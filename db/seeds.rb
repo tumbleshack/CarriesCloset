@@ -11,6 +11,5 @@
 if @mamie.nil?
   @mamie = User.create! email: 'mamie@example.com',
                         password: 'kodgo4-rydfEg-turcus'
-  @mamie.skip_confirmation!
   @mamie.save!
 end
