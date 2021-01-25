@@ -89,6 +89,10 @@ GEM
     ffi (1.14.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hotwire-rails (0.1.2)
+      rails (>= 6.0.0)
+      stimulus-rails
+      turbo-rails
     i18n (1.8.7)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.1)
@@ -118,8 +122,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
-    rack-mini-profiler (2.3.0)
-      rack (>= 1.2.0)
     rack-proxy (0.6.5)
       rack
     rack-test (1.1.0)
@@ -154,6 +156,7 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
+    redis (4.2.5)
     regexp_parser (1.8.2)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -181,11 +184,12 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stimulus-rails (0.1.2)
+      rails (>= 6.0.0)
     thor (1.1.0)
     tilt (2.0.10)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
+    turbo-rails (0.5.4)
+      rails (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     warden (1.2.9)
@@ -219,16 +223,16 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise (~> 4.7.1)
+  hotwire-rails
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2 (~> 0.5)
   puma (~> 5.0)
-  rack-mini-profiler (~> 2.0)
   rails (~> 6.1.1)
+  redis (~> 4.0)
   sass-rails (>= 6)
   selenium-webdriver
   spring
-  turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers
