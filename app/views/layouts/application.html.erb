@@ -6,25 +6,26 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbo-track': 'reload' %>
     <%= stimulus_include_tags %>
+
+    <%= yield :head %>
   </head>
 
   <body>
     <nav>
       <%= turbo_frame_tag 'user-panel' do %>
         <% if current_user.nil? %>
-          <%= link_to 'Log In', new_user_session_url %>
+          <%= link_to 'Log In', new_user_session_url %> |
           <%= link_to 'Sign Up', new_user_registration_url, data: { turbo: "false" } %>
         <% else %>
           <%= current_user.email %> |
-          <%= link_to 'Edit Account', edit_user_registration_url %> |
-          <%= link_to 'Log Out', destroy_user_session_url %>
+          <%= link_to 'Edit Account', edit_user_registration_url, data: { turbo: "false" } %> |
+          <%= link_to 'Log Out', destroy_user_session_url, data: { turbo: "false" } %>
         <% end %>
       <% end %>
     </nav>
-
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

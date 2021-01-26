@@ -117,4 +117,8 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # TODO: Remember to set `host` properly for production
+  # Configure mailer options for Devise mailers
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
