@@ -26,3 +26,15 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
   stored in the database with a `body` text field and a `likes` counter.
 - `bin/rails destroy Tweet` will revert all generated files for the previous
   `Tweet` model.
+  
+## Running with Docker
+To run the full app stack, run the following commands:
+```shell
+docker-compose build --parallel && docker-compose up -d
+docker exec cc_server sh -c "bin/rails db:create && bin/rails db:migrate && bin/rails db:seed"
+```
+
+This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
+caching store, and the `cc_server` Rails server. Both commands should complete 
+without error to let you know everything is running properly. The Rails server
+will run on http://127.0.0.1:3000 in most environments.

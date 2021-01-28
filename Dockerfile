@@ -6,16 +6,16 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update && apt-get install -y yarn
 
 WORKDIR /cc_server
+
 COPY Gemfile /cc_server/Gemfile
 COPY Gemfile.lock /cc_server/Gemfile.lock
-RUN bundle install
-COPY . /cc_server
+RUN bundle install && gem install bundler:2.2.1
 
+COPY package.json /cc_server/package.json
+COPY yarn.lock /cc_server/yarn.lock
 RUN yarn install --check-files
 
-RUN bin/rails db:create
-RUN bin/rails db:migrate
-RUN bin/rails db:seed
+COPY . /cc_server
 
 # Start the main process.
-CMD rails server -b 0.0.0.0
+CMD rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'

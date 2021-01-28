@@ -15,12 +15,12 @@ services:
       - container_network
     depends_on:
       - cc_mysql
-      - ccredis
+      - cc_redis
   cc_mysql:
     container_name: cc_mysql
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
+#    restart: always
     env_file: .env
     ports:
       - "127.0.0.1:3306:3306"
@@ -31,10 +31,10 @@ services:
       - ./db/data/MySQL/:/var/lib/mysql/
     networks:
       - container_network
-  ccredis:
-    container_name: ccredis
+  cc_redis:
+    container_name: cc_redis
     image: redis:latest
-    command: redis-server --requirepass $REDIS_PASSWORD --bind ccredis --port 6379
+    command: redis-server --requirepass $REDIS_PASSWORD --bind cc_redis --port 6379
     env_file: .env
     ports:
       - "127.0.0.1:6379:6379"
