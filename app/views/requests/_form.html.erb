@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :urgency, 'How urgently do you need these items?' %>
-    <%= form.number_field :urgency %>
+    <%= form.select :urgency, Request::URGENCIES %>
   </div>
 
   <div class="field">
@@ -32,21 +32,18 @@
   </div>
 
   <div class="field">
-    <%= form.label :type, 'I am a guardian/foster parent/case manager for a...' %>
-    <%= form.number_field :type %>
+    <%= form.label :relationship, 'I am a guardian/foster parent/case manager for a...' %>
+    <%= form.select :relationship, Request::RELATIONSHIPS %>
   </div>
 
   <div class="field">
     <%= form.label :county, 'Select county' %>
-    <%= form.number_field :county %>
+    <%= form.select :county, Request::COUNTIES %>
   </div>
 
   <div class="field">
     <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
-    <%= radio_button_tag :meet, 1, 'Yes' %> Yes
-    <br />
-    <%= radio_button_tag :meet, 0, 'No' %> No, my address is:
-    <br />
+    <%= form.collection_radio_buttons :meet, [['Yes', 1], ['No, my address is:', 2]], :last, :first %>
     <%= form.text_area :address %>
   </div>
 

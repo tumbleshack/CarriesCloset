@@ -1,8 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h1>Request a Donation: Summary</h1>
+<h2>Please review and confirm the summary of your request:</h2>
 
 <p>
   <strong>Urgency:</strong>
-  <%= @request.urgency %>
+  <%= Request::URGENCIES.key(@request.urgency) %>
 </p>
 
 <p>
@@ -21,19 +22,21 @@
 </p>
 
 <p>
-  <strong>Type:</strong>
-  <%= @request.type %>
+  <strong>Relationship:</strong>
+  <%= Request::RELATIONSHIPS.key(@request.relationship) %>
 </p>
 
-<p>
-  <strong>County:</strong>
-  <%= @request.county %>
-</p>
-
-<p>
-  <strong>Meet:</strong>
-  <%= @request.meet %>
-</p>
+<% if @request.meet == 1 %>
+  <p>
+    <strong>County:</strong>
+    <%= @request.county %>
+  </p>
+<% else %>
+  <p>
+    <strong>Address:</strong>
+    <%= @request.address %>
+  </p>
+<% end %>
 
 <p>
   <strong>Availability:</strong>
@@ -46,4 +49,4 @@
 </p>
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
-<%= link_to 'Back', requests_path %>
+<%= link_to 'Back', :back %>
