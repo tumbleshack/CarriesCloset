@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :urgency %>
+    <%= form.label :urgency, 'How urgently do you need these items?' %>
     <%= form.number_field :urgency %>
   </div>
 
   <div class="field">
-    <%= form.label :full_name %>
+    <%= form.label :full_name, 'Full Name' %>
     <%= form.text_field :full_name %>
   </div>
 
@@ -27,27 +27,31 @@
   </div>
 
   <div class="field">
-    <%= form.label :phone %>
+    <%= form.label :phone, 'Phone Number' %>
     <%= form.number_field :phone %>
   </div>
 
   <div class="field">
-    <%= form.label :type %>
+    <%= form.label :type, 'I am a guardian/foster parent/case manager for a...' %>
     <%= form.number_field :type %>
   </div>
 
   <div class="field">
-    <%= form.label :county %>
+    <%= form.label :county, 'Select county' %>
     <%= form.number_field :county %>
   </div>
 
   <div class="field">
-    <%= form.label :meet %>
-    <%= form.check_box :meet %>
+    <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
+    <%= radio_button_tag :meet, 1, 'Yes' %> Yes
+    <br />
+    <%= radio_button_tag :meet, 0, 'No' %> No, my address is:
+    <br />
+    <%= form.text_area :address %>
   </div>
 
   <div class="field">
-    <%= form.label :availability %>
+    <%= form.label :availability, 'What\'s your availability?' %>
     <%= form.text_field :availability %>
   </div>
 
