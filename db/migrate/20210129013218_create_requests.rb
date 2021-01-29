@@ -5,7 +5,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.string :full_name
       t.string :email
       t.integer :phone
-      t.integer :type
+      t.integer :relationship
       t.integer :county
       t.boolean :meet
       t.string :address

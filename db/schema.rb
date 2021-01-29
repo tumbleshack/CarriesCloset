@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_013218) do
     t.string "full_name"
     t.string "email"
     t.integer "phone"
-    t.integer "type"
+    t.integer "relationship"
     t.integer "county"
     t.boolean "meet"
     t.string "address"
