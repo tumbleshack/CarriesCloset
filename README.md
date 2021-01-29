@@ -3,6 +3,11 @@
 ## Getting Started
 After a clean install of this repo, you'll need to run `bundle install` inside 
   the `CarriesCloset` root folder. This will install all needed requirements.
+  
+Additionally, **duplicate** the file `example.env` in the root level directory. 
+Once duplicated, rename the duplicate, e.g. `example.env (1)`, to just `.env`. 
+This may cause the `.env` to disapear from your file brower, but don't worry 
+if you've named the file correctly.
 
 ## Database Creation
 You'll need to have MySQL installed and running locally.
