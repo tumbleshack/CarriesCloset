@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>CarriesCloset</title>
+    <title>Carrie's Closet</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,20 @@
   </head>
 
   <body>
+    <nav>
+      <% if current_user.nil? %>
+        <%= link_to 'Log In', new_user_session_url %>
+        <%= link_to 'Sign Up', new_user_registration_url %>
+      <% else %>
+        <%= current_user.email %> |
+        <%= link_to 'Edit Account', edit_user_registration_url %> |
+        <%= link_to 'Log Out', destroy_user_session_url %>
+      <% end %>
+    </nav>
+
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>
