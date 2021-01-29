@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Urgency:</strong>
+  <%= @request.urgency %>
+</p>
+
+<p>
+  <strong>Full name:</strong>
+  <%= @request.full_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @request.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @request.phone %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @request.type %>
+</p>
+
+<p>
+  <strong>County:</strong>
+  <%= @request.county %>
+</p>
+
+<p>
+  <strong>Meet:</strong>
+  <%= @request.meet %>
+</p>
+
+<p>
+  <strong>Availability:</strong>
+  <%= @request.availability %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @request.comments %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>
