@@ -44,6 +44,7 @@ To run the full app stack, run the following commands:
 ```shell
 docker-compose build --parallel && docker-compose up -d
 docker exec cc_server sh -c "bin/rails db:create && bin/rails db:migrate && bin/rails db:seed"
+docker exec cc_server sh -c "rails webpacker:install"
 ```
 
 Note that on Windows, you may need to run these command seprately. Eg.
@@ -53,6 +54,7 @@ docker-compose up -d
 docker exec cc_server sh -c "bin/rails db:create"
 docker exec cc_server sh -c "bin/rails db:migrate"
 docker exec cc_server sh -c "bin/rails db:seed"
+docker exec cc_server sh -c "rails webpacker:install"
 ```
 
 This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
