@@ -57,6 +57,15 @@ docker exec cc_server sh -c "bin/rails db:seed"
 docker exec cc_server sh -c "rails webpacker:install"
 ```
 
+Note that on Windows, you may need to run these command seprately. Eg.
+```
+docker-compose build --parallel
+docker-compose up -d
+docker exec cc_server sh -c "bin/rails db:create"
+docker exec cc_server sh -c "bin/rails db:migrate"
+docker exec cc_server sh -c "bin/rails db:seed"
+```
+
 This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
 caching store, and the `cc_server` Rails server. Both commands should complete 
 without error to let you know everything is running properly. The Rails server
