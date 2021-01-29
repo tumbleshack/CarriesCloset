@@ -8,6 +8,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.integer :type
       t.integer :county
       t.boolean :meet
+      t.string :address
       t.string :availability
       t.text :comments
 

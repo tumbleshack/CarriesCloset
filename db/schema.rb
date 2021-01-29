@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_013218) do
     t.integer "type"
     t.integer "county"
     t.boolean "meet"
+    t.string "address"
     t.string "availability"
     t.text "comments"
     t.datetime "created_at", precision: 6, null: false
