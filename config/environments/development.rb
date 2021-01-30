@@ -76,4 +76,21 @@ Rails.application.configure do
 
   # Configure mailer options for Devise mailers
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # ----------------------------------Action Mailer------------------------------------------------
+  config.action_mailer.perform_deliveries = true 
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.smtp_settings = {
+    address: "carries.closet.confirmations@gmail.com",
+    port: 587, 
+    domain: "gmail.com",
+    authentication: "plain", 
+    enable_starttls_auto: true, 
+    user_name: 'carries.closet.confirmations@gmail.com',
+    password: ENV["GMAIL_PASSWORD"]
+  }
+  # can change host when we have a URL
+  config.action_mailer.default_url_options = {:host => "localhost:3000"}
+  config.action_mailer.delivery_method = :smtp
 end
