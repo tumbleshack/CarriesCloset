@@ -16,7 +16,7 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
 ```
 ## ActionMailer for Confirmation Emails
 - You can preview a sample email at http://localhost:3000/rails/mailers/user_mailer/ by clicking on new email. 
-- For now, when you create a new request you can view the html and text versions of the confirmation email for that request in your terminal.
+- For now, when you create a new request you can view the html and text versions of the confirmation email for that request in your terminal upon clicking on the create request button.
 
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 
