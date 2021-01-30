@@ -25,6 +25,9 @@ class RequestsController < ApplicationController
 
     respond_to do |format|
       if @request.save
+        # ActionMailer should send email immediately after new request creation is saved
+        UserMailer.with(request: @request).new_email.deliver_now
+
         format.html { redirect_to @request, notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
       else
