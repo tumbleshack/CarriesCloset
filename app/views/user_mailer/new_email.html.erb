@@ -16,17 +16,17 @@
     <h4>
     Request Details<br>
     </h4>
-    <p>==========================================================================</p>
+    <h4>==========================================================================</h4>
     <p>Name: <%= @request.full_name %></p>
     <p>Email: <%= @request.email %></p>
-    <p>Relationship to Donee: <%= @request.relationship %></p>
-    <p>County: <%= @request.county %></p>
-    <p>Pickup Location: <%= @request.meet %></p>
+    <p>Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %></p>
+    <p>County: <%= Request::COUNTIES.key(@request.county) %></p>
+    <p>Pickup Location: <%= @request.meet = 0? 'County DFCS Office' : 'My Address' %></p>
     <p>Address (if applicable): <%= @request.address %></p>
     <p>Phone: <%= @request.phone %></p>
     <p>Availability: <%= @request.availability %></p>
     <p>Comments: <%= @request.comments %></p>
-    <p>==========================================================================</p>
+    <h4>==========================================================================</h4>
     <p>Thank you!</p>
     <p>Sincerely, </p>
     <p>Carrie's Closet Team</p>

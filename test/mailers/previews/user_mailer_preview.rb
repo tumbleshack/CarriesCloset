@@ -7,12 +7,12 @@ class UserMailerPreview < ActionMailer::Preview
         full_name: "Jane Doe", 
         email: "sample@gmail.com", 
         phone: "1234567890", 
-        relationship: "0", 
-        county: "0", 
+        relationship: 1, 
+        county: "1", 
         meet: "0", 
         address: "", 
         availability: "3 pm", 
-        comments: "hi")
+        comments: "Hi, this is a note.")
         UserMailer.with(request: fake_request).new_email
     end
 end
