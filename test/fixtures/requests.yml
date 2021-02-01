@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  urgency: 1
+  full_name: MyString
+  email: MyString
+  phone: 1
+  type: 1
+  county: 1
+  meet: false
+  availability: MyString
+  comments: MyText
+
+two:
+  urgency: 1
+  full_name: MyString
+  email: MyString
+  phone: 1
+  type: 1
+  county: 1
+  meet: false
+  availability: MyString
+  comments: MyText
