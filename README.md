@@ -1,4 +1,10 @@
 # Carrie's Closet
+*Note*: This branch changes the version of Ruby for the project. Check 
+`ruby -v`. If it is `ruby 2.7.2p...`, you're good to go.
+
+You'll need to install `rvm` if you don't have it (`rvm -v` gives an error). To 
+set the proper version for this branch, run `rvm install 2.7.2`. Once Ruby 
+2.7.2 is installed, switch to it with `rvm use 2.7.2`.
 
 ## Getting Started
 On windows, make sure you set git [to use unix line endings](https://docs.github.com/en/github/using-git/configuring-git-to-handle-line-endings) 
@@ -15,6 +21,9 @@ Additionally, **duplicate** the file `example.env` in the root level directory.
 Once duplicated, rename the duplicate, e.g. `example.env (1)`, to just `.env`. 
 This may cause the `.env` to disapear from your file brower, but don't worry 
 if you've named the file correctly.
+
+Try running `bin/rails server`. Try the "Running with Docker" section if this 
+fails.
 
 ## Database Creation
 You'll need to have MySQL installed and running locally.
@@ -35,19 +44,35 @@ bin/rails webpacker:install
 ```
 
 ## Running with Docker
-To run the full app stack, run the following commands:
+### Initial Set Up
+To start the full app stack for the first time, run the following commands:
 ```shell
 docker-compose build --parallel
 docker-compose up -d
 docker exec cc_server bin/rails db:create
 docker exec cc_server bin/rails db:environment:set RAILS_ENV=development
 docker exec cc_server bin/rails db:migrate db:seed
+docker exec cc_server bin/rails webpacker:install
 ```
 
 This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis
 caching store, and the `cc_server` Rails server. Both commands should complete
 without error to let you know everything is running properly. The Rails server
 will run on http://127.0.0.1:3000 in most environments.
+
+### Regular Usage
+To check whether all the containers are running, run `docker-compose ps` inside 
+the project folder. You should see all 3 containers (`cc_mysql`, `cc_redis`, 
+and `cc_server`) in the `Up` state.
+
+To start all containers, run `docker-compose up -d`. To stop all containers, 
+run `docker-compose stop`.
+
+To "drop in" to the server (to access Rails commands directly), run `docker 
+exec -it cc_server sh`. This will allow you direct access to the running 
+server, so Rails commands like `bin/rails console` will work as expected. 
+You'll want to stay in here for the majority of your work. Run `exit` to leave 
+the container.
 
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 

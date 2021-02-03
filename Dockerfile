@@ -22,13 +22,10 @@ COPY --chown=rails_user:rails_user package.json /cc_server/package.json
 COPY --chown=rails_user:rails_user yarn.lock /cc_server/yarn.lock
 RUN yarn install --check-files
 
-# Copy all remaining local files into container
-COPY . /cc_server
-
 # Expose ports for access either from `dev` (:3000) or `prod` (:80 and :443)
 EXPOSE 3000
 EXPOSE 443
 EXPOSE 80
 
 # Start the main process.
-CMD rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'
+CMD rm -f tmp/pids/server.pid; rails server -b '0.0.0.0'
