@@ -25,6 +25,7 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
     2. search for the line `config.action_mailer.perform_deliveries = true`
     3. change it to `config.action_mailer.perform_deliveries = false`
     4. restart server
+    
     Note: that same line is also in `config\environments\production.rb` and `config\environments\test.rb`, so you can also make that change in those files as well depending on   
     what environment you are working in.
     
