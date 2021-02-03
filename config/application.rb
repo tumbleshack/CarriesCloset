@@ -18,5 +18,9 @@ module CarriesCloset
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # TODO: Remove wildcard matching when a URL is set.
+    config.hosts << /.*\.herokuapp\.com/
+    config.hosts << "127.0.0.1"
   end
 end
