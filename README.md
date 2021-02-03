@@ -24,7 +24,7 @@ Depending on whether or not you've run the Rails server recently, or if you're
   having troubles with your database/server, you'll want to run the following:
 ```shell
 bin/rails db:drop
-bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
+bin/rails db:create db:migrate db:seed
 ```
 
 ## General Rails Tips
@@ -42,19 +42,9 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
 ## Running with Docker
 To run the full app stack, run the following commands:
 ```shell
-docker-compose build --parallel && docker-compose up -d
-docker exec cc_server sh -c "bin/rails db:create && bin/rails db:migrate && bin/rails db:seed"
-docker exec cc_server sh -c "rails webpacker:install"
-```
-
-Note that on Windows, you may need to run these command seprately. Eg.
-```
 docker-compose build --parallel
 docker-compose up -d
-docker exec cc_server sh -c "bin/rails db:create"
-docker exec cc_server sh -c "bin/rails db:migrate"
-docker exec cc_server sh -c "bin/rails db:seed"
-docker exec cc_server sh -c "rails webpacker:install"
+docker exec cc_server bin/rails db:create db:migrate db:seed webpacker:install
 ```
 
 This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
