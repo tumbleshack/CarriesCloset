@@ -6,7 +6,7 @@ services:
     # restart: unless-stopped
     env_file: .env
     volumes:
-      - .:/cc_server:cached
+      - .:/cc_server
     ports:
       - 3000:3000
     expose:
