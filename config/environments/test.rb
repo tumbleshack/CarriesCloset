@@ -41,7 +41,7 @@ Rails.application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  config.action_mailer.delivery_method = :test
+  # config.action_mailer.delivery_method = :test
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -58,21 +58,22 @@ Rails.application.configure do
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
-     # ----------------------------------Action Mailer------------------------------------------------
-     config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-     config.action_mailer.perform_deliveries = true 
-     config.action_mailer.raise_delivery_errors = true
-   
-     config.action_mailer.smtp_settings = {
-       address: "carries.closet.confirmations@gmail.com",
-       port: 587, 
-       domain: "gmail.com",
-       authentication: "plain", 
-       enable_starttls_auto: true, 
-       user_name: 'carries.closet.confirmations@gmail.com',
-       password: ENV["GMAIL_PASSWORD"]
-     }
-     # can change host when we have a URL
-     config.action_mailer.default_url_options = {:host => "localhost:3000"}
-     config.action_mailer.delivery_method = :smtp
+  # ----------------------------------Action Mailer------------------------------------------------
+  config.action_mailer.perform_deliveries = true 
+  config.action_mailer.raise_delivery_errors = true
+
+  config.action_mailer.smtp_settings = {
+    address: "smtp.gmail.com",
+    port: 587, 
+    domain: "gmail.com",
+    authentication: "plain", 
+    enable_starttls_auto: true, 
+    user_name: ENV[GMAIL_USERNAME],
+    password: ENV[APP_PASSWORD]
+  }
+  # can change host when we have a URL
+  config.action_mailer.default_url_options = {:host => "127.0.0.1:3000"}
+  config.action_mailer.delivery_method = :smtp
+
+   # -----------------------------------------------------------------------------------------------
 end
