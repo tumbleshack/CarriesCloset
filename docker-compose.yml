@@ -31,6 +31,8 @@ services:
       - ./db/data/MySQL/:/var/lib/mysql/
     networks:
       - container_network
+    cap_add:
+      - SYS_NICE
   cc_redis:
     container_name: cc_redis
     image: redis:latest

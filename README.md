@@ -27,6 +27,28 @@ bin/rails db:drop
 bin/rails db:create db:migrate db:seed
 ```
 
+## Asset Installation
+To install all the packaged Javascript libraries locally (suggested for 
+performance improvements), run:
+```shell
+bin/rails webpacker:install
+```
+
+## Running with Docker
+To run the full app stack, run the following commands:
+```shell
+docker-compose build --parallel
+docker-compose up -d
+docker exec cc_server bin/rails db:create
+docker exec cc_server bin/rails db:environment:set RAILS_ENV=development
+docker exec cc_server bin/rails db:migrate db:seed
+```
+
+This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis
+caching store, and the `cc_server` Rails server. Both commands should complete
+without error to let you know everything is running properly. The Rails server
+will run on http://127.0.0.1:3000 in most environments.
+
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 
   point to the proper Carrie's Closet project)
@@ -38,17 +60,3 @@ bin/rails db:create db:migrate db:seed
   stored in the database with a `body` text field and a `likes` counter.
 - `bin/rails destroy Tweet` will revert all generated files for the previous
   `Tweet` model.
-  
-## Running with Docker
-To run the full app stack, run the following commands:
-```shell
-docker-compose build --parallel
-docker-compose up -d
-docker exec cc_server bin/rails db:environment:set RAILS_ENV=development
-docker exec cc_server bin/rails db:create db:migrate db:seed webpacker:install
-```
-
-This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
-caching store, and the `cc_server` Rails server. Both commands should complete 
-without error to let you know everything is running properly. The Rails server
-will run on http://127.0.0.1:3000 in most environments.
