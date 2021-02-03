@@ -44,6 +44,7 @@ To run the full app stack, run the following commands:
 ```shell
 docker-compose build --parallel
 docker-compose up -d
+docker exec cc_server bin/rails db:environment:set RAILS_ENV=development
 docker exec cc_server bin/rails db:create db:migrate db:seed webpacker:install
 ```
 
