@@ -16,11 +16,12 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
 ```
 ## ActionMailer for Confirmation Emails
 - You can preview a sample email at http://localhost:3000/rails/mailers/user_mailer/ by clicking on new email.
-- Make sure you have copied the environment variables that contain the GMAIL account info from `example.env` into your `.env` file.
+- Accessing Environment Variables Containing GMAIL Account info:
+    - Make a copy of `config\EXAMPLE_local_env.yml` in the config file and rename it just `local_env.yml`. This way the SMTP settings will have access to the GMAIL login info. 
 - When you hit the create request button,
     - you can see the html and text versions of the confirmation email in your terminal.
     - you should also receive the actual email from Carrie's Closet (carries.closet.confirmations@gmail.com) at the email address you entered on the form, so make sure you enter       a valid address.
-- If you want to temporarily turn off emails from sending (you'll still be able to see them in you terminal):
+- If you want to temporarily disable email deliveries (you'll still be able to see them in you terminal):
     1. navigate to `config\environments\development.rb`
     2. search for the line `config.action_mailer.perform_deliveries = true`
     3. change it to `config.action_mailer.perform_deliveries = false`
@@ -29,7 +30,7 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
     Note: that same line is also in `config\environments\production.rb` and `config\environments\test.rb`, so you can also make that change in those files as well depending on   
     what environment you are working in.
     
-    When you want to start receiving emails again, just make those lines `config.action_mailer.perform_deliveries = true` again and restart the server. 
+    Note: When you want to start receiving emails again, just make those lines `config.action_mailer.perform_deliveries = true` again and restart the server. 
     
 
 ## General Rails Tips
