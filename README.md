@@ -15,8 +15,22 @@ bin/rails db:drop
 bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
 ```
 ## ActionMailer for Confirmation Emails
-- You can preview a sample email at http://localhost:3000/rails/mailers/user_mailer/ by clicking on new email. 
-- For now, when you create a new request you can view the html and text versions of the confirmation email for that request in your terminal upon clicking on the create request button.
+- You can preview a sample email at http://localhost:3000/rails/mailers/user_mailer/ by clicking on new email.
+- Make sure you have copied the environment variables that contain the GMAIL account info from `example.env` into your `.env` file.
+- When you hit the create request button,
+    - you can see the html and text versions of the confirmation email in your terminal.
+    - you should also receive the actual email from Carrie's Closet (carries.closet.confirmations@gmail.com) at the email address you entered on the form, so make sure you enter       a valid address.
+- If you want to temporarily turn off emails from sending (you'll still be able to see them in you terminal):
+    1. navigate to `config\environments\development.rb`
+    2. search for the line `config.action_mailer.perform_deliveries = true`
+    3. change it to `config.action_mailer.perform_deliveries = false`
+    4. restart server
+    
+    Note: that same line is also in `config\environments\production.rb` and `config\environments\test.rb`, so you can also make that change in those files as well depending on   
+    what environment you are working in.
+    
+    When you want to start receiving emails again, just make those lines `config.action_mailer.perform_deliveries = true` again and restart the server. 
+    
 
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 
