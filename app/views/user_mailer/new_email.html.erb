@@ -19,9 +19,10 @@
     <h4>==============================</h4>
     <p>Name: <%= @request.full_name %></p>
     <p>Email: <%= @request.email %></p>
+    <p>Urgency: <%= Request::URGENCIES.key(@request.relationship) %></p>
     <p>Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %></p>
     <p>County: <%= Request::COUNTIES.key(@request.county) %></p>
-    <p>Pickup Location: <%= @request.meet = 0? 'County DFCS Office' : 'My Address' %></p>
+    <p>Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %></p>
     <p>Address (if applicable): <%= @request.address %></p>
     <p>Phone: <%= @request.phone %></p>
     <p>Availability: <%= @request.availability %></p>

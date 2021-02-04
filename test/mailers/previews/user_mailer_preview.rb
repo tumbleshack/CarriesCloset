@@ -9,7 +9,7 @@ class UserMailerPreview < ActionMailer::Preview
         phone: "1234567890", 
         relationship: 1, 
         county: "1", 
-        meet: "0", 
+        meet: true, 
         address: "", 
         availability: "3 pm", 
         comments: "Hi, this is a note.")
