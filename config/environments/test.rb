@@ -68,8 +68,8 @@ Rails.application.configure do
     domain: "gmail.com",
     authentication: "plain", 
     enable_starttls_auto: true, 
-    user_name: ENV[GMAIL_USERNAME],
-    password: ENV[APP_PASSWORD]
+    user_name: ENV["GMAIL_USERNAME"],
+    password: ENV["APP_PASSWORD"]
   }
   # can change host when we have a URL
   config.action_mailer.default_url_options = {:host => "127.0.0.1:3000"}
