@@ -1,0 +1,24 @@
+Hi <%= @request.full_name %>,
+Thank you for placing a donation request with Carrie's Closet!
+This message is to confirm that we received your request. We will contact you within a week to arrange a pickup time.
+If you have any inquiries, you can reach us at https://carriesclosetofga.org/contact-us.
+
+Request Details
+
+==============================
+Name: <%= @request.full_name %>
+Email: <%= @request.email %>
+Urgency: <%= Request::URGENCIES.key(@request.relationship) %>
+Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %>
+County: <%=Request::COUNTIES.key(@request.county) %>
+Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %>
+Address (if applicable): <%= @request.address %>
+Phone: <%= @request.phone %>
+Availability: <%= @request.availability %>
+Comments: <%= @request.comments %>
+==============================
+
+Thank you!
+
+Sincerely, 
+Carrie's Closet Team
