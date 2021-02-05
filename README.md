@@ -1,8 +1,20 @@
 # Carrie's Closet
 
 ## Getting Started
+On windows, make sure you set git [to use unix line endings](https://docs.github.com/en/github/using-git/configuring-git-to-handle-line-endings) 
+when checking out and committing. 
+
+If you've already checked out and have windows line endings, you may encounter
+an error stating: `env: ruby\r: No such file or directory`. To resolve, run
+`find ./ -type f -exec dos2unix {} \;`.
+
 After a clean install of this repo, you'll need to run `bundle install` inside 
-  the `CarriesCloset` root folder. This will install all needed requirements.
+the `CarriesCloset` root folder. This will install all needed requirements.
+  
+Additionally, **duplicate** the file `example.env` in the root level directory. 
+Once duplicated, rename the duplicate, e.g. `example.env (1)`, to just `.env`. 
+This may cause the `.env` to disapear from your file brower, but don't worry 
+if you've named the file correctly.
 
 ## Database Creation
 You'll need to have MySQL installed and running locally.
@@ -44,3 +56,27 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
   stored in the database with a `body` text field and a `likes` counter.
 - `bin/rails destroy Tweet` will revert all generated files for the previous
   `Tweet` model.
+  
+## Running with Docker
+To run the full app stack, run the following commands:
+```shell
+docker-compose build --parallel && docker-compose up -d
+docker exec cc_server sh -c "bin/rails db:create && bin/rails db:migrate && bin/rails db:seed"
+docker exec cc_server sh -c "rails webpacker:install"
+```
+
+Note that on Windows, you may need to run these command seprately. Eg.
+```
+docker-compose build --parallel
+docker-compose up -d
+docker exec cc_server sh -c "bin/rails db:create"
+docker exec cc_server sh -c "bin/rails db:migrate"
+docker exec cc_server sh -c "bin/rails db:seed"
+docker exec cc_server sh -c "rails webpacker:install"
+```
+
+This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis 
+caching store, and the `cc_server` Rails server. Both commands should complete 
+without error to let you know everything is running properly. The Rails server
+will run on http://127.0.0.1:3000 in most environments.
+
