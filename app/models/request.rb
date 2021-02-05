@@ -25,7 +25,6 @@ class Request < ApplicationRecord
     'Henry': 6,
     'Muscogee': 7,
     'Other (provide your address below)': 8
-    
   }.freeze
 
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
