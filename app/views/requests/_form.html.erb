@@ -13,7 +13,7 @@
   
   
 
-
+<div class="margins-needed">
   <div class="field">
     <%= form.label :urgency, 'How urgently do you need these items?' %>
     <%= form.select :urgency, Request::URGENCIES %>
@@ -48,7 +48,6 @@
     <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
     <%= form.collection_radio_buttons :meet, [['Yes', 1], ['No, my address is:', 2]], :last, :first %>
     <%= form.text_area :address %>
-    <p>meet: <%= :meet %></p>
   </div>
 
   <div class="field">
@@ -67,5 +66,6 @@
 
   <div class="actions">
     <%= form.submit %>
+  </div>
   </div>
 <% end %>

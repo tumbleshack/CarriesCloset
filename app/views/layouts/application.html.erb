@@ -15,10 +15,16 @@
 
   <body>
     <nav>
-      <%= link_to 'Home', root_url %> |
+      <div class:"nav-bar">
+      <%= link_to image_tag('back.png'), :back, class:"navbar-element" %>
+      <%= image_tag 'logo.png', class:"navbar-element" %>
+      <%= link_to image_tag('home.png'), root_url, class:"navbar-element" %>
+      </div>
+      
       <% if current_user.nil? %>
-        <%= link_to 'Log In', new_user_session_url %>
-        <%= link_to 'Sign Up', new_user_registration_url %>
+        
+        <%= link_to 'Log In', new_user_session_url, class:"small-link-button" %>
+        <%= link_to 'Sign Up', new_user_registration_url, class:"small-link-button" %>
       <% else %>
         <%= current_user.email %> |
         <%= link_to 'Edit Account', edit_user_registration_url %> |
