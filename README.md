@@ -44,6 +44,16 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
     
     Note: When you want to start receiving emails again, just make those lines `config.action_mailer.perform_deliveries = true` again and restart the server. 
     
+- If you get an SMTP Authentication Error, it usually means the environment variable with the GMAIL account info is not working, so follow these steps:
+    1. Go to `config\development.rb` and scroll down to the ActionMailer settings where you will see `user_name: ENV["GMAIL_USERNAME"],` and `password: ENV["APP_PASSWORD"]`
+    2. Go to `config\EXAMPLE_local_env.yml` and copy the `GMAIL_USERNAME` value and paste it in place of `ENV["GMAIL_USERNAME"]` (leave the comma at the end of the line). 
+    3. Copy the `APP_PASSWORD` value and paste it in place of `ENV["APP_PASSWORD"]`.
+    4. Save and restart server.
+    
+    Note: that these same lines are also in `config\environments\production.rb` and `config\environments\test.rb`, so you can also make that change in those files as well      
+    depending on what environment you are working in.
+
+    
 
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 
