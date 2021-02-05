@@ -40,7 +40,7 @@ class Request < ApplicationRecord
   validates :address,
             presence: true,
             length: { in: 7..200 },
-            if: -> {self.meet == '2'}
+            if: Proc.new { |a| a.meet == 2}
 
   validates :full_name,
             length: { in: 2..80 }

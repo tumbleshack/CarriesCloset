@@ -1,0 +1,101 @@
+body {
+   font-family: Cabin;
+   font-size: medium;
+   font-color: #000;
+   background-color: white;
+
+}
+
+a:link, a:active, a:visited {
+   color: blue;
+}
+
+a:hover {
+  background-color: #040;
+}
+
+a.home-link:link, a.home-link:active, a.home-link:visited {
+  background-color: #74b9cb;
+  color: #1b1b1b;
+  padding: 1em 1.5em;
+  text-decoration: none;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-family: Cabin;
+  border: 2px solid #74b9cb;
+  border-radius: 5px;
+  width:100%;
+  text-align:center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+  display: inline-block;
+  width: 90%;
+
+  align-items: center;
+}
+
+a.home-link:hover {
+  
+}
+
+.centered-div {
+    display: flex;
+    justify-content: center;
+}
+
+input {
+   margin-bottom: 5px;
+}
+
+p {
+   line-height: 150%;
+}
+
+div#container {
+   width: 760px;
+   margin: 0 auto;
+}
+
+div#header {
+   text-align: center;
+   padding-bottom: 15px;
+}
+
+div#content {
+   float: left;
+   width: 450px;
+   padding: 10px;
+}
+
+div#content h3 {
+   margin-top: 15px;
+}
+
+ul#books {
+   list-style-type: none;
+}
+
+ul#books li {
+   line-height: 140%;
+}
+
+div#sidebar {
+   width: 200px;
+   margin-left: 480px;
+}
+
+ul#subjects {
+   width: 700px;
+   text-align: center;
+   padding: 5px;
+   background-color: #ececec;
+   border: 1px solid #ccc;
+   margin-bottom: 20px;
+}
+
+ul#subjects li {
+   display: inline;
+   padding-left: 5px;
+}
