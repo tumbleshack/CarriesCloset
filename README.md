@@ -24,7 +24,7 @@ Depending on whether or not you've run the Rails server recently, or if you're
   having troubles with your database/server, you'll want to run the following:
 ```shell
 bin/rails db:drop
-bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
+bin/rails db:create db:migrate db:seed
 ```
 ## ActionMailer for Confirmation Emails
 - You can preview a sample email at http://localhost:3000/rails/mailers/user_mailer/ by clicking on new email.
@@ -44,6 +44,28 @@ bin/rails db:create && bin/rails db:migrate && bin/rails db:seed
     
     Note: When you want to start receiving emails again, just make those lines `config.action_mailer.perform_deliveries = true` again and restart the server. 
     
+
+## Asset Installation
+To install all the packaged Javascript libraries locally (suggested for 
+performance improvements), run:
+```shell
+bin/rails webpacker:install
+```
+
+## Running with Docker
+To run the full app stack, run the following commands:
+```shell
+docker-compose build --parallel
+docker-compose up -d
+docker exec cc_server bin/rails db:create
+docker exec cc_server bin/rails db:environment:set RAILS_ENV=development
+docker exec cc_server bin/rails db:migrate db:seed
+```
+
+This will create the `cc_mysql` MySQL Docker container, the `cc_redis` Redis
+caching store, and the `cc_server` Rails server. Both commands should complete
+without error to let you know everything is running properly. The Rails server
+will run on http://127.0.0.1:3000 in most environments.
 
 ## General Rails Tips
 - Always use `bin/rails` when running commands from the terminal (this will 
