@@ -31,12 +31,16 @@ class Request < ApplicationRecord
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
                         :county, :meet, :phone
 
-  validates_length_of :urgency, :relationship, :county, minimum: 1
+  validates_numericality_of :urgency, :relationship, :county, greater_than: 0, :message => "can't be blank"
+  
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  
+  validates :phone, phone: true
 
   validates :address,
             presence: true,
             length: { in: 7..200 },
-            if: Proc.new { |a| a.meet == 1 }
+            if: -> {self.meet == '2'}
 
   validates :full_name,
             length: { in: 2..80 }
