@@ -7,15 +7,23 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%#= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css" integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">
+    
   </head>
 
   <body>
     <nav>
-      <%= link_to 'Home', root_url %> |
+
+      <%= link_to 'Back', :back, class:"small-link-button" %>
+      <!--<%= image_tag 'logo.png', class:"navbar-element" %> -->
+      <%= link_to 'Home', root_url, class:"small-link-button" %> |
+      
       <% if current_user.nil? %>
-        <%= link_to 'Log In', new_user_session_url %>
-        <%= link_to 'Sign Up', new_user_registration_url %>
+        
+        <%= link_to 'Log In', new_user_session_url, class:"small-link-button" %>
+        <%= link_to 'Sign Up', new_user_registration_url, class:"small-link-button" %>
       <% else %>
         <%= current_user.email %> |
         <%= link_to 'Edit Account', edit_user_registration_url %> |

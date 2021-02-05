@@ -1,4 +1,6 @@
-<%= form_with(model: request) do |form| %>
+
+<%= form_with(model: request, html: { class: 'pure-form pure-form-stacked' }) do |form| %>
+
   <% if request.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
@@ -10,6 +12,9 @@
       </ul>
     </div>
   <% end %>
+
+
+<div class="margins-needed">
 
   <div class="field">
     <%= form.label :urgency, 'How urgently do you need these items?' %>
@@ -28,7 +33,7 @@
 
   <div class="field">
     <%= form.label :phone, 'Phone Number' %>
-    <%= form.number_field :phone %>
+    <%= form.text_field :phone %>
   </div>
 
   <div class="field">
@@ -48,7 +53,12 @@
   </div>
 
   <div class="field">
+    <%= link_to 'Find your county\'s DFCS location', 'https://dfcs.georgia.gov/locations', target: :_blank %>
+  </div>
+
+  <div class="field">
     <%= form.label :availability, 'What\'s your availability?' %>
+    <i>Please indicate your availability between 10 AM and 7 PM, Monday through Friday.</i>
     <%= form.text_field :availability %>
   </div>
 
@@ -59,5 +69,6 @@
 
   <div class="actions">
     <%= form.submit %>
+  </div>
   </div>
 <% end %>

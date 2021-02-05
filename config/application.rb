@@ -22,5 +22,14 @@ module CarriesCloset
     # TODO: Remove wildcard matching when a URL is set.
     config.hosts << /.*\.herokuapp\.com/
     config.hosts << "127.0.0.1"
+    
+    # FOR ACTION MAILER ---------------------------------------------------
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    #---------------------------------------------------------------------
+    end
   end
 end
