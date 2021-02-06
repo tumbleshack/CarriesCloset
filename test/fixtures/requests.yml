@@ -10,6 +10,7 @@ one:
   meet: false
   availability: MyString
   comments: MyText
+  items: 1 shirt, men's medium
 
 two:
   urgency: 1
@@ -21,3 +22,4 @@ two:
   meet: false
   availability: MyString
   comments: MyText
+  items: 1 pair of shoes, kid's 9

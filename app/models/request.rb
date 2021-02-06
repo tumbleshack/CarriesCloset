@@ -28,7 +28,7 @@ class Request < ApplicationRecord
   }.freeze
 
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
-                        :county, :meet, :phone
+                        :county, :meet, :phone, :items
 
   validates_numericality_of :urgency, :relationship, :county, greater_than: 0, :message => "can't be blank"
   
