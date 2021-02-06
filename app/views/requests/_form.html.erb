@@ -63,6 +63,12 @@
   </div>
 
   <div class="field">
+    <%= form.label :items, 'What items would you like to request?' %>
+    <i>Please indicate the quantity, gender, and sizes of requested items.</i>
+    <%= form.text_field :items %>
+  </div>
+
+  <div class="field">
     <%= form.label :comments %>
     <%= form.text_area :comments %>
   </div>

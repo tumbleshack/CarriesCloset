@@ -87,6 +87,8 @@ GEM
       responders
       warden (~> 1.2.3)
     erubi (1.10.0)
+    faker (2.15.1)
+      i18n (>= 1.6, < 2)
     ffi (1.14.2)
     ffi (1.14.2-java)
     ffi (1.14.2-x64-mingw32)
@@ -224,8 +226,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    tzinfo-data (1.2021.1)
-      tzinfo (>= 1.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -264,6 +264,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise (~> 4.7.1)
+  faker
   jbuilder (~> 2.7)
   listen (~> 3.3)
   mysql2 (~> 0.5)

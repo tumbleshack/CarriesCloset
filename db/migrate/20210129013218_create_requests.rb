@@ -10,6 +10,7 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.boolean :meet
       t.string :address
       t.string :availability
+      t.string :items
       t.text :comments
 
       t.timestamps
