@@ -4,12 +4,13 @@ class CreateRequests < ActiveRecord::Migration[6.1]
       t.integer :urgency
       t.string :full_name
       t.string :email
-      t.integer :phone
+      t.string :phone
       t.integer :relationship
       t.integer :county
       t.boolean :meet
       t.string :address
       t.string :availability
+      t.string :items
       t.text :comments
 
       t.timestamps

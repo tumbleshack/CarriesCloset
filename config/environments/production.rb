@@ -60,7 +60,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "CarriesCloset_production"
+  # config.active_job.queue_name_prefix = "carries_closet_production"
 
   config.action_mailer.perform_caching = false
 
@@ -96,6 +96,25 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+   # ----------------------------------Action Mailer------------------------------------------------
+   config.action_mailer.perform_deliveries = true 
+   config.action_mailer.raise_delivery_errors = true
+ 
+   config.action_mailer.smtp_settings = {
+     address: "smtp.gmail.com",
+     port: 587, 
+     domain: "gmail.com",
+     authentication: "plain", 
+     enable_starttls_auto: true, 
+     user_name: ENV["GMAIL_USERNAME"],
+     password: ENV["APP_PASSWORD"]
+   }
+   # can change host when we have a URL
+   config.action_mailer.default_url_options = {:host => "127.0.0.1:3000"}
+   config.action_mailer.delivery_method = :smtp
+ 
+    # -----------------------------------------------------------------------------------------------
 
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector

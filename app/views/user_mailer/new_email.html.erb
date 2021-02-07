@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi <%= @request.full_name %>, </p>
+    <p>Thank you for placing a donation request with Carrie's Closet!</p>
+    <p>
+      This message is to confirm that we received your request. We will contact you within a week to 
+      arrange a pickup time.
+    </p>
+    <p>
+      If you have any inquiries, you can reach us at https://carriesclosetofga.org/contact-us.
+    </p>
+    <h4>
+    Request Details<br>
+    </h4>
+    <h4>==============================</h4>
+    <p>Name: <%= @request.full_name %></p>
+    <p>Email: <%= @request.email %></p>
+    <p>Urgency: <%= Request::URGENCIES.key(@request.relationship) %></p>
+    <p>Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %></p>
+    <p>County: <%= Request::COUNTIES.key(@request.county) %></p>
+    <p>Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %></p>
+    <p>Address (if applicable): <%= @request.address %></p>
+    <p>Phone: <%= @request.phone %></p>
+    <p>Availability: <%= @request.availability %></p>
+    <p>Items: <%= @request.items %></p>
+    <p>Comments: <%= @request.comments %></p>
+    <h4>==============================</h4>
+    <p>Thank you!</p>
+    <p>Sincerely, </p>
+    <p>Carrie's Closet Team</p>
+  </body>
+</html>

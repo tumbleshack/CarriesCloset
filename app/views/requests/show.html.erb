@@ -1,3 +1,5 @@
+
+<div class="margins-needed">
 <h1>Request a Donation: Summary</h1>
 <h2>Please review and confirm the summary of your request:</h2>
 
@@ -44,9 +46,15 @@
 </p>
 
 <p>
+  <strong>Items:</strong>
+  <%= @request.items %>
+</p>
+
+<p>
   <strong>Comments:</strong>
   <%= @request.comments %>
 </p>
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
 <%= link_to 'Back', :back %>
+</div>
