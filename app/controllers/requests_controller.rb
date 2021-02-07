@@ -21,7 +21,7 @@ class RequestsController < ApplicationController
 
   # GET /requests/my-requests
   def my_requests
-    @requests = Request.find(params[:id])
+    @requests = Request.where("email like ?", "%#{current_user.email}%") 
   end 
 
   # POST /requests or /requests.json
