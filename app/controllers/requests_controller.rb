@@ -19,6 +19,11 @@ class RequestsController < ApplicationController
   def edit
   end
 
+  # GET /requests/my-requests
+  def my_requests
+    @requests = current_user != nil ? Request.where("email like ?", "%#{current_user.email}%") : nil  
+  end 
+
   # POST /requests or /requests.json
   def create
     @request = Request.new(request_params)
