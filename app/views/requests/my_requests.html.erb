@@ -18,7 +18,8 @@
     </tr>
   </thead>
 
-  <tbody>
+  <% if @requests != nil %>
+    <tbody>
     <% @requests.each do |request| %>
       <tr>
         <td><%= request.urgency %></td>
@@ -36,7 +37,8 @@
         <td><%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
-  </tbody>
+    </tbody>
+  <% end %>
 </table>
 
 <br>

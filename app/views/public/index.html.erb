@@ -1,9 +1,11 @@
 
 <div>
-  <div class = "centered-div">
-  <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
-  </div>
-  <br>
+  <% if current_user != nil %>
+    <div class = "centered-div">
+    <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
+    </div>
+    <br>
+  <% end %>
 
   <div class = "centered-div">
   <%= link_to 'Request Clothing and Hygiene Items', new_request_url, class: "home-link"%>
