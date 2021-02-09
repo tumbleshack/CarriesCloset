@@ -8,7 +8,7 @@ Request Details
 ==============================
 Name: <%= @request.full_name %>
 Email: <%= @request.email %>
-Urgency: <%= Request::URGENCIES.key(@request.relationship) %>
+Urgency: <%= Request::URGENCIES.key(@request.urgency) %>
 Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %>
 County: <%=Request::COUNTIES.key(@request.county) %>
 Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %>

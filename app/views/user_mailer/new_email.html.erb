@@ -19,7 +19,7 @@
     <h4>==============================</h4>
     <p>Name: <%= @request.full_name %></p>
     <p>Email: <%= @request.email %></p>
-    <p>Urgency: <%= Request::URGENCIES.key(@request.relationship) %></p>
+    <p>Urgency: <%= Request::URGENCIES.key(@request.urgency) %></p>
     <p>Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %></p>
     <p>County: <%= Request::COUNTIES.key(@request.county) %></p>
     <p>Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %></p>
