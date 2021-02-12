@@ -1,6 +1,10 @@
 class RequestsController < ApplicationController
   before_action :set_request, only: %i[ show edit update destroy ]
 
+  before_action :authenticate_user!, only: %i[ index, my_requests ]
+
+  before_action -> { require_role(:root, :admin) }, only: :index
+
   # GET /requests or /requests.json
   def index
     @requests = Request.all

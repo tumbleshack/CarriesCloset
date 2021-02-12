@@ -10,10 +10,12 @@ require 'faker'
 
 # Create Default user
 @mamie = User.find_by_email('test@example.com')
-if @mamie.nil?
-  @mamie = User.create! email: 'test@example.com',
-                        password: 'secure-password'
-end
+@mamie = User.create!(email: 'test@example.com',
+                      password: 'secure-password') if @mamie.nil?
+
+@admin = User.find_by_email('admin@example.com')
+@admin = User.create!(email: 'admin@example.com', password: 'admin-password',
+                      admin: true) if @admin.nil?
 
 loop do
   break if Request.count >= 10
