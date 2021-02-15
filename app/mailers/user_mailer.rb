@@ -1,7 +1,6 @@
 class UserMailer < ApplicationMailer
     def new_admin_urgent_email
         # UserMailer.with(user: User.first).welcome_email
-        puts "786 {User.admin.pluck(:email)}"
         @request = params[:request]
         mail to: User.admins.pluck(:email), #send to all admins
           subject: "[URGENT] Donation Request" if User.admins.any? # only is admins exist
