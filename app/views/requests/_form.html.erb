@@ -64,10 +64,10 @@
 
   <div class="field">
     <%= form.label :items, 'What items would you like to request?' %>
-    <%= form.text_area :amount, :rows=>1, :cols=>2 %>
-    <%= form.select :type, [['Men','men'],['Women','women'],['Boys','boys', ['Girls', 'girls'], ['Unisex', 'unisex']]] %>
-    <%= form.select :category, [['Shoes','shoes'],['T Shirt','t-shirt'],['Hygiene Products','hygiene products', ['Jackets', 'jackets'], ['Other', 'other']]] %>
-    <%= form.select :size, ((0..13).map {|i| [i,i] } << ["Size",nil]) %>    
+    <%= form.select :size, ((1..10).map {|i| [i,i] } << ["Amount",nil]) %>    
+    <%= form.select :type, [["Type", nil], ['Men','men'],['Women','women'],['Boys','boys'], ['Girls', 'girls'], ['Unisex', 'unisex']] %>
+    <%= form.select :category, [["Category"],['Shoes','shoes'],['T Shirt','t-shirt'],['Hygiene Products','hygiene products', ['Jackets', 'jackets'], ['Other', 'other']]] %>
+    <%= form.select :size, ((1..13).map {|i| [i,i] } << ["Size",nil]) %>    
   </div>
 
   <div class="field">
