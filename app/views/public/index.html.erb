@@ -12,6 +12,13 @@
       </div>
       <br />
     <% end %>
+
+    <% if current_user.admin? %>
+      <div class = "centered-div">
+        <%= link_to "Add User", "users/invitation/new/", class: "home-link" %>
+      </div>
+      <br />
+    <% end %>
   <% end %>
 
   <div class = "centered-div">
