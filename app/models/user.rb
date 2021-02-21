@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   # Adds in several different ways to query all `User` objects. For example, to
   # get all users marked as administrators, you can use `User.admins`.
-  scope :admins,     -> { where(admin:     true) }
-  scope :volunteers, -> { where(volunteer: true) }
-  scope :donees,     -> { where(donee:     true) }
-  scope :donors,     -> { where(donor:     true) }
+  scope :admins,     -> { where(admin:     1) }
+  scope :volunteers, -> { where(volunteer: 1) }
+  scope :donees,     -> { where(donee:     1) }
+  scope :donors,     -> { where(donor:     1) }
 end
