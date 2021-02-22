@@ -1,0 +1,35 @@
+
+<div>
+  <% if current_user != nil %>
+    <div class = "centered-div">
+    <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
+    </div>
+    <br>
+
+    <% if current_user.admin? %>
+      <div class = "centered-div">
+        <%= link_to "All Requests", "requests/", class: "home-link" %>
+      </div>
+      <br />
+    <% end %>
+  <% end %>
+
+  <div class = "centered-div">
+  <%= link_to 'Request Clothing and Hygiene Items', new_request_url, class: "home-link"%>
+  </div>
+  <br>
+  <div class = "centered-div">
+  <%= link_to "Donate Items", root_path, class: "home-link" %>
+  </div>
+  <br>
+  <div class = "centered-div">
+  <%= link_to "Volunteer", root_path, class: "home-link" %>
+  </div>
+  <br>
+  <div class = "centered-div">
+  <%= link_to "Support Our Cause", root_path, class: "home-link" %>
+  </div>
+  <div class = "centered-div">
+    <p class="contact-info">Contact Information:<br>carrie.closets@gmail.com</p>
+  </div>
+</div>

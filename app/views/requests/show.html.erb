@@ -1,0 +1,60 @@
+
+<div class="margins-needed">
+<h1>Request a Donation: Summary</h1>
+<h2>Please review and confirm the summary of your request:</h2>
+
+<p>
+  <strong>Urgency:</strong>
+  <%= Request::URGENCIES.key(@request.urgency) %>
+</p>
+
+<p>
+  <strong>Full name:</strong>
+  <%= @request.full_name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @request.email %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @request.phone %>
+</p>
+
+<p>
+  <strong>Relationship:</strong>
+  <%= Request::RELATIONSHIPS.key(@request.relationship) %>
+</p>
+
+<% if @request.meet == 1 %>
+  <p>
+    <strong>County:</strong>
+    <%= @request.county %>
+  </p>
+<% else %>
+  <p>
+    <strong>Address:</strong>
+    <%= @request.address %>
+  </p>
+<% end %>
+
+<p>
+  <strong>Availability:</strong>
+  <%= @request.availability %>
+</p>
+
+<p>
+  <strong>Items:</strong>
+  <%= @request.items %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+  <%= @request.comments %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', :back %>
+</div>
