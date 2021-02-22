@@ -13,6 +13,7 @@ require 'faker'
 @mamie = User.create!(email: 'test@example.com',
                       password: 'secure-password') if @mamie.nil?
 
+
 @admin = User.find_by_email('carries.closet.confirmations@gmail.com')
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
