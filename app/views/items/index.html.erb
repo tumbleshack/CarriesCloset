@@ -17,7 +17,7 @@
     <% @items.each do |item| %>
       <tr>
         <td><%= item.quantity %></td>
-        <td><%= item.category %></td>
+        <td><%= Item::CATEGORIES.key(item.category) %></td>
         <td><%= item.itemType %></td>
         <td><%= item.size %></td>
         <td><%= link_to 'Show', item %></td>
