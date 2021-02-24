@@ -6,7 +6,7 @@ ruby '2.7.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.1'
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.5'
+gem 'mysql2', '~> 0.5.3'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
@@ -61,4 +61,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "phonelib", "~> 0.6.48"
 gem 'semantic-ui-sass'
 gem 'purecss'
-gem 'faker'
+gem "i18n"
