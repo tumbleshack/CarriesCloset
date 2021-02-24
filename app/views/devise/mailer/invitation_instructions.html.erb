@@ -1,6 +1,7 @@
 <p><%= t("devise.mailer.invitation_instructions.hello", email: @resource.email) %></p>
 
-<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url) %></p>
+<p><%= t("devise.mailer.invitation_instructions.someone_invited_you", url: root_url, 
+        role: [ @resource.admin ? "an admin" : nil, @resource.volunteer ? "a volunteer" : nil, @resource.donor ? "a donor" : nil, @resource.donee ? "a donee" : nil ].compact.to_sentence ) %></p>
 
 <p><%= link_to t("devise.mailer.invitation_instructions.accept"), accept_invitation_url(@resource, invitation_token: @token) %></p>
 
