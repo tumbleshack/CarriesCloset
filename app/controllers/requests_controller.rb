@@ -17,6 +17,10 @@ class RequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
+    @categories = Item::CATEGORIES
+    @sizes = Item.all.map{ |item| item.size }
+    @itemTypes = Item.all.map{ |item| item.itemType }
+
   end
 
   # GET /requests/1/edit
