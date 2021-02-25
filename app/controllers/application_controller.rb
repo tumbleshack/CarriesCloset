@@ -13,10 +13,10 @@ class ApplicationController < ActionController::Base
   def require_role(redirect_path, role)
     should_reject = false
     case role
-      when :admin;     should_reject = true unless current_user.admin?
-      when :volunteer; should_reject = true unless current_user.volunteer?
-      when :donee;     should_reject = true unless current_user.donee?
-      when :donor;     should_reject = true unless current_user.donor?
+      when :admin;     should_reject = true unless (current_user != nil and current_user.admin?)
+      when :volunteer; should_reject = true unless (current_user != nil and current_user.volunteer?)
+      when :donee;     should_reject = true unless (current_user != nil and current_user.donee?)
+      when :donor;     should_reject = true unless (current_user != nil and current_user.donor?)
     end
 
     redirect_to redirect_path, alert: 'You do not have proper authorization to access the attempted URL.' if should_reject
