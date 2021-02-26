@@ -23,7 +23,9 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(name: item_params["name"], categories: Category.where(id: item_params["versions"]))
+
+    puts @item.versions, @item.categories
 
     respond_to do |format|
       if @item.save
@@ -38,8 +40,11 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    @item.categories = Category.where(id: item_params["versions"])
+    @item.categories.where.not(id: item_params["versions"])
+
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.update(name: item_params["name"])
         format.html { redirect_to @item, notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -66,6 +71,6 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-      params.require(:item).permit(:quantity, :category, :itemType, :size)
+      params.require(:item).permit(:name, :versions => [])
     end
 end

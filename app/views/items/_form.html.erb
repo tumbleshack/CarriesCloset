@@ -12,24 +12,17 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
+    <%= form.label :name, "Item Name" %>
+    <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= form.label :category %>
-    <%= form.select :category, Item::CATEGORIES %>
-
-  </div>
-
-  <div class="field">
-    <%= form.label :itemType %>
-    <%= form.text_field :itemType %>
-  </div>
-
-  <div class="field">
-    <%= form.label :size %>
-    <%= form.text_field :size %>
+  <div class="inline-options">
+    <%= form.label :versions, "Categories" %>
+    <%= collection_check_boxes(:item, :versions, Category.all, :id, :name) do |b| %>
+      <%= b.label class: "label-checkbox" do%>
+        <%= b.check_box(checked: !item.category_named(b.text).nil?) + b.text %>
+      <%end%>
+    <% end %>
   </div>
 
   <div class="actions">

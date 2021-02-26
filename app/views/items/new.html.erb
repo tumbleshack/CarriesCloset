@@ -1,5 +1,11 @@
-<h1>New Item</h1>
+<div class="container">
+  <h1>New Item</h1>
 
-<%= render 'form', item: @item %>
+  <div class="form">
+    <%= render 'form', item: @item %>
+  </div>
 
-<%= link_to 'Back', items_path %>
+  <div class="links">
+    <%= link_to 'Back', items_path %>
+  </div>
+</div>

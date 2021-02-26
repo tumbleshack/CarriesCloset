@@ -1,15 +1,14 @@
 class Item < ApplicationRecord
+  has_many :versions
+  has_many :categories, :through => :versions
   
-  CATEGORIES = {
-    '': 0,
-    'Boys': 1,
-    'Girls': 2,
-    'Womens': 3,
-    'Mens': 4,
-    'Hygeine Products': 5
-  }.freeze
-  
-  validates_presence_of :quantity, :category, :itemType, :size
+  validates_presence_of :name
 
-  validates_numericality_of :quantity, greater_than: -1, :message => "can't be negative"
+  def for_category category
+    versions.where(category: category).first
+  end
+
+  def category_named name
+    versions.find_by(category: Category.find_by_name(name))
+  end
 end
