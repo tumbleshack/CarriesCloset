@@ -40,7 +40,8 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
-    @item.categories = Category.where(id: item_params["version"])
+    @item.categories = Category.where(id: item_params["versions"])
+    @item.categories.where.not(id: item_params["versions"])
 
     respond_to do |format|
       if @item.update(name: item_params["name"])

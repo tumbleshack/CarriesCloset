@@ -5,7 +5,13 @@
 div.form {
   padding-left: 5rem;
 }
-div.field.inline > * {
-    display: inline-block;
-    padding: 0.2rem 0.2rem;
+div.inline-options {
+  label.label-checkbox {
+    margin: 0.5rem 0;
+    margin-left: 0.5rem;
+
+    input {
+      margin-right: 0.5rem;
+    }
+  }
 }

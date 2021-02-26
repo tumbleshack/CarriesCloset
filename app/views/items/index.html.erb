@@ -6,21 +6,24 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Num. of Versions</th>
+      <th>Category</th>
       <th>Size</th>
+      <th>Quantity</th>
       <th colspan="3"></th>
     </tr>
   </thead>
-
   <tbody>
     <% @items.each do |item| %>
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= item.versions.count %></td>
-        <td><%= link_to 'Show', item %></td>
-        <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <% item.versions.each do |version| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= version.category.name %></td>
+          <td><%= version.size %></td>
+          <td><%= version.quantity %></td>
+          <td><%= link_to 'Show', item %></td>
+          <td><%= link_to 'Edit', edit_item_path(item) %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

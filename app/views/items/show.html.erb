@@ -1,17 +1,21 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @item.name %>
-</p>
-
-<h3>Versions (<%= @item.versions.count %>)</h3>
-<% @item.versions.each do |version| %>
-  <p>Category: <%= version.category %></p>
-  <p>Quantity: <%= version.quantity %></p>
-  <p>Size: <%= version.size %></p>
-<% end %>
-<hr />
+<h3>All <%= pluralize(2, @item.name).sub(/\d*/, "") %></h3>
+<table>
+  <thead>
+    <th>Category Name</th>
+    <th>Quantity</th>
+  </thead>
+  <tbody>
+    <% @item.versions.each do |version| %>
+      <tr>
+        <td><%= version.category.name %></td>
+        <td><%= version.size %></td>
+        <td><%= version.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>
