@@ -12,28 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
-  <div class="field">
-    <% Category.all.each do |category| %>
-      <div class="inline">
-        <%= form.check_box category.name %>
-        <%= form.label category.name %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= form.label :itemType %>
-    <%= form.text_field :itemType %>
-  </div>
-
-  <div class="field">
-    <%= form.label :size %>
-    <%= form.text_field :size %>
-  </div>
+  <%= collection_check_boxes(:item, :versions, Category.all, :id, :name) %>
 
   <div class="actions">
     <%= form.submit %>

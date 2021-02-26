@@ -5,9 +5,8 @@
 <table>
   <thead>
     <tr>
-      <th>Quantity</th>
-      <th>Category</th>
-      <th>Itemtype</th>
+      <th>Name</th>
+      <th>Num. of Versions</th>
       <th>Size</th>
       <th colspan="3"></th>
     </tr>
@@ -16,10 +15,8 @@
   <tbody>
     <% @items.each do |item| %>
       <tr>
-        <td><%= item.quantity %></td>
-        <td><%= Item::CATEGORIES.key(item.category) %></td>
-        <td><%= item.itemType %></td>
-        <td><%= item.size %></td>
+        <td><%= item.name %></td>
+        <td><%= item.versions.count %></td>
         <td><%= link_to 'Show', item %></td>
         <td><%= link_to 'Edit', edit_item_path(item) %></td>
         <td><%= link_to 'Destroy', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>

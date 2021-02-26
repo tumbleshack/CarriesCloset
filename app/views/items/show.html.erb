@@ -1,24 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Quantity:</strong>
-  <%= @item.quantity %>
+  <strong>Name:</strong>
+  <%= @item.name %>
 </p>
 
-<p>
-  <strong>Category:</strong>
-  <%= @item.category %>
-</p>
-
-<p>
-  <strong>Itemtype:</strong>
-  <%= @item.itemType %>
-</p>
-
-<p>
-  <strong>Size:</strong>
-  <%= @item.size %>
-</p>
+<h3>Versions (<%= @item.versions.count %>)</h3>
+<% @item.versions.each do |version| %>
+  <p>Category: <%= version.category %></p>
+  <p>Quantity: <%= version.quantity %></p>
+  <p>Size: <%= version.size %></p>
+<% end %>
+<hr />
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>

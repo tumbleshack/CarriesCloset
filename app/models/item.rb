@@ -1,7 +1,6 @@
 class Item < ApplicationRecord
-  has_one :category
+  has_many :versions
+  has_many :categories, :through => :versions
   
-  validates_presence_of :quantity, :category, :itemType, :size
-
-  validates_numericality_of :quantity, greater_than: -1, :message => "can't be negative"
+  validates_presence_of :name
 end

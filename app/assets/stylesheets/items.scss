@@ -5,9 +5,7 @@
 div.form {
   padding-left: 5rem;
 }
-div.field {
-  .inline > * {
+div.field.inline > * {
     display: inline-block;
     padding: 0.2rem 0.2rem;
-  }
 }
