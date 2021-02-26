@@ -7,7 +7,7 @@
     <tr>
       <th>Quantity</th>
       <th>Category</th>
-      <th>Itemtype</th>
+      <th>Name</th>
       <th>Size</th>
       <th colspan="3"></th>
     </tr>
@@ -17,7 +17,7 @@
     <% @items.each do |item| %>
       <tr>
         <td><%= item.quantity %></td>
-        <td><%= Item::CATEGORIES.key(item.category) %></td>
+        <td><%= item.category.name %></td>
         <td><%= item.itemType %></td>
         <td><%= item.size %></td>
         <td><%= link_to 'Show', item %></td>

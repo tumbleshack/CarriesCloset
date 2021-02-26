@@ -32,3 +32,8 @@ loop do
                              items: Faker::Lorem.sentence
   puts "Request #{Request.count}: '#{@request.full_name}' requests '#{@request.items}'"
 end
+
+categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
+categories.each do |category|
+  Category.create!(name: category) if Category.find_by_name(category).nil?
+end

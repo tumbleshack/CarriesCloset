@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
-  
   before_action -> { require_role(:root, :admin) }, only: %i[ show edit update destroy index ]
 
   # GET /items or /items.json
@@ -23,23 +22,27 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    Category.where(id: item_params["category_id"]).each do |category|
+      item_params["size"].split(",").each do |size|
+        puts "Creating #{item_params["itemType"]} with category #{category.name} with size #{size}"
+        @item = Item.new(quantity: 0,
+                         itemType: item_params["itemType"],
+                         size: size,
+                         category_id: category.id)
+        puts @item, @item.save!
+      end
+    end
 
     respond_to do |format|
-      if @item.save
-        format.html { redirect_to @item, notice: "Item was successfully created." }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to items_url, notice: "Item was successfully created." }
+      format.json { render :show, status: :created, location: @item }
     end
   end
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.update(size: item_params["size"], itemType: item_params["itemType"], quantity: item_params["quantity"])
         format.html { redirect_to @item, notice: "Item was successfully updated." }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -66,6 +69,6 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-      params.require(:item).permit(:quantity, :category, :itemType, :size)
+      params.require(:item).permit(:quantity, :itemType, :size, :category_id => [])
     end
 end

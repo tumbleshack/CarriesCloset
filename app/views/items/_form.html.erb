@@ -11,15 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
-  </div>
+  <% if !item.id.nil? %>
+    <div class="field">
+      <%= form.label :quantity %>
+      <%= form.number_field :quantity %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= form.label :category %>
-    <%= form.select :category, Item::CATEGORIES %>
-
+    <% if item.id.nil? %>
+      <div class="inline-options">
+        <%= collection_check_boxes(:item, :category_id, Category.all, :id, :name) do |b| %>
+          <%= b.label class:"label-checkbox" do%>
+            <%= b.check_box + b.text %>
+          <%end%>
+        <% end %>
+      </div>
+    <% else %>
+      <li><%= item.category.name %></li>
+      <%= form.hidden_field :category %>
+    <% end %>
   </div>
 
   <div class="field">
