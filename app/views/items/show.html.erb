@@ -1,24 +1,25 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <h1>All <%= pluralize(2, @item.name).sub(/\d*/, "") %></h1>
+  <table>
+    <thead>
+      <th>Category Name</th>
+      <th>Size</th>
+      <th>Quantity</th>
+    </thead>
+    <tbody>
+      <% @item.versions.each do |version| %>
+        <tr>
+          <td><%= version.category.name %></td>
+          <td><%= version.size %></td>
+          <td><%= version.quantity %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<h3>All <%= pluralize(2, @item.name).sub(/\d*/, "") %></h3>
-<table>
-  <thead>
-    <th>Category Name</th>
-    <th>Quantity</th>
-  </thead>
-  <tbody>
-    <% @item.versions.each do |version| %>
-      <tr>
-        <td><%= version.category.name %></td>
-        <td><%= version.size %></td>
-        <td><%= version.quantity %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
-<div class = "centered-div">
-  <%= link_to "View Inventory", "/items", class: "home-link" %>
+  <div class="links">
+    <%= link_to "View Inventory", "/items" %> |
+    <%= link_to 'Edit', edit_item_path(@item) %> |
+    <%= link_to 'Back', items_path %>
+  </div>
 </div>

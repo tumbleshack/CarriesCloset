@@ -1,33 +1,34 @@
 <p id="notice"><%= notice %></p>
+<div class="container">
+  <h1>Items</h1>
 
-<h1>Items</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Size</th>
-      <th>Quantity</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @items.each do |item| %>
-      <% item.versions.each do |version| %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= version.category.name %></td>
-          <td><%= version.size %></td>
-          <td><%= version.quantity %></td>
-          <td><%= link_to 'Show', item %></td>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        </tr>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Size</th>
+        <th>Quantity</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <% item.versions.each do |version| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= version.category.name %></td>
+            <td><%= version.size %></td>
+            <td><%= version.quantity %></td>
+            <td><%= link_to 'Show', item %></td>
+            <td><%= link_to 'Edit', edit_item_path(item) %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New Item', new_item_path %>
+  <%= link_to 'New Item', new_item_path %>
+</div>

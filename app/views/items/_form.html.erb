@@ -12,13 +12,14 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :name, "Item Name" %>
     <%= form.text_field :name %>
   </div>
 
   <div class="inline-options">
+    <%= form.label :versions, "Categories" %>
     <%= collection_check_boxes(:item, :versions, Category.all, :id, :name) do |b| %>
-      <%= b.label class:"label-checkbox" do%>
+      <%= b.label class: "label-checkbox" do%>
         <%= b.check_box(checked: !item.category_named(b.text).nil?) + b.text %>
       <%end%>
     <% end %>
