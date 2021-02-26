@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :itemType, "Name" %>
+    <%= form.text_field :itemType %>
+  </div>
+
   <% if !item.id.nil? %>
     <div class="field">
       <%= form.label :quantity %>
@@ -32,11 +37,6 @@
       <li><%= item.category.name %></li>
       <%= form.hidden_field :category %>
     <% end %>
-  </div>
-
-  <div class="field">
-    <%= form.label :itemType %>
-    <%= form.text_field :itemType %>
   </div>
 
   <div class="field">
