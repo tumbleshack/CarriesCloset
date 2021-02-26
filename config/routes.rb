@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :categories
+  resources :items
   get '/requests/my_requests' => 'requests#my_requests'
   resources :requests
   get 'public/index'

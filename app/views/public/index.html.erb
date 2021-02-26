@@ -1,17 +1,30 @@
 
 <div>
-  <% if current_user != nil %>
-    <div class = "centered-div">
-    <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
-    </div>
-    <br>
+  
 
-    <% if current_user.admin? %>
+    <% if current_user != nil and current_user.admin? %>
       <div class = "centered-div">
         <%= link_to "All Requests", "requests/", class: "home-link" %>
       </div>
       <br />
+      <div class = "centered-div">
+        <%= link_to "All Pending Donations", root_path, class: "home-link" %>
+      </div>
+      <br />
+      <div class = "centered-div">
+        <%= link_to "View Inventory", "items", class: "home-link" %>
+      </div>
+      <br />
+      <div class = "centered-div">
+        <%= link_to "Add Item Type", "items/new", class: "home-link" %>
+      </div>
+      <br />
     <% end %>
+    <% if current_user != nil %>
+    <div class = "centered-div">
+    <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
+    </div>
+    <br>
 
     <% if current_user.admin? %>
       <div class = "centered-div">
