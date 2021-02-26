@@ -65,3 +65,4 @@ gem "phonelib", "~> 0.6.48"
 gem 'semantic-ui-sass'
 gem 'purecss'
 gem "i18n"
+gem 'jquery-rails'
