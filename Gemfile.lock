@@ -86,8 +86,11 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.3)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     erubi (1.10.0)
-    faker (2.15.1)
+    faker (2.16.0)
       i18n (>= 1.6, < 2)
     ffi (1.14.2)
     ffi (1.14.2-java)
@@ -226,6 +229,8 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2021.1)
+      tzinfo (>= 1.0.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.1.0)
@@ -265,6 +270,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise (~> 4.7.1)
+  devise_invitable (~> 2.0.3)
   faker
   i18n
   jbuilder (~> 2.7)
