@@ -26,7 +26,6 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise', '~> 4.7.1'
 # Used to creation of sign up invite codes
 gem 'devise_invitable', '~> 2.0.3'
-
 gem 'faker'
 
 # Use Active Storage variant
@@ -66,3 +65,4 @@ gem "phonelib", "~> 0.6.48"
 gem 'semantic-ui-sass'
 gem 'purecss'
 gem "i18n"
+gem 'jquery-rails'
