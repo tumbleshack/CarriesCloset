@@ -36,7 +36,7 @@
         <td><%= request.comments %></td>
         <td><%= link_to 'Show', request %></td>
         <td><%= link_to 'Edit', edit_request_path(request) %></td>
-        <td><%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' }, class: "button-looks-like-link" %></td>
       </tr>
     <% end %>
   </tbody>
