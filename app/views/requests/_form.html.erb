@@ -64,8 +64,25 @@
 
   <div class="field">
     <%= form.label :items, 'What items would you like to request?' %>
-    <i>Please indicate the quantity, gender, and sizes of requested items.</i>
-    <%= form.text_field :items %>
+    <table>
+    <thead>
+      <tr>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Item Type</th>
+        <th>Size</th>
+      </tr>
+    </thead>
+  
+    <tbody>
+        <tr>
+          <td><%= form.number_field :items_quantity %></td>
+          <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
+          <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
+          <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>  
+        </tr>
+    </tbody>
+  </table>
   </div>
 
   <div class="field">
