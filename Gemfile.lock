@@ -86,6 +86,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise_invitable (2.0.3)
+      actionmailer (>= 5.0)
+      devise (>= 4.6)
     erubi (1.10.0)
     faker (2.15.1)
       i18n (>= 1.6, < 2)
@@ -265,6 +268,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise (~> 4.7.1)
+  devise_invitable (~> 2.0.0)
   faker
   i18n
   jbuilder (~> 2.7)
