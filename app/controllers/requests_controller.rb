@@ -30,12 +30,13 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
-    @request = Request.new(request_params)
+    @request = Request.new(request_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
+    @request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} size #{request_params["items_sizes"]}"
 
     respond_to do |format|
       if @request.save
 
-        
+
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
@@ -46,6 +47,7 @@ class RequestsController < ApplicationController
         format.html { redirect_to @request, notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
       else
+        
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
@@ -55,7 +57,10 @@ class RequestsController < ApplicationController
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
     respond_to do |format|
-      if @request.update(request_params)
+      if @request.update(request_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
+        @request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} Size #{request_params["items_sizes"]}"
+        @request.save
+
         format.html { redirect_to @request, notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
       else
@@ -83,6 +88,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :items, :comments)
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :items, :items_quantity, :items_category, :items_itemType, :items_sizes, :comments)
   end
 end
