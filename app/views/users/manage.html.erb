@@ -13,6 +13,16 @@
   </thead>
 
   <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td><%= user.admin %></td>
+        <td><%= user.volunteer %></td>
+        <td><%= user.donee %></td>
+        <td><%= user.donor %></td>
+        
+      </tr>
+    <% end %>
 
   </tbody>
 </table>
