@@ -20,8 +20,9 @@
         <td><%= user.volunteer ? "yes" : "no" %></td>
         <td><%= user.donee ? "yes" : "no" %></td>
         <td><%= user.donor ? "yes" : "no"  %></td>
-        <td><%= link_to 'Edit', users_manage_path %></td>
+        <td><%= link_to 'Edit', "/users/edit" %></td>
         <td><%= link_to 'Delete', users_manage_path %></td>
+        <td><%= button_to 'Destroy', users_manage_path, method: :destroy, data: { confirm: 'Are you sure?' }, class: "button-looks-like-link" %></td>
       </tr>
     <% end %>
 
