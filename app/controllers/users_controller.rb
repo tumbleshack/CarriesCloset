@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+
+    # make sure you cannot delete yourself
     
     def new
         @users = User.all
@@ -14,4 +16,9 @@ class UsersController < ApplicationController
         @users = User.all
         render 'users/manage'
     end
+
+    def set_user
+        @user = User.find(params[:id])
+      end
+
   end

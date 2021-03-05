@@ -4,11 +4,11 @@
   <thead>
     <tr>
       <th>Email</th>
-      <th>Admin?</th>
-      <th>Volunteer?</th>
-      <th>Donee?</th>
-      <th>Donor?</th>
-      <th colspan="4"></th>
+      <th>Admin</th>
+      <th>Volunteer</th>
+      <th>Donee</th>
+      <th>Donor</th>
+      <th colspan="5"></th>
     </tr>
   </thead>
 
@@ -20,7 +20,9 @@
         <td><%= user.volunteer %></td>
         <td><%= user.donee %></td>
         <td><%= user.donor %></td>
-        
+        <td><%= link_to 'Edit', root_path %></td>
+        <td><%= link_to 'Delete', root_path %></td>
+
       </tr>
     <% end %>
 
