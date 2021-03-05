@@ -1,0 +1,34 @@
+<h1>User Summary</h1>
+
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Admin:</strong>
+  <%= @user.admin ? "yes" : "no" %>
+</p>
+
+<p>
+  <strong>Volunteer:</strong>
+  <%= @user.volunteer ? "yes" : "no" %>
+</p>
+
+<p>
+  <strong>Donor:</strong>
+  <%= @user.donor ? "yes" : "no" %>
+</p>
+
+<p>
+  <strong>Donee:</strong>
+  <%= @user.donee ? "yes" : "no" %>
+</p>
+
+<p>
+  Last updated at
+  <%= @user.updated_at %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_manage_path %>
