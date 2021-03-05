@@ -31,6 +31,23 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <div class="field">
+    <%= f.label :admin %>
+    <%= f.check_box :admin %>
+  </div>
+  <div class="field">
+    <%= f.label :volunteer %>
+    <%= f.check_box :volunteer %>
+  </div>
+  <div class="field">
+    <%= f.label :donor %>
+    <%= f.check_box :donor %>
+  </div>
+  <div class="field">
+    <%= f.label :donee %>
+    <%= f.check_box :donee %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
