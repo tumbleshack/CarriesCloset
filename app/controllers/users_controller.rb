@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     def update
         @user = User.find(params[:id])
         respond_to do |format|
-            if @user.update(email: user_params["email"], password: user_params["password"], admin: user_params["admin"])
+            if @user.update(email: user_params["email"], admin: user_params["admin"], donor: user_params["donor"], donee: user_params["donee"], volunteer: user_params["volunteer"])
                 format.html { redirect_to @user, notice: "User was successfully updated." }
                 format.json { render :show, status: :ok, location: @user }
             else
@@ -56,6 +56,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-        params.require(:user).permit(:email, :current_password, :password_confirmation, :admin, :volunteer, :donee, :donor => [])
+        params.require(:user).permit(:email, :admin, :volunteer, :donee, :donor, :current_password, :password_confirmation => [])
     end
   end
