@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 
     # make sure you cannot delete yourself
+
+    before_action -> { require_role(:root, :admin) }
     
     def new
         @users = User.all
