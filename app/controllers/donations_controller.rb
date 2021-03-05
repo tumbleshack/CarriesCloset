@@ -1,5 +1,9 @@
 class DonationsController < ApplicationController
   before_action :set_donation, only: %i[ show edit update destroy ]
+  
+  before_action :authenticate_user!, only: %i[ index, my_donations ]
+
+  before_action -> { require_role(:root, :admin) }, only: :index
 
   # GET /donations or /donations.json
   def index
