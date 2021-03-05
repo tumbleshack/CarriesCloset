@@ -31,7 +31,7 @@
 <% if @request.meet == 1 %>
   <p>
     <strong>County:</strong>
-    <%= @request.county %>
+    <%= Request::COUNTIES.key(@request.county) %>
   </p>
 <% else %>
   <p>
