@@ -19,6 +19,16 @@ class UsersController < ApplicationController
 
     def set_user
         @user = User.find(params[:id])
-      end
+    end
+
+    def edit
+        @user = User.find(params[:id])
+    end
+
+    def destroy
+        User.find(params[:id]).destroy
+        flash[:success] = "User destroyed."
+        redirect_to users_manage_url
+     end
 
   end
