@@ -15,20 +15,17 @@
   <%= @donation.phone %>
 </p>
 
-<p>
-  <strong>County:</strong>
-  <%= @donation.county %>
-</p>
-
-<p>
-  <strong>Meet:</strong>
-  <%= @donation.meet %>
-</p>
-
-<p>
-  <strong>Address:</strong>
-  <%= @donation.address %>
-</p>
+<% if @donation.meet %>
+  <p>
+    <strong>County:</strong>
+    <%= Request::COUNTIES.key(@donation.county) %>
+  </p>
+<% else %>
+  <p>
+    <strong>Address:</strong>
+    <%= @donation.address %>
+  </p>
+<% end %>
 
 <p>
   <strong>Availability:</strong>

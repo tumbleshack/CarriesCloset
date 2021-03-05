@@ -11,8 +11,9 @@
     </div>
   <% end %>
 
+<div class="margins-needed">
   <div class="field">
-    <%= form.label :full_name %>
+    <%= form.label :full_name, 'Full Name' %>
     <%= form.text_field :full_name %>
   </div>
 
@@ -27,22 +28,24 @@
   </div>
 
   <div class="field">
-    <%= form.label :county %>
-    <%= form.number_field :county %>
+    <%= form.label :county, 'Select county' %>
+    <%= form.select :county, Request::COUNTIES %>
   </div>
 
   <div class="field">
-    <%= form.label :meet %>
-    <%= form.check_box :meet %>
+    <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
+    <%= form.collection_radio_buttons :meet, [['Yes', 1], ['No, my address is:', 2]], :last, :first %>
+    <%= form.text_area :address %>
   </div>
 
   <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
+    <%= link_to 'Find your county\'s DFCS location', 'https://dfcs.georgia.gov/locations', target: :_blank %>
   </div>
 
   <div class="field">
-    <%= form.label :availability %>
+    <%= form.label :availability, 'What\'s your availability?' %>
+    <i>Please indicate your availability between 10 AM and 7 PM, Monday through Friday.</i>
+    <br />
     <%= form.text_field :availability %>
   </div>
 
@@ -59,4 +62,5 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+</div>
 <% end %>

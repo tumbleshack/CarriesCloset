@@ -79,7 +79,7 @@
           <td><%= form.number_field :items_quantity %></td>
           <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
           <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-          <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>  
+          <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
         </tr>
     </tbody>
   </table>

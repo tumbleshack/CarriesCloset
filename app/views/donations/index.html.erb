@@ -9,7 +9,7 @@
       <th>Email</th>
       <th>Phone</th>
       <th>County</th>
-      <th>Meet</th>
+      <th>Meet at DFCS</th>
       <th>Address</th>
       <th>Availability</th>
       <th>Items</th>
@@ -24,7 +24,7 @@
         <td><%= donation.full_name %></td>
         <td><%= donation.email %></td>
         <td><%= donation.phone %></td>
-        <td><%= donation.county %></td>
+        <td><%= Request::COUNTIES.key(donation.county) %></td>
         <td><%= donation.meet %></td>
         <td><%= donation.address %></td>
         <td><%= donation.availability %></td>
@@ -32,7 +32,7 @@
         <td><%= donation.comments %></td>
         <td><%= link_to 'Show', donation %></td>
         <td><%= link_to 'Edit', edit_donation_path(donation) %></td>
-        <td><%= link_to 'Destroy', donation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to 'Destroy', donation, method: :delete, data: { confirm: 'Are you sure?' }, class: "button-looks-like-link" %></td>
       </tr>
     <% end %>
   </tbody>

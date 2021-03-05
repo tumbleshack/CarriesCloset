@@ -28,7 +28,7 @@
   <%= Request::RELATIONSHIPS.key(@request.relationship) %>
 </p>
 
-<% if @request.meet == 1 %>
+<% if @request.meet %>
   <p>
     <strong>County:</strong>
     <%= Request::COUNTIES.key(@request.county) %>
