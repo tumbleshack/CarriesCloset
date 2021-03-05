@@ -16,13 +16,12 @@
   <% @users.each do |user| %>
       <tr>
         <td><%= user.email %></td>
-        <td><%= user.admin %></td>
-        <td><%= user.volunteer %></td>
-        <td><%= user.donee %></td>
-        <td><%= user.donor %></td>
+        <td><%= user.admin ? "yes" : "no" %></td>
+        <td><%= user.volunteer ? "yes" : "no" %></td>
+        <td><%= user.donee ? "yes" : "no" %></td>
+        <td><%= user.donor ? "yes" : "no"  %></td>
         <td><%= link_to 'Edit', root_path %></td>
         <td><%= link_to 'Delete', root_path %></td>
-
       </tr>
     <% end %>
 
