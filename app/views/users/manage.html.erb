@@ -20,8 +20,8 @@
         <td><%= user.volunteer ? "yes" : "no" %></td>
         <td><%= user.donee ? "yes" : "no" %></td>
         <td><%= user.donor ? "yes" : "no"  %></td>
-        <td><%= link_to 'Edit', root_path %></td>
-        <td><%= link_to 'Delete', root_path %></td>
+        <td><%= link_to 'Edit', users_manage_path %></td>
+        <td><%= link_to 'Delete', users_manage_path %></td>
       </tr>
     <% end %>
 
