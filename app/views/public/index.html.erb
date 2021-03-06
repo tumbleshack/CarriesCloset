@@ -26,6 +26,11 @@
     </div>
     <br>
 
+    <div class = "centered-div">
+    <%= link_to "My Donations", "donations/my_donations", class: "home-link" %>
+    </div>
+    <br>
+
     <% if current_user.admin? %>
       <div class = "centered-div">
         <%= link_to "Add User", "users/invitation/new/", class: "home-link" %>

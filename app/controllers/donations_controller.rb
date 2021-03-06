@@ -23,6 +23,11 @@ class DonationsController < ApplicationController
   def edit
   end
 
+  # GET /donations/my-donations
+  def my_donations
+    @donations = current_user != nil ? Donation.where("email like ?", "%#{current_user.email}%") : nil  
+  end 
+
   # POST /donations or /donations.json
   def create
     @donation = Donation.new(donation_params)

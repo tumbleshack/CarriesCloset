@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get '/donations/my_donations' => 'donations#my_donations'
   resources :donations
   resources :categories
   resources :items
