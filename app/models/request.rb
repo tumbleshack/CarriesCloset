@@ -19,7 +19,7 @@ class Request < ApplicationRecord
     '': 0,
     'Fulton': 1,
     'Dekalb': 2,
-    'Gwinnet': 3,
+    'Gwinnett': 3,
     'Cobb': 4,
     'Clayton': 5,
     'Henry': 6,
