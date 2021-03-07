@@ -35,6 +35,9 @@ class DonationsController < ApplicationController
 
     respond_to do |format|
       if @donation.save
+
+        UserMailer.with(donation: @donation).new_donor_email.deliver_later
+
         format.html { redirect_to @donation, notice: "Donation was successfully created." }
         format.json { render :show, status: :created, location: @donation }
       else
