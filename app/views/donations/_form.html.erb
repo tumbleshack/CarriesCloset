@@ -1,26 +1,17 @@
-
-<%= form_with(model: request, html: { class: 'pure-form pure-form-stacked' }) do |form| %>
-
-  <% if request.errors.any? %>
+<%= form_with(model: donation) do |form| %>
+  <% if donation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+      <h2><%= pluralize(donation.errors.count, "error") %> prohibited this donation from being saved:</h2>
 
       <ul>
-        <% request.errors.each do |error| %>
+        <% donation.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-
 <div class="margins-needed">
-
-  <div class="field">
-    <%= form.label :urgency, 'How urgently do you need these items?' %>
-    <%= form.select :urgency, Request::URGENCIES %>
-  </div>
-
   <div class="field">
     <%= form.label :full_name, 'Full Name' %>
     <%= form.text_field :full_name %>
@@ -32,13 +23,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :phone, 'Phone Number' %>
+    <%= form.label :phone %>
     <%= form.text_field :phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :relationship, 'I am a guardian/foster parent/case manager for a...' %>
-    <%= form.select :relationship, Request::RELATIONSHIPS %>
   </div>
 
   <div class="field">
@@ -59,30 +45,31 @@
   <div class="field">
     <%= form.label :availability, 'What\'s your availability?' %>
     <i>Please indicate your availability between 10 AM and 7 PM, Monday through Friday.</i>
+    <br />
     <%= form.text_field :availability %>
   </div>
 
   <div class="field">
     <%= form.label :items, 'What items would you like to request?' %>
     <table>
-    <thead>
-      <tr>
-        <th>Quantity</th>
-        <th>Category</th>
-        <th>Item Type</th>
-        <th>Size</th>
-      </tr>
-    </thead>
-  
-    <tbody>
+      <thead>
         <tr>
-          <td><%= form.number_field :items_quantity %></td>
-          <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
-          <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-          <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
+          <th>Quantity</th>
+          <th>Category</th>
+          <th>Item Type</th>
+          <th>Size</th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+          <tr>
+            <td><%= form.number_field :items_quantity %></td>
+            <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
+            <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
+            <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
+          </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="field">
@@ -93,5 +80,5 @@
   <div class="actions">
     <%= form.submit %>
   </div>
-  </div>
+</div>
 <% end %>

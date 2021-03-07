@@ -11,7 +11,7 @@
       <th>Phone</th>
       <th>Relationship</th>
       <th>County</th>
-      <th>Meet</th>
+      <th>Meet at DFCS</th>
       <th>Address</th>
       <th>Availability</th>
       <th>Items</th>
@@ -23,12 +23,12 @@
   <tbody>
     <% @requests.each do |request| %>
       <tr>
-        <td><%= request.urgency %></td>
+        <td><%= Request::URGENCIES.key(request.urgency) %></td>
         <td><%= request.full_name %></td>
         <td><%= request.email %></td>
         <td><%= request.phone %></td>
-        <td><%= request.relationship %></td>
-        <td><%= request.county %></td>
+        <td><%= Request::RELATIONSHIPS.key(request.relationship) %></td>
+        <td><%= Request::COUNTIES.key(request.county) %></td>
         <td><%= request.meet %></td>
         <td><%= request.address %></td>
         <td><%= request.availability %></td>
