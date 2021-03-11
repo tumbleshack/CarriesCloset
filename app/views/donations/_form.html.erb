@@ -49,27 +49,115 @@
     <%= form.text_field :availability %>
   </div>
 
+  <script>
+    window.onload = function () {
+      const categorySelectors = document.querySelectorAll('[id^="donation_items_category"]');
+
+      for (var i = 0; i < categorySelectors.length; i++) {
+        categorySelectors[i].onchange = function() {
+          updateItemTypes(i);
+        }
+        updateItemTypes();
+      }
+
+      const itemTypeSelectors = document.querySelectorAll('[id^="donation_items_itemType"]');
+
+      for (var i = 0; i < itemTypeSelectors.length; i++) {
+        itemTypeSelectors[i].onchange = function() {
+          updateItemSizes(i);
+        }
+        updateItemSizes();
+      }
+    };
+
+    function updateItemTypes() {
+      var items = <%= raw @allItems.to_json %>;
+      var categories = <%= raw @allCategories.to_json %>;
+      var categoryName = document.getElementById("donation_items_category").value;
+      var itemSelector = document.getElementById("donation_items_itemType");
+
+      for(var i = itemSelector.options.length - 1; i >= 0; i--) {
+        itemSelector.remove(i);
+      }
+
+      const matchedCategory = categories.find(c => c.name == categoryName);
+      if (matchedCategory) {
+        const categoryID = matchedCategory.id;
+        const itemsForCategory = items.filter(i => i.category_id == categoryID);
+
+        for (var i = 0; i < itemsForCategory.length; i++) {
+          var newOption = document.createElement('option');
+          newOption.value = itemsForCategory[i].itemType;
+          newOption.innerHTML = itemsForCategory[i].itemType;
+          itemSelector.appendChild(newOption);
+        }
+      }
+
+      updateItemSizes();
+    }
+
+    function updateItemSizes() {
+      var items = <%= raw @allItems.to_json %>;
+      var categories = <%= raw @allCategories.to_json %>;
+      var itemTypeName = document.getElementById("donation_items_itemType").value;
+      var sizeSelector = document.getElementById("donation_items_sizes");
+
+      for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
+        sizeSelector.remove(i);
+      }
+
+      const matchedItem = items.find(i => i.itemType == itemTypeName);
+      if (matchedItem) {
+        const itemID = matchedItem.id;
+        const sizesForItem = items.filter(i => i.id == itemID).map(i => i.size);
+
+        for (var i = 0; i < sizesForItem.length; i++) {
+          var newOption = document.createElement('option');
+          newOption.value = sizesForItem[i];
+          newOption.innerHTML = sizesForItem[i];
+          sizeSelector.appendChild(newOption);
+        }
+      }
+    }
+
+    function insertItemRow() {
+      const table = document.getElementById("items-table");
+      const firstRow = document.getElementById("first-row")
+      const clone = firstRow.cloneNode(true);
+      table.appendChild(clone);
+    }
+
+    function removeItemRow(index) {
+      document.getElementById("items-table").deleteRow(index + 1);
+    }
+
+  </script>
+
   <div class="field">
     <%= form.label :items, 'What items would you like to request?' %>
-    <table>
+    <table id="items-table">
       <thead>
         <tr>
           <th>Quantity</th>
           <th>Category</th>
           <th>Item Type</th>
           <th>Size</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
-          <tr>
+          <tr id="first-row">
             <td><%= form.number_field :items_quantity %></td>
-            <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
-            <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-            <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
+            <td><%= form.select :items_category, Category.all.map { |category| category.name }.uniq %></td>
+            <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType }.uniq %></td>
+            <td><%= form.select :items_sizes, Item.all.map{ |item| item.size }.uniq %></td>
+            <td><button type="button" onclick="removeItemRow(0);">Remove</button></td>
           </tr>
       </tbody>
+        
     </table>
+    <button type="button" onclick="insertItemRow();">Add Item</button>
   </div>
 
   <div class="field">

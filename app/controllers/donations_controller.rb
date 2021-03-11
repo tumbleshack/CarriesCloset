@@ -17,10 +17,15 @@ class DonationsController < ApplicationController
   # GET /donations/new
   def new
     @donation = Donation.new
+    @itemCount = 1
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /donations/1/edit
   def edit
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /donations/my-donations
