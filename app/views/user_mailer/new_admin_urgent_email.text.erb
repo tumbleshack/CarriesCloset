@@ -1,0 +1,24 @@
+Hi,
+This message is to notify you of an urgent donation request.
+The request details are provided below.
+
+Request Details
+
+==============================
+Name: <%= @request.full_name %>
+Email: <%= @request.email %>
+Urgency: <%= Request::URGENCIES.key(@request.urgency) %>
+Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %>
+County: <%=Request::COUNTIES.key(@request.county) %>
+Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %>
+Address (if applicable): <%= @request.address %>
+Phone: <%= @request.phone %>
+Availability: <%= @request.availability %>
+Items: <%= @request.items %>
+Comments: <%= @request.comments %>
+==============================
+
+Thank you!
+
+Sincerely, 
+Carrie's Closet Team

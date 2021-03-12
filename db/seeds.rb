@@ -13,8 +13,9 @@ require 'faker'
 @mamie = User.create!(email: 'test@example.com',
                       password: 'secure-password') if @mamie.nil?
 
-@admin = User.find_by_email('admin@example.com')
-@admin = User.create!(email: 'admin@example.com', password: 'admin-password',
+
+@admin = User.find_by_email('carries.closet.confirmations@gmail.com')
+@admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
 loop do
@@ -32,3 +33,10 @@ loop do
                              items: Faker::Lorem.sentence
   puts "Request #{Request.count}: '#{@request.full_name}' requests '#{@request.items}'"
 end
+
+
+categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
+categories.each do |category|
+  Category.create!(name: category) if Category.find_by_name(category).nil?
+end
+

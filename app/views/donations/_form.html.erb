@@ -1,0 +1,84 @@
+<%= form_with(model: donation) do |form| %>
+  <% if donation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(donation.errors.count, "error") %> prohibited this donation from being saved:</h2>
+
+      <ul>
+        <% donation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="margins-needed">
+  <div class="field">
+    <%= form.label :full_name, 'Full Name' %>
+    <%= form.text_field :full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :county, 'Select county' %>
+    <%= form.select :county, Request::COUNTIES %>
+  </div>
+
+  <div class="field">
+    <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
+    <%= form.collection_radio_buttons :meet, [['Yes', 1], ['No, my address is:', 2]], :last, :first %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= link_to 'Find your county\'s DFCS location', 'https://dfcs.georgia.gov/locations', target: :_blank %>
+  </div>
+
+  <div class="field">
+    <%= form.label :availability, 'What\'s your availability?' %>
+    <i>Please indicate your availability between 10 AM and 7 PM, Monday through Friday.</i>
+    <br />
+    <%= form.text_field :availability %>
+  </div>
+
+  <div class="field">
+    <%= form.label :items, 'What items would you like to donate?' %>
+    <table>
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Category</th>
+          <th>Item Type</th>
+          <th>Size</th>
+        </tr>
+      </thead>
+
+      <tbody>
+          <tr>
+            <td><%= form.number_field :items_quantity %></td>
+            <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
+            <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
+            <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="field">
+    <%= form.label :comments %>
+    <%= form.text_area :comments %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+</div>
+<% end %>
