@@ -1,0 +1,4 @@
+<h1>New Pop-Up Shop Transaction</h1>
+<%= form_with(model: @request, html: { class: 'pure-form pure-form-stacked' }) do |form| %>
+  <%= render partial: 'item_selection', locals: { form: form } %>
+<% end %>

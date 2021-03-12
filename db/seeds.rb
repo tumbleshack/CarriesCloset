@@ -18,6 +18,10 @@ require 'faker'
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
+@volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
+@volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
+                          volunteer: true) if @volunteer.nil?
+
 loop do
   break if Request.count >= 10
 
