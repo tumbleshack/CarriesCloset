@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :items
   get '/requests/my_requests' => 'requests#my_requests'
+  get '/requests/popup' => 'requests#popup'
   get '/users/manage' => 'users#manage'
   resources :requests
   get 'public/index'

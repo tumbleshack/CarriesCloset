@@ -26,7 +26,12 @@ class RequestsController < ApplicationController
   # GET /requests/my-requests
   def my_requests
     @requests = current_user != nil ? Request.where("email like ?", "%#{current_user.email}%") : nil  
-  end 
+  end
+
+  # GET /requests/popup
+  def popup
+    @request = Request.new
+  end
 
   # POST /requests or /requests.json
   def create

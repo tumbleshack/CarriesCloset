@@ -45,6 +45,13 @@
     <% end %>
   <% end %>
 
+  <% if current_user && current_user.volunteer? %>
+    <div class="centered-div">
+      <%= link_to "New Pop-Up Shop Transaction", requests_popup_url, class: "home-link" %>
+    </div>
+    <br />
+  <% end %>
+
   <div class = "centered-div">
   <%= link_to 'Request Clothing and Hygiene Items', new_request_url, class: "home-link"%>
   </div>
