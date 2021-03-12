@@ -22,4 +22,10 @@ class UserMailer < ApplicationMailer
         mail to: @request.email,
           subject: "Donation Request Confirmation"
     end
+
+    def new_donor_email
+      @donation = params[:donation]
+        mail to: @donation.email,
+          subject: "Donation Confirmation"
+    end
 end

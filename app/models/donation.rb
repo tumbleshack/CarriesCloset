@@ -1,4 +1,15 @@
 class Donation < ApplicationRecord
+  COUNTIES = {
+    '': 0,
+    'Fulton': 1,
+    'Dekalb': 2,
+    'Gwinnett': 3,
+    'Cobb': 4,
+    'Clayton': 5,
+    'Henry': 6,
+    'Muscogee': 7,
+    'Other (provide your address below)': 8
+  }.freeze
   
   validates_presence_of :full_name, :email, :availability,
                         :county, :meet, :phone, :items
@@ -16,4 +27,7 @@ class Donation < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
+
+
+  
 end
