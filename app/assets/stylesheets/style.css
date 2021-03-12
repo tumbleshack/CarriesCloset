@@ -1,5 +1,7 @@
 body {
+
     font-family: Cabin, sans-serif;
+
    font-size: medium;
    font-color: #000;
    background-color: white;
@@ -176,6 +178,7 @@ ul#subjects li {
   align-items: center;
 }
 
+
 .button-looks-like-link {
   background: none!important;
   border: none;
@@ -236,3 +239,4 @@ ul#subjects li {
   font-size: 24px;
   background-color: rgba(0.5, 0, 0, 0)
 }
+
