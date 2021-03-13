@@ -27,8 +27,11 @@ class Request < ApplicationRecord
     'Other (provide your address below)': 8
   }.freeze
 
+  has_many :items, foreign_key: "request_id", dependent: :destroy
+  accepts_nested_attributes_for :items, allow_destroy: true, reject_if: :any_blank?
+
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
-                        :county, :meet, :phone, :items
+                        :county, :meet, :phone
 
   validates_numericality_of :urgency, :relationship, :county, greater_than: 0, :message => "can't be blank"
   
@@ -43,4 +46,12 @@ class Request < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
+
+  public
+
+  def any_blank?(att)
+    att.any? { |k, v| v.blank? }
+  end
+
+
 end

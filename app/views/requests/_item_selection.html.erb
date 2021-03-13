@@ -11,12 +11,16 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td><%= form.number_field :items_quantity %></td>
-        <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
-        <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-        <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
-      </tr>
+      <%= form.fields_for :items do |item_form| %>
+        <tr>
+          <td><%= item_form.check_box :_destroy %></td>
+          <td><%= item_form.number_field :quantity %></td>
+          <td><%= item_form.select :category, Category.all.map { |category| category.name } %></td>
+          <td><%= item_form.select :size, Item.all.map{ |item| item.size } %></td>
+          <td><%= item_form.select :itemType, Item.all.map{ |item| item.itemType } %></td>
+        </tr>
+      <% end %>
     </tbody>
+    
   </table>
 </div>
