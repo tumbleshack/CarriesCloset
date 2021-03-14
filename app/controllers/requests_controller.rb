@@ -17,10 +17,14 @@ class RequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/1/edit
   def edit
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/my-requests

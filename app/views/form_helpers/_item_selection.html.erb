@@ -1,0 +1,165 @@
+<script>
+  window.onload = function () {
+
+    const row = document.getElementById("first-row");
+    const body = getBody();
+    row.setAttribute("data-index", body.childNodes.length - 2);
+
+    const categorySelectors = document.querySelectorAll('[id$="items_category"]');
+    categorySelectors.forEach(element => {
+      element.onchange = function() { updateItemTypes(this); }
+      element.setAttribute("data-selector-type", "items_category");
+    });
+
+    const itemTypeSelectors = document.querySelectorAll('[id$="items_itemType"]');
+    itemTypeSelectors.forEach(element => {
+      element.onchange = function() { updateItemSizes(this); }
+      element.setAttribute("data-selector-type", "items_itemType");
+    });
+
+    const sizeSelectors = document.querySelectorAll('[id$="items_sizes"]');
+    sizeSelectors.forEach(selector => {
+      selector.setAttribute("data-selector-type","items_sizes")
+    });
+
+    categorySelectors.forEach(element => { updateItemTypes(element); });
+    itemTypeSelectors.forEach(element => { updateItemSizes(element); });
+
+    const removeButton = document.querySelectorAll('[type^="button"]');
+
+  };
+
+  function getBody() {
+    return document.getElementById("table-body");
+  }
+
+  function updateItemTypes(element) {
+    var items = <%= raw @allItems.to_json %>;
+    var categories = <%= raw @allCategories.to_json %>;
+    var categoryName = element.value;
+    var row = element.parentElement.parentElement;
+    var itemSelector = row.querySelector('[data-selector-type$="items_itemType"]');
+
+    for(var i = itemSelector.options.length - 1; i >= 0; i--) {
+      itemSelector.remove(i);
+    }
+
+    const matchedCategory = categories.find(c => c.name == categoryName);
+    if (matchedCategory) {
+      const categoryID = matchedCategory.id;
+      const itemsForCategory = items.filter(i => i.category_id == categoryID);
+
+      for (var i = 0; i < itemsForCategory.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.value = itemsForCategory[i].itemType;
+        newOption.innerHTML = itemsForCategory[i].itemType;
+        itemSelector.appendChild(newOption);
+      }
+    }
+
+    updateItemSizes(itemSelector);
+  }
+
+  function updateItemSizes(element) {
+    var items = <%= raw @allItems.to_json %>;
+    var categories = <%= raw @allCategories.to_json %>;
+    var itemTypeName = element.value;
+
+    var row = element.parentElement.parentElement;
+    var sizeSelector = row.querySelector('[data-selector-type$="items_sizes"]');
+
+    for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
+      sizeSelector.remove(i);
+    }
+
+    const matchedItem = items.find(i => i.itemType == itemTypeName);
+    if (matchedItem) {
+      const itemID = matchedItem.id;
+      const sizesForItem = items.filter(i => i.id == itemID).map(i => i.size);
+
+      for (var i = 0; i < sizesForItem.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.value = sizesForItem[i];
+        newOption.innerHTML = sizesForItem[i];
+        sizeSelector.appendChild(newOption);
+      }
+    }
+  }
+
+  function getAllRows() {
+    const body = getBody();
+    return [ ...body.childNodes ].filter(element => element.tagName == "TR");
+  }
+
+  function getLastRow() {
+    const body = getBody();
+    const prevRows = [ ...body.childNodes ].filter(element => element.tagName == "TR");
+    var prevRow = undefined;
+    var prevRowMaxIndex = 0;
+    prevRows.forEach(row => {
+      if (row.dataset.index > prevRowMaxIndex) {
+        prevRow = row;
+        prevRowMaxIndex = row.dataset.index;
+      }
+    });
+    return prevRow;
+  }
+
+  function insertItemRow() {
+    const body = getBody();
+    const prevRow = getLastRow();
+    const clone = prevRow.cloneNode(true);
+    clone.removeAttribute("id");
+    var categorySelector = null;
+    clone.setAttribute("data-index", parseInt(clone.dataset.index) + 1);
+    clone.childNodes.forEach(td => {
+      td.childNodes.forEach(element => {
+        element.removeAttribute("id");
+        if (element.dataset.selectorType == "items_category") {
+          element.onchange = function() { updateItemTypes(this); }
+          categorySelector = element;
+        } else if (element.dataset.selectorType == "items_itemType") {
+          element.onchange = function() { updateItemSizes(this); }
+        }
+      });
+    });
+    body.appendChild(clone);
+    updateItemTypes(categorySelector);
+  }
+
+  function removeItemRow(element) {
+    if (getAllRows().length < 2) return;
+    const index = element.parentNode.parentNode.dataset.index;
+    const body = getBody();
+    const selector = '[data-index^="' + index + '"]';
+    const row = body.querySelector(selector);
+    body.removeChild(row);
+  }
+
+</script>
+
+<div class="field">
+  <%= form.label :items, 'What items would you like to request?' %>
+  <table id="items-table">
+    <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Category</th>
+      <th>Item Type</th>
+      <th>Size</th>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody id="table-body">
+      <tr id="first-row">
+        <td><%= form.number_field :items_quantity %></td>
+        <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
+        <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
+        <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
+        <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <button type="button" onclick="insertItemRow();">Add Item</button>
+</div>
