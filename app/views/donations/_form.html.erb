@@ -51,30 +51,45 @@
 
   <script>
     window.onload = function () {
-      const categorySelectors = document.querySelectorAll('[id^="donation_items_category"]');
 
-      for (var i = 0; i < categorySelectors.length; i++) {
-        categorySelectors[i].onchange = function() {
-          updateItemTypes(i);
-        }
-        updateItemTypes();
-      }
+      const row = document.getElementById("first-row");
+      const body = getBody();
+      row.setAttribute("data-index", body.childNodes.length - 2);
+
+      const categorySelectors = document.querySelectorAll('[id^="donation_items_category"]');
+      categorySelectors.forEach(element => {
+        element.onchange = function() { updateItemTypes(this); }
+        element.setAttribute("data-selector-type", "donation_items_category");
+      });
 
       const itemTypeSelectors = document.querySelectorAll('[id^="donation_items_itemType"]');
+      itemTypeSelectors.forEach(element => {
+        element.onchange = function() { updateItemSizes(this); }
+        element.setAttribute("data-selector-type", "donation_items_itemType");
+      });
 
-      for (var i = 0; i < itemTypeSelectors.length; i++) {
-        itemTypeSelectors[i].onchange = function() {
-          updateItemSizes(i);
-        }
-        updateItemSizes();
-      }
+      const sizeSelectors = document.querySelectorAll('[id^="donation_items_sizes"]');
+      sizeSelectors.forEach(selector => {
+        selector.setAttribute("data-selector-type","donation_items_sizes")
+      });
+
+      categorySelectors.forEach(element => { updateItemTypes(element); });
+      itemTypeSelectors.forEach(element => { updateItemSizes(element); });
+
+      const removeButton = document.querySelectorAll('[type^="button"]');
+
     };
 
-    function updateItemTypes() {
+    function getBody() {
+      return document.getElementById("table-body");
+    }
+
+    function updateItemTypes(element) {
       var items = <%= raw @allItems.to_json %>;
       var categories = <%= raw @allCategories.to_json %>;
-      var categoryName = document.getElementById("donation_items_category").value;
-      var itemSelector = document.getElementById("donation_items_itemType");
+      var categoryName = element.value;
+      var row = element.parentElement.parentElement;
+      var itemSelector = row.querySelector('[data-selector-type^="donation_items_itemType"]');
 
       for(var i = itemSelector.options.length - 1; i >= 0; i--) {
         itemSelector.remove(i);
@@ -93,14 +108,16 @@
         }
       }
 
-      updateItemSizes();
+      updateItemSizes(itemSelector);
     }
 
-    function updateItemSizes() {
+    function updateItemSizes(element) {
       var items = <%= raw @allItems.to_json %>;
       var categories = <%= raw @allCategories.to_json %>;
-      var itemTypeName = document.getElementById("donation_items_itemType").value;
-      var sizeSelector = document.getElementById("donation_items_sizes");
+      var itemTypeName = element.value;
+
+      var row = element.parentElement.parentElement;
+      var sizeSelector = row.querySelector('[data-selector-type^="donation_items_sizes"]');
 
       for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
         sizeSelector.remove(i);
@@ -120,15 +137,51 @@
       }
     }
 
-    function insertItemRow() {
-      const table = document.getElementById("items-table");
-      const firstRow = document.getElementById("first-row")
-      const clone = firstRow.cloneNode(true);
-      table.appendChild(clone);
+    function getAllRows() {
+      const body = getBody();
+      return [ ...body.childNodes ].filter(element => element.tagName == "TR");
     }
 
-    function removeItemRow(index) {
-      document.getElementById("items-table").deleteRow(index + 1);
+    function getLastRow() {
+      const body = getBody();
+      const prevRows = [ ...body.childNodes ].filter(element => element.tagName == "TR");
+      var prevRow = undefined;
+      var prevRowMaxIndex = 0;
+      prevRows.forEach(row => {
+        if (row.dataset.index > prevRowMaxIndex) {
+          prevRow = row;
+          prevRowMaxIndex = row.dataset.index;
+        }
+      });
+      return prevRow;
+    }
+
+    function insertItemRow() {
+      const body = getBody();
+      const prevRow = getLastRow();
+      const clone = prevRow.cloneNode(true);
+      clone.removeAttribute("id");
+      clone.setAttribute("data-index", parseInt(clone.dataset.index) + 1);
+      clone.childNodes.forEach(td => {
+        td.childNodes.forEach(element => {
+          element.removeAttribute("id");
+          if (element.dataset.selectorType == "donation_items_category") {
+            element.onchange = function() { updateItemTypes(this); }
+          } else if (element.dataset.selectorType == "donation_items_itemType") {
+            element.onchange = function() { updateItemSizes(this); }
+          }
+        });
+      });
+      body.appendChild(clone);
+    }
+
+    function removeItemRow(element) {
+      if (getAllRows().length < 2) return;
+      const index = element.parentNode.parentNode.dataset.index;
+      const body = getBody();
+      const selector = '[data-index^="' + index + '"]';
+      const row = body.querySelector(selector);
+      body.removeChild(row);
     }
 
   </script>
@@ -146,13 +199,13 @@
         </tr>
       </thead>
 
-      <tbody>
+      <tbody id="table-body">
           <tr id="first-row">
             <td><%= form.number_field :items_quantity %></td>
             <td><%= form.select :items_category, Category.all.map { |category| category.name }.uniq %></td>
             <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType }.uniq %></td>
             <td><%= form.select :items_sizes, Item.all.map{ |item| item.size }.uniq %></td>
-            <td><button type="button" onclick="removeItemRow(0);">Remove</button></td>
+            <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
           </tr>
       </tbody>
         
