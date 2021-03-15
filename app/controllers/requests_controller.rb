@@ -37,10 +37,9 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new(request_params.except(:item_changes_attributes))
 
-    p "TRANSFORM THE NESTED ATTRIBUTES AND SAVE THEM TO REQUEST OBJECT"
-
-    @request.item_changes
-    #@request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} size #{request_params["items_sizes"]}"
+    p "Transform the nested attributes such that the category is an object (not string) and the type enum is set to :request"
+    p "Should be done in a re-usable helper function, so we can use it in the donation and popup shop form (also the update action)"
+    # request.item_changes = /* CALL HELPER WHICH PARSES request_params*/
 
     respond_to do |format|
       if @request.save
