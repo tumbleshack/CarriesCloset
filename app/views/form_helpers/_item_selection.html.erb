@@ -1,33 +1,4 @@
 <script>
-  window.onload = function () {
-
-    const row = document.querySelector('[data-id$="first-row"]');
-    const body = getBody();
-    row.setAttribute("data-index", body.childNodes.length - 2);
-
-    const categorySelectors = document.querySelectorAll('[id$="category"]');
-    categorySelectors.forEach(element => {
-      element.onchange = function() { updateItemTypes(this); }
-      element.setAttribute("data-selector-type", "category");
-    });
-
-    const itemTypeSelectors = document.querySelectorAll('[id$="itemType"]');
-    itemTypeSelectors.forEach(element => {
-      element.onchange = function() { updateItemSizes(this); }
-      element.setAttribute("data-selector-type", "itemType");
-    });
-
-    const sizeSelectors = document.querySelectorAll('[id$="size"]');
-    sizeSelectors.forEach(selector => {
-      selector.setAttribute("data-selector-type","size")
-    });
-
-    categorySelectors.forEach(element => { updateItemTypes(element); });
-    itemTypeSelectors.forEach(element => { updateItemSizes(element); });
-
-    const removeButton = document.querySelectorAll('[type^="button"]');
-
-  };
 
   function getBody() {
     return document.getElementById("table-body");
@@ -38,7 +9,7 @@
     var categories = <%= raw @allCategories.to_json %>;
     var categoryName = element.value;
     var row = element.parentElement.parentElement;
-    var itemSelector = row.querySelector('[data-selector-type$="itemType"]');
+    var itemSelector = row.querySelector('[data-selectortype$="itemType"]');
 
     for(var i = itemSelector.options.length - 1; i >= 0; i--) {
       itemSelector.remove(i);
@@ -68,7 +39,7 @@
     var itemTypeName = element.value;
 
     var row = element.parentElement.parentElement;
-    var sizeSelector = row.querySelector('[data-selector-type$="size"]');
+    var sizeSelector = row.querySelector('[data-selectortype$="size"]');
 
     for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
       sizeSelector.remove(i);
@@ -79,7 +50,6 @@
       const itemID = matchedItem.id;
       const sizesForItemRaw = items.filter(i => i.id == itemID).map(i => i.size);
       const sizesForItem = toUnique(sizesForItemRaw);
-
 
       for (var i = 0; i < sizesForItem.length; i++) {
         var newOption = document.createElement('option');
@@ -98,43 +68,70 @@
   function getLastRow() {
     const body = getBody();
     const prevRows = [ ...body.childNodes ].filter(element => element.tagName == "TR");
-    var prevRow = undefined;
-    var prevRowMaxIndex = 0;
+    var maxIndex = -1;
+    var maxRow = null;
     prevRows.forEach(row => {
-      if (row.dataset.index > prevRowMaxIndex) {
-        prevRow = row;
-        prevRowMaxIndex = row.dataset.index;
-      }
+      row.childNodes.forEach(td => {
+        if (td.tagName == "TD") {
+          td.childNodes.forEach(field => {
+            let inx = extractIndexFromName(field.name);
+            if ((inx != null) && inx[0] > maxIndex) {
+              maxIndex = inx[0];
+              maxRow = row;
+            }
+          });
+        }
+      });
     });
-    return prevRow;
+    return maxRow;
+  }
+
+  function extractIndexFromName(name) {
+    if (!name) return null;
+    const regex = /\[(\d)+\]/;
+    const found = name.match(regex);
+    if (!found) return null;
+    return [parseInt(found[0].substring(1, found[0].length - 1)), found.index]
+  }
+
+  function allDescendants (root, doSomethingToNode) { 
+    root.childNodes.forEach(child => { 
+       allDescendants(child, doSomethingToNode);
+       doSomethingToNode(child);   
+    }); 
   }
 
   function insertItemRow() {
     const body = getBody();
     const prevRow = getLastRow();
     const clone = prevRow.cloneNode(true);
+    clone.dataset.id = parseInt(clone.dataset.id) + 1;
     var categorySelector = null;
-    clone.setAttribute("data-index", parseInt(clone.dataset.index) + 1);
-    clone.childNodes.forEach(td => {
-      td.childNodes.forEach(element => {
-        element.removeAttribute("id");
-        if (element.dataset.selectorType == "category") {
-          element.onchange = function() { updateItemTypes(this); }
-          categorySelector = element;
-        } else if (element.dataset.selectorType == "itemType") {
-          element.onchange = function() { updateItemSizes(this); }
+    
+    const incrementNameAndIdIndex = (node) => {
+      found = extractIndexFromName(node.name)
+      if (found != null) {
+        node.name = node.name.replace("[" + found[0] + "]", "[" + (found[0] + 1) + "]");
+        node.id = node.id.replace("_" + found[0] + "_", "_" + (found[0] + 1) + "_");
+        if (node.dataset.selectortype == "category") {
+          node.onchange = function() { updateItemTypes(this); }
+          categorySelector = node;
+        } else if (node.dataset.selectortype == "itemType") {
+          node.onchange = function() { updateItemSizes(this); }
         }
-      });
-    });
+      }
+    }
+
+    allDescendants(clone, incrementNameAndIdIndex);
     body.appendChild(clone);
     updateItemTypes(categorySelector);
   }
 
-  function removeItemRow(element) {
+  function removeItemRow(button) {
     if (getAllRows().length < 2) return;
-    const index = element.parentNode.parentNode.dataset.index;
+    const index = button.parentNode.parentNode.dataset.id;
     const body = getBody();
-    const selector = '[data-index^="' + index + '"]';
+    const selector = '[data-id="' + index + '"]';
     const row = body.querySelector(selector);
     body.removeChild(row);
   }
@@ -161,16 +158,16 @@
     </thead>
 
     <tbody id="table-body">
-      <%= form.fields_for :item_changes do |item_change_form| %>
-        <tr data-id="first-row">
-          <td><%= item_change_form.number_field :quantity %></td>
-          <td><%= item_change_form.select :category, Category.all.map { |category| category.name } %></td>
-          <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType } %></td>
-          <td><%= item_change_form.select :size, Item.all.map{ |item| item.size } %></td>
-          <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
-        </tr>
-      <% end %>
+      <%= form.simple_fields_for :item_changes do |item_change_form| %>
+        <tr data-id=<%=item_change_form.index%>>
+            <td><%= item_change_form.number_field :quantity %></td>
+            <td><%= item_change_form.select :category, Category.all.map { |category| category.name }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
+            <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
+            <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
+            <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
+        </tr> 
+      <%end%>
     </tbody>
   </table>
-  <button type="button" onclick="insertItemRow();">Add Item</button>
+  <button type="button" onclick="insertItemRow();">Add Item</button> 
 </div>

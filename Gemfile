@@ -27,6 +27,8 @@ gem 'devise', '~> 4.7.1'
 # Used to creation of sign up invite codes
 gem 'devise_invitable', '~> 2.0.3'
 gem 'faker'
+gem 'cocoon'
+gem 'simple_form'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

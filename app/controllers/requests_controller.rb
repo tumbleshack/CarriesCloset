@@ -19,11 +19,12 @@ class RequestsController < ApplicationController
     @request = Request.new
     @allCategories = Category.all
     @allItems = Item.all
-    1.times { @request.item_changes.build }
+    @request.item_changes.build
   end
 
   # GET /requests/1/edit
   def edit
+    super
     @allCategories = Category.all
     @allItems = Item.all
   end
@@ -35,7 +36,7 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
-    @request = Request.new(request_params.except(:item_changes_attributes))
+    @request = Request.new(request_params)
 
     p "Transform the nested attributes such that the category is an object (not string) and the type enum is set to :request"
     p "Should be done in a re-usable helper function, so we can use it in the donation and popup shop form (also the update action)"
@@ -96,6 +97,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category, :quantity, :itemType, :size])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category, :quantity, :itemType, :size, :_destroy])
   end
 end
