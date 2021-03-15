@@ -27,6 +27,9 @@ class Request < ApplicationRecord
     'Other (provide your address below)': 8
   }.freeze
 
+  has_many :items
+  accepts_nested_attributes_for :items, reject_if: :any_blank?
+
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
                         :county, :meet, :phone, :items
 

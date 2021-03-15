@@ -1,5 +1,5 @@
 class Donation < ApplicationRecord
-  
+
   validates_presence_of :full_name, :email, :availability,
                         :county, :meet, :phone, :items
 

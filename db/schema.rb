@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_05_183914) do
+ActiveRecord::Schema.define(version: 2021_03_15_000329) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -67,7 +67,12 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
     t.string "size"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "in_inventory", default: false, null: false
+    t.boolean "in_request", default: false, null: false
+    t.boolean "in_donation", default: false, null: false
+    t.bigint "request_id"
     t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["request_id"], name: "index_items_on_request_id"
   end
 
   create_table "requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -80,14 +85,7 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
     t.boolean "meet"
     t.string "address"
     t.string "availability"
-    t.string "items"
     t.text "comments"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "sizes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -122,4 +120,5 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "categories"
+  add_foreign_key "items", "requests"
 end

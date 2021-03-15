@@ -13,28 +13,30 @@ require 'faker'
 @mamie = User.create!(email: 'test@example.com',
                       password: 'secure-password') if @mamie.nil?
 
+categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
+categories.each do |category|
+  Category.create!(name: category) if Category.find_by_name(category).nil?
 
 @admin = User.find_by_email('carries.closet.confirmations@gmail.com')
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
-loop do
-  break if Request.count >= 10
+@someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6", in_inventory: true)
 
-  @request = Request.create! urgency: (1...Request::URGENCIES.count).to_a.sample,
-                             full_name: Faker::Name.name,
-                             email: Faker::Internet.email,
-                             phone: (678_555_0000...678_567_9999).to_a.sample.to_s,
-                             relationship: (1...Request::RELATIONSHIPS.count).to_a.sample,
-                             county: (1...Request::COUNTIES.count).to_a.sample,
-                             meet: 1,
-                             availability: Faker::Lorem.sentence,
-                             comments: Faker::Lorem.sentence,
-                             items: Faker::Lorem.sentence
-  puts "Request #{Request.count}: '#{@request.full_name}' requests '#{@request.items}'"
-end
+# loop do
+#   break if Request.count >= 10
 
-categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
-categories.each do |category|
-  Category.create!(name: category) if Category.find_by_name(category).nil?
+#   @request = Request.create! urgency: (1...Request::URGENCIES.count).to_a.sample,
+#                              full_name: Faker::Name.name,
+#                              email: Faker::Internet.email,
+#                              phone: (678_555_0000...678_567_9999).to_a.sample.to_s,
+#                              relationship: (1...Request::RELATIONSHIPS.count).to_a.sample,
+#                              county: (1...Request::COUNTIES.count).to_a.sample,
+#                              meet: 1,
+#                              availability: Faker::Lorem.sentence,
+#                              comments: Faker::Lorem.sentence
+#                             #  items: Item.create!(quantity: 1, category: Category.find_by_name(category), itemType: category, size: "M", in_inventory: false, in_request: true, in_donation: false)
+#   puts "Request #{Request.count}: '#{@request.full_name}' requests '#{@request.items}'"
+# end
+
 end
