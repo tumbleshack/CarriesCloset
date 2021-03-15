@@ -19,6 +19,7 @@ class RequestsController < ApplicationController
     @request = Request.new
     @allCategories = Category.all
     @allItems = Item.all
+    1.times { @request.item_changes.build }
   end
 
   # GET /requests/1/edit
@@ -34,7 +35,11 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
-    @request = Request.new(request_params)
+    @request = Request.new(request_params.except(:item_changes_attributes))
+
+    p "TRANSFORM THE NESTED ATTRIBUTES AND SAVE THEM TO REQUEST OBJECT"
+
+    @request.item_changes
     #@request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} size #{request_params["items_sizes"]}"
 
     respond_to do |format|
@@ -92,6 +97,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, items_attributes: [:quantity, :category, :itemType, :sizes ])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category, :quantity, :itemType, :size])
   end
 end

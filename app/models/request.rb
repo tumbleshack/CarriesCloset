@@ -1,4 +1,5 @@
 class Request < ApplicationRecord
+
   URGENCIES = {
     '': 0,
     'Within 24 hours': 1,
@@ -27,11 +28,15 @@ class Request < ApplicationRecord
     'Other (provide your address below)': 8
   }.freeze
 
-  has_many :items
-  accepts_nested_attributes_for :items, reject_if: :any_blank?
+  has_many :item_changes
+  accepts_nested_attributes_for :item_changes, reject_if: :any_blank
+
+  def any_blank(att)
+    att.any? { |k, v| v.blank? }
+  end
 
   validates_presence_of :relationship, :full_name, :urgency, :email, :availability,
-                        :county, :meet, :phone, :items
+                        :county, :meet, :phone, :item_changes
 
   validates_numericality_of :urgency, :relationship, :county, greater_than: 0, :message => "can't be blank"
   
@@ -46,4 +51,5 @@ class Request < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
+            
 end

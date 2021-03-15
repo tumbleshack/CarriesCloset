@@ -1,25 +1,25 @@
 <script>
   window.onload = function () {
 
-    const row = document.getElementById("first-row");
+    const row = document.querySelector('[data-id$="first-row"]');
     const body = getBody();
     row.setAttribute("data-index", body.childNodes.length - 2);
 
-    const categorySelectors = document.querySelectorAll('[id$="items_category"]');
+    const categorySelectors = document.querySelectorAll('[id$="category"]');
     categorySelectors.forEach(element => {
       element.onchange = function() { updateItemTypes(this); }
-      element.setAttribute("data-selector-type", "items_category");
+      element.setAttribute("data-selector-type", "category");
     });
 
-    const itemTypeSelectors = document.querySelectorAll('[id$="items_itemType"]');
+    const itemTypeSelectors = document.querySelectorAll('[id$="itemType"]');
     itemTypeSelectors.forEach(element => {
       element.onchange = function() { updateItemSizes(this); }
-      element.setAttribute("data-selector-type", "items_itemType");
+      element.setAttribute("data-selector-type", "itemType");
     });
 
-    const sizeSelectors = document.querySelectorAll('[id$="items_sizes"]');
+    const sizeSelectors = document.querySelectorAll('[id$="size"]');
     sizeSelectors.forEach(selector => {
-      selector.setAttribute("data-selector-type","items_sizes")
+      selector.setAttribute("data-selector-type","size")
     });
 
     categorySelectors.forEach(element => { updateItemTypes(element); });
@@ -38,7 +38,7 @@
     var categories = <%= raw @allCategories.to_json %>;
     var categoryName = element.value;
     var row = element.parentElement.parentElement;
-    var itemSelector = row.querySelector('[data-selector-type$="items_itemType"]');
+    var itemSelector = row.querySelector('[data-selector-type$="itemType"]');
 
     for(var i = itemSelector.options.length - 1; i >= 0; i--) {
       itemSelector.remove(i);
@@ -47,7 +47,9 @@
     const matchedCategory = categories.find(c => c.name == categoryName);
     if (matchedCategory) {
       const categoryID = matchedCategory.id;
-      const itemsForCategory = items.filter(i => i.category_id == categoryID);
+      const itemsForCategoryRaw = items.filter(i => i.category_id == categoryID);
+
+      const itemsForCategory = toUnique(itemsForCategoryRaw);
 
       for (var i = 0; i < itemsForCategory.length; i++) {
         var newOption = document.createElement('option');
@@ -66,7 +68,7 @@
     var itemTypeName = element.value;
 
     var row = element.parentElement.parentElement;
-    var sizeSelector = row.querySelector('[data-selector-type$="items_sizes"]');
+    var sizeSelector = row.querySelector('[data-selector-type$="size"]');
 
     for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
       sizeSelector.remove(i);
@@ -75,7 +77,9 @@
     const matchedItem = items.find(i => i.itemType == itemTypeName);
     if (matchedItem) {
       const itemID = matchedItem.id;
-      const sizesForItem = items.filter(i => i.id == itemID).map(i => i.size);
+      const sizesForItemRaw = items.filter(i => i.id == itemID).map(i => i.size);
+      const sizesForItem = toUnique(sizesForItemRaw);
+
 
       for (var i = 0; i < sizesForItem.length; i++) {
         var newOption = document.createElement('option');
@@ -109,16 +113,15 @@
     const body = getBody();
     const prevRow = getLastRow();
     const clone = prevRow.cloneNode(true);
-    clone.removeAttribute("id");
     var categorySelector = null;
     clone.setAttribute("data-index", parseInt(clone.dataset.index) + 1);
     clone.childNodes.forEach(td => {
       td.childNodes.forEach(element => {
         element.removeAttribute("id");
-        if (element.dataset.selectorType == "items_category") {
+        if (element.dataset.selectorType == "category") {
           element.onchange = function() { updateItemTypes(this); }
           categorySelector = element;
-        } else if (element.dataset.selectorType == "items_itemType") {
+        } else if (element.dataset.selectorType == "itemType") {
           element.onchange = function() { updateItemSizes(this); }
         }
       });
@@ -134,6 +137,12 @@
     const selector = '[data-index^="' + index + '"]';
     const row = body.querySelector(selector);
     body.removeChild(row);
+  }
+
+  function toUnique(array) { //array,placeholder,placeholder
+    return array.filter(function(item, pos) {
+      return array.indexOf(item) == pos;
+    });
   }
 
 </script>
@@ -152,13 +161,15 @@
     </thead>
 
     <tbody id="table-body">
-      <tr id="first-row">
-        <td><%= form.number_field :items_quantity %></td>
-        <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
-        <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
-        <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-        <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
-      </tr>
+      <%= form.fields_for :item_changes do |item_change_form| %>
+        <tr data-id="first-row">
+          <td><%= item_change_form.number_field :quantity %></td>
+          <td><%= item_change_form.select :category, Category.all.map { |category| category.name } %></td>
+          <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType } %></td>
+          <td><%= item_change_form.select :size, Item.all.map{ |item| item.size } %></td>
+          <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
   <button type="button" onclick="insertItemRow();">Add Item</button>

@@ -21,7 +21,8 @@ categories.each do |category|
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
-@someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6", in_inventory: true)
+@someitem = Item.find_by_itemType("Shoes")
+@someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6") if @someitem.nil?
 
 # loop do
 #   break if Request.count >= 10
