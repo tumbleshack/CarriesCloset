@@ -22,7 +22,11 @@
     <p>Address (if applicable): <%= @request.address %></p>
     <p>Phone: <%= @request.phone %></p>
     <p>Availability: <%= @request.availability %></p>
-    <p>Items: <%= @request.items %></p>
+    <p><strong>Items:</strong>
+      <%@request.item_changes.each do |item|%>
+        <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
+      <%end%>
+    </p>
     <p>Comments: <%= @request.comments %></p>
     <h4>==============================</h4>
     <p>Thank you!</p>

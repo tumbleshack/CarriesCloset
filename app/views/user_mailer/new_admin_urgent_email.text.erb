@@ -14,7 +14,9 @@ Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Addres
 Address (if applicable): <%= @request.address %>
 Phone: <%= @request.phone %>
 Availability: <%= @request.availability %>
-Items: <%= @request.items %>
+Items: <%@request.item_changes.each do |item|%>
+            <%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size -%>
+       <%end%>
 Comments: <%= @request.comments %>
 ==============================
 
