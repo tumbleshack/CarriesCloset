@@ -37,7 +37,12 @@ class RequestsController < ApplicationController
     @allCategories = Category.all
     @allItems = Item.all
     @requests = current_user != nil ? Request.where("email like ?", "%#{current_user.email}%") : nil  
-  end 
+  end
+
+  # GET /requests/popup
+  def popup
+    @request = Request.new
+  end
 
   # POST /requests or /requests.json
   def create
@@ -45,9 +50,11 @@ class RequestsController < ApplicationController
     @allItems = Item.all
     @request = Request.new(request_params)
 
+
     respond_to do |format|
 
       if @request.save
+
 
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
@@ -56,10 +63,11 @@ class RequestsController < ApplicationController
           UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
         end
 
+
         format.html { redirect_to @request, notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
       else
-        
+
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end

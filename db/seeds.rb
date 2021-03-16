@@ -9,9 +9,12 @@
 require 'faker'
 
 # Create Default user
-@mamie = User.find_by_email('test@example.com')
-@mamie = User.create!(email: 'test@example.com',
-                      password: 'secure-password') if @mamie.nil?
+@test = User.find_by_email('test@example.com')
+@test = User.create!(email: 'test@example.com',
+                     password: 'secure-password') if @test.nil?
+
+@default = User.find_by_email('carrie.closets@gmail.com')
+@default = User.create!(email: 'carrie.closets@gmail.com', password: 'GmM$}$X?fb!?+6&(', admin: true) if @default.nil?
 
 categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
 categories.each do |category|
@@ -24,4 +27,9 @@ categories.each do |category|
 @someitem = Item.find_by_itemType("Shoes")
 @someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6") if @someitem.nil?
 
+@volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
+@volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
+                          volunteer: true) if @volunteer.nil?
+
 end
+

@@ -1,5 +1,6 @@
 class User < ApplicationRecord
 
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -14,5 +15,6 @@ class User < ApplicationRecord
   scope :volunteers, -> { where(volunteer: 1) }
   scope :donees,     -> { where(donee:     1) }
   scope :donors,     -> { where(donor:     1) }
+
 
 end

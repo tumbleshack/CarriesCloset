@@ -2,7 +2,7 @@ class Donation < ApplicationRecord
 
   has_many :item_changes
   accepts_nested_attributes_for :item_changes, allow_destroy: true
-
+  
   validates_presence_of :full_name, :email, :availability,
                         :county, :meet, :phone, :item_changes
 
@@ -19,4 +19,7 @@ class Donation < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
+
+
+  
 end

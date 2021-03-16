@@ -30,6 +30,7 @@
     </div>
     <br>
 
+
     <div class = "centered-div">
     <%= link_to "My Donations", "donations/my_donations", class: "home-link" %>
     </div>
@@ -38,9 +39,17 @@
     <% if current_user.admin? %>
       <div class = "centered-div">
         <%= link_to "Add User", "users/invitation/new/", class: "home-link" %>
+
       </div>
       <br />
     <% end %>
+  <% end %>
+
+  <% if current_user && current_user.volunteer? %>
+    <div class="centered-div">
+      <%= link_to "New Pop-Up Shop Transaction", requests_popup_url, class: "home-link" %>
+    </div>
+    <br />
   <% end %>
 
   <div class = "centered-div">
@@ -48,7 +57,9 @@
   </div>
   <br>
   <div class = "centered-div">
+
   <%= link_to "Donate Items", new_donation_url, class: "home-link" %>
+
   </div>
   <br>
   <div class = "centered-div">
@@ -56,10 +67,12 @@
   </div>
   <br>
   <div class = "centered-div">
+
   <div class = "centered-div-support-us">
   <p class = "home-link-text">Support Our Cause<p>
   <form aria-live="polite" data-ux="Form" action="https://www.paypal.com/cgi-bin/webscr" method="post" class="home-li"><input type="hidden" name="edit_selector" data-aid="EDIT_PANEL_EDIT_PAYMENT_ICON"><input type="hidden" name="business" value="carrie.closets@gmail.com"><input type="hidden" name="cmd" value="_xclick"><input type="hidden" name="item_name" value="Support Our Cause"><input type="hidden" name="item_number"><input type="hidden" name="amount" value="20.00" data-aid="PAYMENT_HIDDEN_AMOUNT"><input type="hidden" name="shipping" value="0.00"><input type="hidden" name="currency_code" value="USD" data-aid="PAYMENT_HIDDEN_CURRENCY"><input type="hidden" name="rm" value="0"><input type="hidden" name="return" value="http://carriesclosetofga.org/"><input type="hidden" name="cancel_return" value="http://carriesclosetofga.org/"><input type="hidden" name="cbt" value="Return to Carrie's Closet of Georgia"><div data-ux="Block" class="home-link"><button data-ux-btn="spotlight" data-ux="ButtonSpotlight" shape="PILL" decoration="NONE" shadow="NONE" name="submit" data-aid="PAYMENT_PAYPALBUTTON_RENDERED" icon="[object Object]" data-typography="ButtonAlpha" class="home-link" data-tccl="ux2.PAYMENT.payment1.Form.Default.Button.Spotlight.82000.click,click"><span data-ux="Element" class="home-link"><span data-ux="Element" class="home-link"><img alt="image48" src="https://www.paypalobjects.com/webstatic/icon/pp258.png" data-ux="Image" data-aid="PAYMENT_PAYPALBUTTON_IMAGE_RENDERED" class="home-link"></span><span class="home-link-text" data-ux="Element" class="home-link">Donate</span></span></button></div></form>
   </div>
+
   </div>
   <div class = "centered-div">
     <p class="contact-info">Contact Information:<br>carrie.closets@gmail.com</p>
