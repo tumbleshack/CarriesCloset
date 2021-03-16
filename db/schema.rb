@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.integer "quantity"
     t.string "itemType"
     t.string "size"
-    t.integer "type", null: false
+    t.integer "change_type", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"

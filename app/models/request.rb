@@ -28,8 +28,8 @@ class Request < ApplicationRecord
     'Other (provide your address below)': 8
   }.freeze
 
-  has_many :item_changes, dependent: :destroy
-  accepts_nested_attributes_for :item_changes, allow_destroy: true, reject_if: :any_blank
+  has_many :item_changes
+  accepts_nested_attributes_for :item_changes, reject_if: :any_blank
 
   def any_blank(att)
     att.any? { |k, v| v.blank? }

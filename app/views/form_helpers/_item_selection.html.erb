@@ -7,7 +7,7 @@
   function updateItemTypes(element) {
     var items = <%= raw @allItems.to_json %>;
     var categories = <%= raw @allCategories.to_json %>;
-    var categoryName = element.value;
+    var categoryValue = element.value;
     var row = element.parentElement.parentElement;
     var itemSelector = row.querySelector('[data-selectortype$="itemType"]');
 
@@ -15,7 +15,9 @@
       itemSelector.remove(i);
     }
 
-    const matchedCategory = categories.find(c => c.name == categoryName);
+    console.log(categories);
+
+    const matchedCategory = categories.find(c => c.id == categoryValue);
     if (matchedCategory) {
       const categoryID = matchedCategory.id;
       const itemsForCategoryRaw = items.filter(i => i.category_id == categoryID);
@@ -161,9 +163,10 @@
       <%= form.simple_fields_for :item_changes do |item_change_form| %>
         <tr data-id=<%=item_change_form.index%>>
             <td><%= item_change_form.number_field :quantity %></td>
-            <td><%= item_change_form.select :category, Category.all.map { |category| category.name }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
+            <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
             <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
             <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
+            <td hidden><%= item_change_form.hidden_field :change_type, value:ItemChange::CHANGE_TYPES.fetch(:request) %></td>
             <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
         </tr> 
       <%end%>

@@ -19,12 +19,11 @@ class RequestsController < ApplicationController
     @request = Request.new
     @allCategories = Category.all
     @allItems = Item.all
-    @request.item_changes.build
+    1.times { @request.item_changes.build }
   end
 
   # GET /requests/1/edit
   def edit
-    super
     @allCategories = Category.all
     @allItems = Item.all
   end
@@ -36,15 +35,29 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
+    
+    # p "Person attributes hash: #{@request.attributes.inspect}"
+
+    
+    
     @request = Request.new(request_params)
 
-    p "Transform the nested attributes such that the category is an object (not string) and the type enum is set to :request"
-    p "Should be done in a re-usable helper function, so we can use it in the donation and popup shop form (also the update action)"
-    # request.item_changes = /* CALL HELPER WHICH PARSES request_params*/
-
     respond_to do |format|
+
+      # request_params["item_changes_attributes"].each do | key, val |
+      #   # format.html { redirect_to :back, notice: "Item quantities must be greater than zero." } 
+      #   return if (val["quantity"].nil? || Integer(val["quantity"]) < 1)
+      # end
+
       if @request.save
 
+        # request_params["item_changes_attributes"].each do | key, val |
+        #   newItem = ItemChange.new(val.except(:category, :change_type))
+        #   newItem.category = Category.find(val["category"])
+        #   newItem.request = @request
+        #   newItem.change_type = ItemChange::CHANGE_TYPES.fetch(:request)
+        #   newItem.save
+        # end
 
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
@@ -97,6 +110,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category, :quantity, :itemType, :size, :_destroy])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category_id, :quantity, :itemType, :size, :change_type])
   end
 end

@@ -1,20 +1,18 @@
 class ItemChange < ApplicationRecord
-    enum types: [ :request, :donation ]
+    
+    
+    CHANGE_TYPES = {
+        'request': 1,
+        'donation': 2,
+    }.freeze
 
     belongs_to :category
     belongs_to :request, optional: true
 
-    validates :type, inclusion: { in: types }
+    validates :change_type, inclusion: { in: CHANGE_TYPES.values }
 
     validates_presence_of :quantity, :itemType, :size
 
-    after_initialize :set_defaults, unless: :persisted?
-  # The set_defaults will only work if the object is new
+    validates_numericality_of :quantity, greater_than: 0 
 
-    def set_defaults
-        self.type = :request
-        self.category ||= Category.all.first
-    end
-
-    
 end

@@ -4,7 +4,7 @@ class CreateItemChanges < ActiveRecord::Migration[6.1]
       t.integer :quantity
       t.string :itemType
       t.string :size
-      t.column :type, :integer, null: false
+      t.column :change_type, :integer, null: false
 
       t.timestamps
     end
