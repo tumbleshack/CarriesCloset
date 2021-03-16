@@ -17,7 +17,7 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create donation" do
     assert_difference('Donation.count') do
-      post donations_url, params: { donation: { address: @donation.address, availability: @donation.availability, comments: @donation.comments, county: @donation.county, email: @donation.email, full_name: @donation.full_name, items: @donation.items, meet: @donation.meet, phone: @donation.phone } }
+      post donations_url, params: { donation: { address: @donation.address, availability: @donation.availability, comments: @donation.comments, county: @donation.county, email: @donation.email, full_name: @donation.full_name, item_changes: @donation.item_changes, meet: @donation.meet, phone: @donation.phone } }
     end
 
     assert_redirected_to donation_url(Donation.last)
@@ -34,7 +34,7 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update donation" do
-    patch donation_url(@donation), params: { donation: { address: @donation.address, availability: @donation.availability, comments: @donation.comments, county: @donation.county, email: @donation.email, full_name: @donation.full_name, items: @donation.items, meet: @donation.meet, phone: @donation.phone } }
+    patch donation_url(@donation), params: { donation: { address: @donation.address, availability: @donation.availability, comments: @donation.comments, county: @donation.county, email: @donation.email, full_name: @donation.full_name, item_changes: @donation.item_changes, meet: @donation.meet, phone: @donation.phone } }
     assert_redirected_to donation_url(@donation)
   end
 

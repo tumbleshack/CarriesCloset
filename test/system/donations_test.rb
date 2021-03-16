@@ -20,7 +20,7 @@ class DonationsTest < ApplicationSystemTestCase
     fill_in "County", with: @donation.county
     fill_in "Email", with: @donation.email
     fill_in "Full name", with: @donation.full_name
-    fill_in "Items", with: @donation.items
+    fill_in "Item Changes", with: @donation.item_changes
     check "Meet" if @donation.meet
     fill_in "Phone", with: @donation.phone
     click_on "Create Donation"
@@ -39,7 +39,7 @@ class DonationsTest < ApplicationSystemTestCase
     fill_in "County", with: @donation.county
     fill_in "Email", with: @donation.email
     fill_in "Full name", with: @donation.full_name
-    fill_in "Items", with: @donation.items
+    fill_in "Item Changes", with: @donation.item_changes
     check "Meet" if @donation.meet
     fill_in "Phone", with: @donation.phone
     click_on "Update Donation"

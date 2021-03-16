@@ -1,7 +1,10 @@
 class Donation < ApplicationRecord
 
+  has_many :item_changes
+  accepts_nested_attributes_for :item_changes, allow_destroy: true
+
   validates_presence_of :full_name, :email, :availability,
-                        :county, :meet, :phone, :items
+                        :county, :meet, :phone, :item_changes
 
   validates_numericality_of :county, greater_than: 0, :message => "can't be blank"
   

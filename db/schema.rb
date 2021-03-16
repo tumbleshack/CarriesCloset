@@ -54,7 +54,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.boolean "meet"
     t.string "address"
     t.string "availability"
-    t.string "items"
     t.text "comments"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -69,7 +68,9 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "category_id"
     t.bigint "request_id"
+    t.bigint "donation_id"
     t.index ["category_id"], name: "index_item_changes_on_category_id"
+    t.index ["donation_id"], name: "index_item_changes_on_donation_id"
     t.index ["request_id"], name: "index_item_changes_on_request_id"
   end
 
@@ -128,6 +129,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "item_changes", "categories"
+  add_foreign_key "item_changes", "donations"
   add_foreign_key "item_changes", "requests"
   add_foreign_key "items", "categories"
 end

@@ -43,7 +43,6 @@ class RequestsController < ApplicationController
   def create
     @allCategories = Category.all
     @allItems = Item.all
-    # p "Person attributes hash: #{@request.attributes.inspect}"
     @request = Request.new(request_params)
 
     respond_to do |format|
@@ -87,6 +86,8 @@ class RequestsController < ApplicationController
 
   # DELETE /requests/1 or /requests/1.json
   def destroy
+    @allCategories = Category.all
+    @allItems = Item.all
     @request.destroy
     respond_to do |format|
       format.html { redirect_to requests_url, notice: "Request was successfully destroyed." }

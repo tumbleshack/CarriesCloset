@@ -8,6 +8,7 @@ class ItemChange < ApplicationRecord
 
     belongs_to :category
     belongs_to :request, optional: true
+    belongs_to :donation, optional: true
 
     validates :change_type, inclusion: { in: CHANGE_TYPES.values }
 
