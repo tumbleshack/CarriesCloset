@@ -1,5 +1,26 @@
 <script>
 
+  window.onload = () => {
+    itemTypeSelectors = document.querySelectorAll('[data-selectortype$="category"]');
+    itemTypeSelectors.forEach(element => {
+      updateItemTypes(element);
+    });
+
+    sizeSelectors = document.querySelectorAll('[data-selectortype$="itemType"]');
+    sizeSelectors.forEach(element => {
+      updateItemSizes(element);
+    });
+
+    destroyNodes = document.querySelectorAll('[data-type$="destroy"]');
+    destroyNodes.forEach(node => {
+      if ((!node.style.display) || node.style.display.search("none") == -1) {
+        node.value = false;
+      }
+    });
+
+    
+  }
+
   function getBody() {
     return document.getElementById("table-body");
   }
@@ -41,7 +62,10 @@
     var itemTypeName = element.value;
 
     var row = element.parentElement.parentElement;
+    if (row.tagName == "TD") row = row.parentElement;
+    console.log(row)
     var sizeSelector = row.querySelector('[data-selectortype$="size"]');
+    console.log(sizeSelector)
 
     for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
       sizeSelector.remove(i);
@@ -69,7 +93,7 @@
 
   function getLastRow() {
     const body = getBody();
-    const prevRows = [ ...body.childNodes ].filter(element => element.tagName == "TR");
+    const prevRows = getAllRows();
     var maxIndex = -1;
     var maxRow = null;
     prevRows.forEach(row => {
@@ -109,8 +133,12 @@
     const clone = prevRow.cloneNode(true);
     clone.dataset.id = parseInt(clone.dataset.id) + 1;
     var categorySelector = null;
+    clone.style.display = null;
     
     const incrementNameAndIdIndex = (node) => {
+      if (node.className && node.className.search("field_with_errors") > -1) {
+        node.className = node.className.replace("field_with_errors", "");
+      }
       found = extractIndexFromName(node.name)
       if (found != null) {
         node.name = node.name.replace("[" + found[0] + "]", "[" + (found[0] + 1) + "]");
@@ -120,6 +148,8 @@
           categorySelector = node;
         } else if (node.dataset.selectortype == "itemType") {
           node.onchange = function() { updateItemSizes(this); }
+        } else if (node.dataset.type == "destroy") {
+          node.value = false;
         }
       }
     }
@@ -130,12 +160,16 @@
   }
 
   function removeItemRow(button) {
-    if (getAllRows().length < 2) return;
+    if (getAllRows().filter(node => (!node.style.display) || node.style.display.search("none") == -1).length < 2) return;
     const index = button.parentNode.parentNode.dataset.id;
     const body = getBody();
     const selector = '[data-id="' + index + '"]';
     const row = body.querySelector(selector);
-    body.removeChild(row);
+    console.log(row)
+    row.style.display = "none";
+    destroyNode = row.querySelector('[data-type$="destroy"]')
+    destroyNode.value = true;
+    
   }
 
   function toUnique(array) { //array,placeholder,placeholder
@@ -160,13 +194,14 @@
     </thead>
 
     <tbody id="table-body">
-      <%= form.simple_fields_for :item_changes do |item_change_form| %>
+      <%= form.fields_for :item_changes do |item_change_form| %>
         <tr data-id=<%=item_change_form.index%>>
             <td><%= item_change_form.number_field :quantity %></td>
             <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
             <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
             <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
             <td hidden><%= item_change_form.hidden_field :change_type, value:ItemChange::CHANGE_TYPES.fetch(:request) %></td>
+            <td hidden><%= item_change_form.hidden_field :_destroy, html_options = {:onchange => "updateItemSizes(this)", :data => { type: "destroy" }}%></td>
             <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
         </tr> 
       <%end%>

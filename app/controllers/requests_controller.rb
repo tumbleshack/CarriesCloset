@@ -8,10 +8,14 @@ class RequestsController < ApplicationController
   # GET /requests or /requests.json
   def index
     @requests = Request.all
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/1 or /requests/1.json
   def show
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/new
@@ -30,34 +34,21 @@ class RequestsController < ApplicationController
 
   # GET /requests/my-requests
   def my_requests
+    @allCategories = Category.all
+    @allItems = Item.all
     @requests = current_user != nil ? Request.where("email like ?", "%#{current_user.email}%") : nil  
   end 
 
   # POST /requests or /requests.json
   def create
-    
+    @allCategories = Category.all
+    @allItems = Item.all
     # p "Person attributes hash: #{@request.attributes.inspect}"
-
-    
-    
     @request = Request.new(request_params)
 
     respond_to do |format|
 
-      # request_params["item_changes_attributes"].each do | key, val |
-      #   # format.html { redirect_to :back, notice: "Item quantities must be greater than zero." } 
-      #   return if (val["quantity"].nil? || Integer(val["quantity"]) < 1)
-      # end
-
       if @request.save
-
-        # request_params["item_changes_attributes"].each do | key, val |
-        #   newItem = ItemChange.new(val.except(:category, :change_type))
-        #   newItem.category = Category.find(val["category"])
-        #   newItem.request = @request
-        #   newItem.change_type = ItemChange::CHANGE_TYPES.fetch(:request)
-        #   newItem.save
-        # end
 
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
@@ -78,9 +69,11 @@ class RequestsController < ApplicationController
 
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
+    @allCategories = Category.all
+    @allItems = Item.all
+
     respond_to do |format|
       if @request.update(request_params)
-        #@request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} Size #{request_params["items_sizes"]}"
         @request.save
 
         format.html { redirect_to @request, notice: "Request was successfully updated." }
@@ -110,6 +103,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:category_id, :quantity, :itemType, :size, :change_type])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size, :change_type, :_destroy])
   end
 end

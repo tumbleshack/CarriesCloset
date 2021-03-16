@@ -29,7 +29,7 @@ class Request < ApplicationRecord
   }.freeze
 
   has_many :item_changes
-  accepts_nested_attributes_for :item_changes, reject_if: :any_blank
+  accepts_nested_attributes_for :item_changes, allow_destroy: true
 
   def any_blank(att)
     att.any? { |k, v| v.blank? }
