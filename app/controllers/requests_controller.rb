@@ -5,6 +5,8 @@ class RequestsController < ApplicationController
 
   before_action -> { require_role(:root, :admin) }, only: :index
 
+  before_action :check_timeout, only: :show
+
   # GET /requests or /requests.json
   def index
     @requests = Request.all
@@ -113,5 +115,11 @@ class RequestsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def request_params
     params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size, :change_type, :_destroy])
+  end
+
+  # Redirects to :root if accessed by non-volunteer after 30 minutes to
+  # protect information contained in request.
+  def check_timeout
+    require_role(:root, :volunteer) if @request.nil? || (Time.current.utc - @request.created_at.utc) / 1.minute > 30
   end
 end
