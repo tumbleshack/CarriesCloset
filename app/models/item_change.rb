@@ -14,6 +14,8 @@ class ItemChange < ApplicationRecord
 
     validates_presence_of :quantity, :itemType, :size
 
-    validates_numericality_of :quantity, greater_than: 0 
+    validates_numericality_of :quantity, greater_than: 0
+    
+    default_scope { order(quantity: :desc) }
 
 end
