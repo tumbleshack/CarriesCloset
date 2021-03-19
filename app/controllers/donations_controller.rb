@@ -8,31 +8,43 @@ class DonationsController < ApplicationController
   # GET /donations or /donations.json
   def index
     @donations = Donation.all
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /donations/1 or /donations/1.json
   def show
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /donations/new
   def new
     @donation = Donation.new
+    @allCategories = Category.all
+    @allItems = Item.all
+    1.times { @donation.item_changes.build }
   end
 
   # GET /donations/1/edit
   def edit
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /donations/my-donations
   def my_donations
+    @allCategories = Category.all
+    @allItems = Item.all
     @donations = current_user != nil ? Donation.where("email like ?", "%#{current_user.email}%") : nil  
   end 
 
   # POST /donations or /donations.json
   def create
-    @donation = Donation.new(donation_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-    @donation.items = "#{donation_params["items_quantity"]}x #{donation_params["items_category"]} #{donation_params["items_itemType"]} size #{donation_params["items_sizes"]}"
-
+    @allCategories = Category.all
+    @allItems = Item.all
+    @donation = Donation.new(donation_params)
+  
     respond_to do |format|
       if @donation.save
 
@@ -49,9 +61,10 @@ class DonationsController < ApplicationController
 
   # PATCH/PUT /donations/1 or /donations/1.json
   def update
+    @allCategories = Category.all
+    @allItems = Item.all
     respond_to do |format|
-      if @donation.update(donation_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-        @donation.items = "#{donation_params["items_quantity"]}x #{donation_params["items_category"]} #{donation_params["items_itemType"]} Size #{donation_params["items_sizes"]}"
+      if @donation.update(donation_params)
         @donation.save
 
         format.html { redirect_to @donation, notice: "Donation was successfully updated." }
@@ -65,6 +78,8 @@ class DonationsController < ApplicationController
 
   # DELETE /donations/1 or /donations/1.json
   def destroy
+    @allCategories = Category.all
+    @allItems = Item.all
     @donation.destroy
     respond_to do |format|
       format.html { redirect_to donations_url, notice: "Donation was successfully destroyed." }
@@ -80,6 +95,6 @@ class DonationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def donation_params
-      params.require(:donation).permit(:full_name, :email, :phone, :county, :meet, :address, :availability, :items, :items_quantity, :items_category, :items_itemType, :items_sizes, :comments)
+      params.require(:donation).permit(:full_name, :email, :phone, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size, :change_type, :_destroy])
     end
 end

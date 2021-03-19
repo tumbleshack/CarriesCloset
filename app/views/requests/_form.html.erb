@@ -62,7 +62,7 @@
     <%= form.text_field :availability %>
   </div>
 
-  <%= render partial: 'item_selection', locals: { form: form } %>
+  <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request } %> 
 
   <div class="field">
     <%= form.label :comments %>

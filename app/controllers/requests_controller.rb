@@ -5,26 +5,39 @@ class RequestsController < ApplicationController
 
   before_action -> { require_role(:root, :admin) }, only: :index
 
+  before_action :check_timeout, only: :show
+
   # GET /requests or /requests.json
   def index
     @requests = Request.all
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/1 or /requests/1.json
   def show
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/new
   def new
     @request = Request.new
+    @allCategories = Category.all
+    @allItems = Item.all
+    1.times { @request.item_changes.build }
   end
 
   # GET /requests/1/edit
   def edit
+    @allCategories = Category.all
+    @allItems = Item.all
   end
 
   # GET /requests/my-requests
   def my_requests
+    @allCategories = Category.all
+    @allItems = Item.all
     @requests = current_user != nil ? Request.where("email like ?", "%#{current_user.email}%") : nil  
   end
 
@@ -35,14 +48,14 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
-
-    @request = Request.new(request_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-    @request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} size #{request_params["items_sizes"]}"
+    @allCategories = Category.all
+    @allItems = Item.all
+    @request = Request.new(request_params)
 
 
     respond_to do |format|
-      if @request.save
 
+      if @request.save
 
 
         # ActionMailer should send email immediately after new request creation is saved
@@ -65,10 +78,11 @@ class RequestsController < ApplicationController
 
   # PATCH/PUT /requests/1 or /requests/1.json
   def update
-    respond_to do |format|
+    @allCategories = Category.all
+    @allItems = Item.all
 
-      if @request.update(request_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-        @request.items = "#{request_params["items_quantity"]}x #{request_params["items_category"]} #{request_params["items_itemType"]} Size #{request_params["items_sizes"]}"
+    respond_to do |format|
+      if @request.update(request_params)
         @request.save
 
         format.html { redirect_to @request, notice: "Request was successfully updated." }
@@ -82,6 +96,8 @@ class RequestsController < ApplicationController
 
   # DELETE /requests/1 or /requests/1.json
   def destroy
+    @allCategories = Category.all
+    @allItems = Item.all
     @request.destroy
     respond_to do |format|
       format.html { redirect_to requests_url, notice: "Request was successfully destroyed." }
@@ -98,8 +114,12 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size, :change_type, :_destroy])
+  end
 
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :items, :items_quantity, :items_category, :items_itemType, :items_sizes, :comments)
-
+  # Redirects to :root if accessed by non-volunteer after 30 minutes to
+  # protect information contained in request.
+  def check_timeout
+    require_role(:root, :volunteer) if @request.nil? || (Time.current.utc - @request.created_at.utc) / 1.minute > 30
   end
 end
