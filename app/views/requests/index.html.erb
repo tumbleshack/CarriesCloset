@@ -34,7 +34,11 @@
         <td><%= request.meet %></td>
         <td><%= request.address %></td>
         <td><%= request.availability %></td>
-        <td>DISPLAY ITEMS HERE?</td>
+        <td>
+            <% request.item_changes.limit(5).each do |item_change| %>
+              <li><%= item_change.category.name %> <%= item_change.itemType %> (Size <%= item_change.size %>) x <%= item_change.quantity %></li>
+            <% end %>
+        </td>
         <td><%= request.comments %></td>
         <td><%= link_to 'Show', request %></td>
         <td><%= link_to 'Edit', edit_request_path(request) %></td>
