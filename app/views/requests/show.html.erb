@@ -29,18 +29,10 @@
 </p>
 
 
-<% if @request.meet %>
-  <p>
-    <strong>County:</strong>
-    <%= Request::COUNTIES.key(@request.county) %>
-
-  </p>
-<% else %>
-  <p>
-    <strong>Address:</strong>
-    <%= @request.address %>
-  </p>
-<% end %>
+<p>
+  <strong>Meeting Location:</strong>
+  <%= @request.location %>
+</p>
 
 <p>
   <strong>Availability:</strong>
@@ -49,9 +41,11 @@
 
 <p>
   <strong>Items:</strong>
-  <%@request.item_changes.each do |item|%>
-     <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
-  <%end%>
+  <ul>
+    <% @request.item_changes.each do |item|%>
+     <li><%= item.description %></li>
+    <%end%>
+  </ul>
 </p>
 
 <p>

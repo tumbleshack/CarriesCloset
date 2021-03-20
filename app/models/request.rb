@@ -51,5 +51,13 @@ class Request < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
-            
+
+  def county_str
+    Request::COUNTIES.key(county)
+  end
+
+  def location
+    meet == 1 ? "#{county_str} DFCS Office" : address
+  end
+  
 end

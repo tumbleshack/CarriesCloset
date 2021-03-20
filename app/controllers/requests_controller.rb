@@ -52,19 +52,14 @@ class RequestsController < ApplicationController
     @allItems = Item.all
     @request = Request.new(request_params)
 
-
     respond_to do |format|
-
       if @request.save
-
-
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
         if @request.urgency == 1
           UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
         end
-
 
         format.html { redirect_to @request, notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
@@ -83,8 +78,6 @@ class RequestsController < ApplicationController
 
     respond_to do |format|
       if @request.update(request_params)
-        @request.save
-
         format.html { redirect_to @request, notice: "Request was successfully updated." }
         format.json { render :show, status: :ok, location: @request }
       else

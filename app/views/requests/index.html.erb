@@ -10,9 +10,7 @@
       <th>Email</th>
       <th>Phone</th>
       <th>Relationship</th>
-      <th>County</th>
-      <th>Meet at DFCS</th>
-      <th>Address</th>
+      <th>Meeting Location</th>
       <th>Availability</th>
       <th>Items</th>
       <th>Comments</th>
@@ -29,14 +27,11 @@
         <td><%= request.email %></td>
         <td><%= request.phone %></td>
         <td><%= Request::RELATIONSHIPS.key(request.relationship) %></td>
-        <td><%= Request::COUNTIES.key(request.county) %></td>
-
-        <td><%= request.meet %></td>
-        <td><%= request.address %></td>
+        <td><%= request.location %></td>
         <td><%= request.availability %></td>
         <td>
             <% request.item_changes.limit(5).each do |item_change| %>
-              <li><%= item_change.category.name %> <%= item_change.itemType %> (Size <%= item_change.size %>) x <%= item_change.quantity %></li>
+              <li><%= item_change.description %></li>
             <% end %>
         </td>
         <td><%= request.comments %></td>
