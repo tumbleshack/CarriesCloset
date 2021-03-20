@@ -31,6 +31,13 @@
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
+  <div class="field" style="border: 1px solid red;">
+    <%= f.fields_for :email_setting, include_id: false do |email_f| %>
+      <%= email_f.label :preference %>
+      <%= email_f.select(:preference, EmailSetting::OPTIONS) %>
+    <% end %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>

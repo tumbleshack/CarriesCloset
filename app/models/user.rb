@@ -16,5 +16,7 @@ class User < ApplicationRecord
   scope :donees,     -> { where(donee:     1) }
   scope :donors,     -> { where(donor:     1) }
 
+  has_one :email_setting
+  accepts_nested_attributes_for :email_setting, update_only: true
 
 end
