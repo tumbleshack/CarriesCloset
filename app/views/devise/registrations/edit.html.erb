@@ -27,15 +27,16 @@
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="field" style="border: 1px solid red;">
     <%= f.fields_for :email_setting, include_id: false do |email_f| %>
-      <%= email_f.label :preference %>
+      <%= email_f.label :preference, "Email Notification Preferences" %>
+	  <p>TODO: Descriptive text</p>
       <%= email_f.select(:preference, EmailSetting::OPTIONS) %>
     <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
   <div class="actions">
