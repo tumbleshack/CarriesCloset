@@ -21,9 +21,15 @@ class UserMailer < ApplicationMailer
       if User.volunteers.any?
         volunteers = User.volunteers.pluck(:email)
         for x in User.volunteers do   
-          if x.email_setting.send_all?
+          if x.email_setting.send_all? != nil && x.email_setting.send_all? # add volunteers who want to receive all emails
             volunteer_emails[count] = x.email
             count = count + 1
+          end
+          if @request.urgency == 1 # if request is URGENT
+            if x.email_setting.send_urgent? # add volunteers who want to receive only urgent emails IF the request is URGENT
+              volunteer_emails[count] = x.email
+              count = count + 1
+            end
           end  
         end
       end
@@ -32,7 +38,7 @@ class UserMailer < ApplicationMailer
         mail to: volunteer_emails, #send to all admins
             subject: "Donation Request Notification"
       else 
-        mail to: 'carries.closet.confirmations@gmail.com', #send to all ccarries closet email if no admins
+        mail to: 'carries.closet.confirmations@gmail.com', #send to all carries closet email if no volunteers
           subject: "Donation Request Notification"
       end 
     end
