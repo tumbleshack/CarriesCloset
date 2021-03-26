@@ -1,0 +1,29 @@
+Hi,
+This message is to notify you of a new donation request from Carrie's Closet of GA.
+The request details are provided below.
+
+You are signed up to recieve donation request notifications from Carrie's Closet. You can change these setting by logging
+into your account at Carrie's Closet of GA.
+
+Request Details
+
+==============================
+Name: <%= @request.full_name %>
+Email: <%= @request.email %>
+Urgency: <%= Request::URGENCIES.key(@request.urgency) %>
+Relationship to Donee: <%= Request::RELATIONSHIPS.key(@request.relationship) %>
+County: <%=Request::COUNTIES.key(@request.county) %>
+Pickup Location: <%= @request.address.empty? ? 'County DFCS Office' : 'My Address' %>
+Address (if applicable): <%= @request.address %>
+Phone: <%= @request.phone %>
+Availability: <%= @request.availability %>
+Items: <%@request.item_changes.each do |item|%>
+            <%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size -%>
+       <%end%>
+Comments: <%= @request.comments %>
+==============================
+
+Thank you!
+
+Sincerely, 
+Carrie's Closet Team
