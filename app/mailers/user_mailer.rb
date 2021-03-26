@@ -20,7 +20,7 @@ class UserMailer < ApplicationMailer
       count = 0
       if User.volunteers.any?
         volunteers = User.volunteers.pluck(:email)
-        for x in User.volunteers do 
+        for x in User.volunteers do   
           if x.email_setting.send_all?
             volunteer_emails[count] = x.email
             count = count + 1
