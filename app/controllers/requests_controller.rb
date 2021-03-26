@@ -65,6 +65,8 @@ class RequestsController < ApplicationController
           UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
         end
 
+        UserMailer.with(request: @request).volunteer_email.deliver_later
+
 
         format.html { redirect_to @request, notice: "Request was successfully created." }
         format.json { render :show, status: :created, location: @request }
