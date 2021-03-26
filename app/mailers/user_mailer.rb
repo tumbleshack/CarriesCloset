@@ -16,7 +16,7 @@ class UserMailer < ApplicationMailer
 
     def volunteer_email
       @request = params[:request]
-      volunteer_emails = Array.new
+      volunteer_emails = Array.new # fill with relevant volunteer emails 
       count = 0
       if User.volunteers.any?
         volunteers = User.volunteers.pluck(:email)
