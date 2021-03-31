@@ -5,13 +5,40 @@ class UserMailer < ApplicationMailer
         @request = params[:request]
         # mail to: User.admins.pluck(:email), #send to all admins
         #   subject: "[URGENT] Donation Request" if User.admins.any? # only is admins exist
-        if User.admins.any?
-          mail to: User.admins.pluck(:email), #send to all admins
-           subject: "[URGENT] Donation Request"
-        else 
-          mail to: 'carries.closet.confirmations@gmail.com', #send to all ccarries closet email if no admins
-           subject: "[URGENT] Donation Request"
-        end   
+        # if User.admins.any?
+        #   mail to: User.admins.pluck(:email), #send to all admins
+        #    subject: "[URGENT] Donation Request"
+        # else 
+        #   mail to: 'carries.closet.confirmations@gmail.com', #send to all ccarries closet email if no admins
+        #    subject: "[URGENT] Donation Request"
+        # end   
+
+      # WITH NEW EMAIL SETTINGS -- SPRINT 4
+      admin_emails = Array.new # fill with relevant admin emails 
+      count = 0
+      if User.admins.any?
+        admins = User.admins.pluck(:email)
+        for x in User.admins do   
+          if x.email_setting.send_all? != nil && x.email_setting.send_all? # add admins who want to receive all emails
+            admin_emails[count] = x.email
+            count = count + 1
+          end
+          if @request.urgency == 1 # if request is URGENT
+            if x.email_setting.send_urgent? # add admins who want to receive only urgent emails IF the request is URGENT
+              admin_emails[count] = x.email
+              count = count + 1
+            end
+          end  
+        end
+      end
+      
+      if admin_emails.length() > 0
+        mail to: admin_emails, #send to all admins
+            subject: "Donation Request Notification"
+      else 
+        mail to: 'carries.closet.confirmations@gmail.com', #send to all carries closet email if no admins
+          subject: "Donation Request Notification"
+      end 
     end
 
     def volunteer_email
