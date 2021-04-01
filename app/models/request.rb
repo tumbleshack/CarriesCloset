@@ -28,6 +28,11 @@ class Request < ApplicationRecord
     'Other (provide your address below)': 8
   }.freeze
 
+  enum status: { pending: 0, claimed: 1, delivery_ready: 2 }
+  scope :pending,        -> { where(status: :pending) }
+  scope :claimed,        -> { where(status: :claimed) }
+  scope :delivery_ready, -> { where(status: :delivery_ready) }
+
   has_many :item_changes
   accepts_nested_attributes_for :item_changes, allow_destroy: true
 

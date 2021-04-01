@@ -19,6 +19,7 @@ require 'faker'
 categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
 categories.each do |category|
   Category.create!(name: category) if Category.find_by_name(category).nil?
+end
 
 @admin = User.find_by_email('carries.closet.confirmations@gmail.com')
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
@@ -30,6 +31,3 @@ categories.each do |category|
 @volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
 @volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
                           volunteer: true) if @volunteer.nil?
-
-end
-
