@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :items
   get '/requests/my_requests' => 'requests#my_requests'
   get '/requests/popup' => 'requests#popup'
+  get '/requests/volunteer' => 'requests#volunteer'
   get '/users/manage' => 'users#manage'
   resources :requests
   get 'public/index'

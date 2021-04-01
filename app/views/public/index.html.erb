@@ -52,6 +52,13 @@
     <br />
   <% end %>
 
+  <% if current_user&.volunteer? %>
+    <div class="centered-div">
+      <%= link_to "Volunteer Requests", requests_volunteer_path, class: "home-link" %>
+    </div>
+    <br />
+  <% end %>
+
   <div class = "centered-div">
   <%= link_to 'Request Clothing and Hygiene Items', new_request_url, class: "home-link"%>
   </div>

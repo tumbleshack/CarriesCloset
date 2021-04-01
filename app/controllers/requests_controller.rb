@@ -20,6 +20,9 @@ class RequestsController < ApplicationController
     @allItems = Item.all
   end
 
+  def volunteer
+  end
+
   # GET /requests/new
   def new
     @request = Request.new

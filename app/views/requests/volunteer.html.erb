@@ -1,0 +1,12 @@
+<h1>Pending Requests (<%= Request.pending.count %>)</h1>
+<% Request.pending.each do |pending_request| %>
+  <ul>
+    <% pending_request.item_changes.limit(5).each do |item| %>
+      <li><%= item.description %></li>
+    <% end %>
+  </ul>
+
+  <p><%= time_ago_in_words(pending_request.due_time) %></p>
+<% end %>
+
+<h1>Ready to Deliver (<%= Request.delivery_ready.count %>)</h1>
