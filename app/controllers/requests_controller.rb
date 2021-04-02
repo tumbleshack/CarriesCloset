@@ -130,7 +130,7 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size, :change_type, :_destroy])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :settled, :itemType, :size, :change_type, :_destroy])
   end
 
   # Redirects to :root if accessed by non-volunteer after 30 minutes to
