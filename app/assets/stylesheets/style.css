@@ -210,10 +210,13 @@ ul#subjects li {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
-.navbar-element {
+.navbar-element, .navbar-element:hover {
   align-items: center;
   height: 80px;
+  padding: 0px 5%;
+  background-color: #e8f6fb;
 }
 
 
