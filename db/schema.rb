@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2021_03_15_031158) do
 
-
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -40,7 +39,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
-
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -113,7 +111,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.boolean "volunteer", default: false
     t.boolean "donee", default: false
     t.boolean "donor", default: false
-
     t.string "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -126,7 +123,6 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
     t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
     t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
     t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by"
-
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -136,5 +132,4 @@ ActiveRecord::Schema.define(version: 2021_03_15_031158) do
   add_foreign_key "item_changes", "donations"
   add_foreign_key "item_changes", "requests"
   add_foreign_key "items", "categories"
-
 end
