@@ -31,3 +31,30 @@ end
 @volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
 @volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
                           volunteer: true) if @volunteer.nil?
+
+loop do |index|
+  break if Request.count >= 10 || Rails.env.production?
+
+  request = Request.new relationship: Request::RELATIONSHIPS.values.sample,
+                        full_name: Faker::Name.name,
+                        urgency: Request::URGENCIES.values.sample,
+                        email: Faker::Internet.email,
+                        availability: 1,
+                        county: Request::COUNTIES.values.sample,
+                        meet: 1,
+                        phone: (678_555_0000...678_567_9999).to_a.sample.to_s,
+                        status: [ 0, 2 ].sample
+
+  (1...10).to_a.sample.times do
+    category = categories.sample
+    change = request.item_changes.new category: Category.find_by_name(category),
+                                      change_type: 1,
+                                      quantity: (1...20).to_a.sample,
+                                      itemType: Item.all.pluck(:itemType).sample,
+                                      size: %w[ XS S M L XL XXL ].sample
+    change.save!
+  end
+
+  puts "Request #{index} created: '#{request.full_name}' requests \n- " +
+         "#{request.item_changes.map(&:description).join("\n- ")}'" if request.save
+end
