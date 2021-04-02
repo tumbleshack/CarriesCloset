@@ -20,18 +20,21 @@
       <%= image_tag 'logo.png', class:"navbar-element" %>
       <%= link_to image_tag("home.png", class:"navbar-element"), root_url, {:style=>'padding-right: 5px;', :class => "navbar-element"} %>
       </div>
-      <br>
+      
       <% if current_user.nil? %>
-        
+        <div class="margins-needed">
         <%= link_to 'Log In', new_user_session_url, class:"small-link-button" %>
         <%= link_to 'Sign Up', new_user_registration_url, class:"small-link-button" %>
+        </div>
       <% else %>
+        <div class="margins-needed">
         <%= current_user.email %> |
-        <%= link_to 'Edit Account', edit_user_registration_url %> |
-        <%= link_to 'Log Out', destroy_user_session_url %>
+        <%= link_to 'Edit Account', edit_user_registration_url, class:"small-link-button" %> |
+        <%= link_to 'Log Out', destroy_user_session_url, class:"small-link-button" %>
+        </div>
       <% end %>
     </nav>
-
+    <div class="padding-for-nav-bar"> </div>
 
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
