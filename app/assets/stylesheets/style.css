@@ -8,10 +8,10 @@ body {
 }
 input, textarea, select, button, option {
   width : 100%;
-  padding: 0;
+  padding: 5px;
   margin: 0;
-  box-sizing: border-box;
-  border: 1.5px solid #74B9CB;
+  border: 1.5px solid;
+  border-color: #74B9CB;
   border-radius: 8px;
   background-color: white;
   font-family: Cabin;
@@ -25,9 +25,12 @@ button, input[type=submit] {
 button:hover, input[type=submit]:hover {
   background-color: #e8f6fb;
 }
-input[type=radio] {
-  width: 20px;
+
+option {
+    color: white;
+    background-color: #74B9CB !important;
 }
+
 
 p, label {
    font-family: Cabin;
@@ -136,10 +139,6 @@ margin-top:1%;
 .centered-div {
     display: flex;
     justify-content: center;
-}
-
-input {
-   margin-bottom: 5px;
 }
 
 
@@ -295,3 +294,10 @@ li {
   color: #CC0000;
 }
 
+input[type=radio] {
+  height: 25px;
+  width: 25px;
+  color: #74b9cb;
+  border: 2px solid #74B9CB;
+  box-sizing: border-box;
+}
