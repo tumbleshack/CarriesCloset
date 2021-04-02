@@ -213,6 +213,7 @@ ul#subjects li {
 }
 .navbar-element {
   align-items: center;
+  height: 80px;
 }
 
 

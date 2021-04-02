@@ -15,11 +15,12 @@
 
   <body>
     <nav>
-
-      <%= link_to 'Back', :back, class:"small-link-button" %>
-      <!--<%= image_tag 'logo.png', class:"navbar-element" %> -->
-      <%= link_to 'Home', root_url, class:"small-link-button" %> |
-      
+      <div class="nav-bar">
+      <%= link_to image_tag("back.png", class:"navbar-element"), :back, class:"navbar-element" %>
+      <%= image_tag 'logo.png', class:"navbar-element" %>
+      <%= link_to image_tag("home.png", class:"navbar-element"), root_url, class:"navbar-element" %>
+      </div>
+      <br>
       <% if current_user.nil? %>
         
         <%= link_to 'Log In', new_user_session_url, class:"small-link-button" %>
