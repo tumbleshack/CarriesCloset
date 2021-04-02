@@ -69,5 +69,31 @@ class Request < ApplicationRecord
 
     created_at + offset
   end
-            
+
+  # Returns a hash which stores the inventory items that match each element inside request.item_changes to the actual inventory quantity.
+  # If the item is either out of stock or in limited stock it will show up in this hash, otherwise it will not.
+  # So, an item that has enough stock to fulfill the order will not be in the hash, otherwise it will have the form:
+  # [itemChangeID: inventoryStock]. If someone requested 15 Boy's Size 6 Shoe's with ID 2 and there were only 5 in stock it would show 
+  # [2: 5], where 2 is the ID of the 15 Boy's Size 6 in item_change and 5 is the actual stock in the "items" table
+  def getItemStock
+    itemsToStock = {}
+    for item in item_changes
+      # match item for inventory 
+      matchingItems = Item.where(:itemType => item.itemType, :size => item.size, :category_id => item.category_id)
+
+      # loop through and calculate the total inventory size
+      inventoryQuantity = 0
+      for matchedItem in matchingItems
+        inventoryQuantity += matchedItem.quantity
+      end 
+
+      # this indicates there is not enough stock, so store the inventory quantity 
+      if inventoryQuantity < item.quantity
+        itemsToStock[item.id] = inventoryQuantity
+      end 
+    end 
+
+    return itemsToStock
+  end 
+
 end

@@ -1,7 +1,19 @@
 <div class="volunteer-request-list-block">
+  <% @itemsToStock = request.getItemStock() %>
   <ul>
     <% request.item_changes.limit(5).each do |item| %>
-      <li><%= item.description %></li>
+      <li>
+        <%= item.description %>
+        <% if @itemsToStock.keys.any?(item.id) %>
+          <% if @itemsToStock[item.id] > 0 %>
+            - Limited Stock (<%= @itemsToStock[item.id] =%>)
+          <% else %>
+            - Out of Stock
+          <% end %>
+        <% end %>
+      
+      </li>
+      
     <% end %>
 
     <% if request.item_changes.count > 5 %>

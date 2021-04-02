@@ -54,6 +54,13 @@
       <p>
         <%= check_box 'accept', true %>
         <%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %>
+        <% if @itemsToStock.keys.any?(item.id) %>
+          <% if @itemsToStock[item.id] > 0 %>
+            - Limited Stock (<%= @itemsToStock[item.id] =%>)
+          <% else %>
+            - Out of Stock
+          <% end %>
+        <% end %>
       </p>
     <%end%>
   <% else %>

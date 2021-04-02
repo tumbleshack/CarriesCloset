@@ -18,6 +18,8 @@ class RequestsController < ApplicationController
   def show
     @allCategories = Category.all
     @allItems = Item.all
+    @itemsToStock = @request.getItemStock()
+
   end
 
   def volunteer
@@ -28,8 +30,25 @@ class RequestsController < ApplicationController
     @request.status = @request.status == "pending" ? "delivery_ready" : "claimed"
     
     if @request.status == "claimed"
-      # remove items from inventory
-      
+      # iterate through items table and update quantity 
+      for item in @request.item_changes
+        # match item for inventory 
+        matchingItems = Item.where(:itemType => item.itemType, :size => item.size, :category_id => item.category_id)
+        quantityFulfilled = item.quantity
+
+        # contiously remove from each item until the set quantity has been removed 
+        for matchedItem in matchingItems
+          if matchedItem.quantity <= quantityFulfilled
+            # perform the update quantity 
+            # ex: quantityFulfilled = 20, and amount in inventory = 15, then quantityFulfilled becomes 5 and amount in inventory should become 0
+            # it will then continue to loop to see if there are any more items it can remove
+            amountToRemove = quantityFulfilled
+            quantityFulfilled -= matchedItem.quantity
+            matchedItem.quantity -= amountToRemove 
+            matchedItem.save 
+          end 
+        end 
+      end
     end 
     @request.save 
 
