@@ -23,6 +23,14 @@ class RequestsController < ApplicationController
   def volunteer
   end
 
+  def next_status
+    @request = Request.find(params[:format])
+    @request.status = @request.status == "pending" ? "delivery_ready" : "claimed"
+    @request.save 
+
+    redirect_to @request
+  end
+
   # GET /requests/new
   def new
     @request = Request.new
