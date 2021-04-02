@@ -4,6 +4,7 @@ class ItemChange < ApplicationRecord
     CHANGE_TYPES = {
         'request': 1,
         'donation': 2,
+        'cart_item': 3
     }.freeze
 
     belongs_to :category, optional: true

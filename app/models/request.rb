@@ -1,5 +1,7 @@
 class Request < ApplicationRecord
 
+  before_create :create_cart_items
+
   URGENCIES = {
     '': 0,
     'Within 24 hours': 1,
@@ -53,5 +55,15 @@ class Request < ApplicationRecord
 
   validates :full_name,
             length: { in: 2..80 }
-            
+
+  private
+
+  def create_cart_items
+    item_changes.all.each do |item_change|
+      copy = item_change.dup.save!
+      copy.change_type = ItemChange::CHANGE_TYPES[:cart_item]
+      puts copy
+      item_change.cart_items << copy
+    end
+  end
 end
