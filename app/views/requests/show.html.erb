@@ -51,7 +51,10 @@
   <strong>Requested Items:</strong>
   <% if current_user&.volunteer? %>
     <%@request.item_changes.each do |item|%>
-      <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
+      <p>
+        <%= check_box 'accept', true %>
+        <%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %>
+      </p>
     <%end%>
   <% else %>
     <%@request.item_changes.each do |item|%>

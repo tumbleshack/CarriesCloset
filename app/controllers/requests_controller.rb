@@ -26,6 +26,11 @@ class RequestsController < ApplicationController
   def next_status
     @request = Request.find(params[:format])
     @request.status = @request.status == "pending" ? "delivery_ready" : "claimed"
+    
+    if @request.status == "claimed"
+      # remove items from inventory
+      
+    end 
     @request.save 
 
     redirect_to @request
