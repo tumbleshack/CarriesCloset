@@ -217,23 +217,35 @@
   <table id="items-table">
     <thead>
     <tr>
+      <th>Settled</th>
       <th>Quantity</th>
-      <th>Category</th>
-      <th>Item Type</th>
-      <th>Size</th>
+      <% if current_user&.volunteer? %>
+        <th>Description</th>
+      <% else %>
+        <th>Category</th>
+        <th>Item Type</th>
+        <th>Size</th>
+      <% end %>
       <th></th>
     </tr>
     </thead>
 
     <tbody id="table-body">
       <%= form.fields_for :item_changes do |item_change_form| %>
+        <% item_change = item_change_form.instance_variable_get(:@object) %>
         <tr data-id=<%=item_change_form.index%>>
+          <% if current_user&.volunteer? %>
+            <td><%= item_change_form.number_field :settled %></td>
+            <td><%= item_change.quantity %></td>
+            <td><%= item_change.description %></td>
+          <% else %>
             <td><%= item_change_form.number_field :quantity %></td>
             <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
             <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
             <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
             <td hidden><%= item_change_form.hidden_field :change_type, value:ItemChange::CHANGE_TYPES.fetch(parent_f) %></td>
             <td hidden><%= item_change_form.hidden_field :_destroy, html_options = {:onchange => "updateItemSizes(this)", :data => { type: "destroy" }}%></td>
+          <% end %>
             <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
         </tr> 
       <%end%>

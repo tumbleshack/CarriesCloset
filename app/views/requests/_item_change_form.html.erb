@@ -1,0 +1,23 @@
+
+<%= form_with(model: request, html: { class: 'pure-form pure-form-stacked' }) do |form| %>
+
+  <% if request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+        <% request.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="margins-needed">
+    <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request } %>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  </div>
+<% end %>
