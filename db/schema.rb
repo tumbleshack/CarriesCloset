@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_212902) do
+ActiveRecord::Schema.define(version: 2021_04_02_174537) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2021_04_01_212902) do
     t.bigint "category_id"
     t.bigint "request_id"
     t.bigint "donation_id"
+    t.integer "settled", default: 0
     t.index ["category_id"], name: "index_item_changes_on_category_id"
     t.index ["donation_id"], name: "index_item_changes_on_donation_id"
     t.index ["request_id"], name: "index_item_changes_on_request_id"
