@@ -230,6 +230,7 @@
     </tr>
     </thead>
 
+    <% @itemsToStock = @request.getItemStock() %>
     <tbody id="table-body">
       <%= form.fields_for :item_changes do |item_change_form| %>
         <% item_change = item_change_form.instance_variable_get(:@object) %>
@@ -237,7 +238,16 @@
           <% if current_user&.volunteer? %>
             <td><%= item_change_form.number_field :settled %></td>
             <td><%= item_change.quantity %></td>
-            <td><%= item_change.description %></td>
+            <td>
+              <%= item_change.description %>
+              <% if @itemsToStock.keys.any?(item_change.id) %>
+                <% if @itemsToStock[item_change.id] > 0 %>
+                  - Limited Stock (<%= @itemsToStock[item_change.id] =%>)
+                <% else %>
+                  - Out of Stock
+                <% end %>
+              <% end %>      
+            </td>
           <% else %>
             <td><%= item_change_form.number_field :quantity %></td>
             <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
