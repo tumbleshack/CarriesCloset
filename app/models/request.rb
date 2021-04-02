@@ -31,6 +31,8 @@ class Request < ApplicationRecord
   has_many :item_changes
   accepts_nested_attributes_for :item_changes, allow_destroy: true
 
+  has_many :cart_items, class_name: 'ItemChange', through: :item_changes
+
   def any_blank(att)
     att.any? { |k, v| v.blank? }
   end

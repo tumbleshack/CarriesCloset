@@ -6,9 +6,12 @@ class ItemChange < ApplicationRecord
         'donation': 2,
     }.freeze
 
-    belongs_to :category
+    belongs_to :category, optional: true
     belongs_to :request, optional: true
     belongs_to :donation, optional: true
+
+    has_many :cart_items, foreign_key: "item_changes_id", class_name: "ItemChange"
+    belongs_to :item_change, optional: true
 
     validates :change_type, inclusion: { in: CHANGE_TYPES.values }
 
