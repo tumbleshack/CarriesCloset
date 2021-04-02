@@ -7,15 +7,17 @@ body {
 
 }
 input, textarea, select, button, option {
-  width : 100%;
-  padding: 5px;
-  margin: 0;
-  border: 1.5px solid;
-  border-color: #74B9CB;
-  border-radius: 8px;
+  width : 97%;
+  padding-top: 5px !important;
+  padding-bottom: 10px !important;
+  padding-right: 2px !important;
+  padding-left: 2px !important;
+  border: 2px solid !important;
+  border-color: #74B9CB !important;
+  border-radius: 8px !important;
   background-color: white;
-  font-family: Cabin;
-  font-size: medium;
+  font-family: Cabin !important;
+  font-size: medium !important;
 }
 
 button, input[type=submit] {
