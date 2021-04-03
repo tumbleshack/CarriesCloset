@@ -100,9 +100,11 @@ class RequestsController < ApplicationController
         # ActionMailer should send email immediately after new request creation is saved
         UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
-        if @request.urgency == 1
-          UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
-        end
+        #if @request.urgency == 1 // new email settings will take care of this
+        UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
+        # end
+
+        UserMailer.with(request: @request).volunteer_email.deliver_later
 
 
         format.html { redirect_to @request, notice: "Request was successfully created." }

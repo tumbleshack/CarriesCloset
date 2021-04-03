@@ -59,6 +59,14 @@ ActiveRecord::Schema.define(version: 2021_04_02_174537) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "email_settings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "preference"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_email_settings_on_user_id"
+  end
+
   create_table "item_changes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "quantity"
     t.string "itemType"
@@ -130,6 +138,7 @@ ActiveRecord::Schema.define(version: 2021_04_02_174537) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "email_settings", "users"
   add_foreign_key "item_changes", "categories"
   add_foreign_key "item_changes", "donations"
   add_foreign_key "item_changes", "requests"
