@@ -18,4 +18,8 @@ class ItemChange < ApplicationRecord
     
     default_scope { order(quantity: :desc) }
 
+    def description
+      return "#{category.name} #{itemType} (Size #{size}) x #{quantity}"
+    end
+
 end

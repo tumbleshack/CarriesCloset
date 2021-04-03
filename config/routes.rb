@@ -5,8 +5,11 @@ Rails.application.routes.draw do
   resources :donations
   resources :categories
   resources :items
+  get 'requests/next_status' => 'requests#next_status'
   get '/requests/my_requests' => 'requests#my_requests'
   get '/requests/popup' => 'requests#popup'
+  get '/requests/volunteer' => 'requests#volunteer'
+  get '/requests/:id/settle' => 'requests#settle', as: :settle_request
   get '/users/manage' => 'users#manage'
   resources :requests
   get 'public/index'
@@ -17,4 +20,5 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "public#index"  
+
 end

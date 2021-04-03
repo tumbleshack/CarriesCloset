@@ -48,16 +48,33 @@
 </p>
 
 <p>
-  <strong>Items:</strong>
-  <%@request.item_changes.each do |item|%>
-     <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
+  <strong>Requested Items:</strong>
+  <% @request.item_changes.each do |item|%>
+    <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
   <%end%>
+  
 </p>
 
 <p>
   <strong>Comments:</strong>
   <%= @request.comments %>
 </p>
+
+<% if current_user&.volunteer? %>
+  <strong>Order Status:</strong>
+  <%= @request.status.titleize %>
+  <br>
+<% end %>
+
+<% if current_user&.volunteer? && @request.status == "pending" %>
+  <%= link_to "Mark Ready for Delivery", requests_next_status_path(@request), class: "home-link" %> 
+  <br>
+<% end %>
+
+<% if current_user&.volunteer? && @request.status == "delivery_ready" %>
+  <%= link_to "Mark Order Complete", requests_next_status_path(@request), class: "home-link" %> 
+  <br>
+<% end %>
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
 <%= link_to 'Back', :back %>
