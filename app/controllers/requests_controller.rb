@@ -1,5 +1,5 @@
 class RequestsController < ApplicationController
-  before_action :set_request, only: %i[ show edit update destroy ]
+  before_action :set_request, only: %i[ show edit update destroy settle ]
 
   before_action :authenticate_user!, only: %i[ index, my_requests ]
 
@@ -23,6 +23,10 @@ class RequestsController < ApplicationController
   end
 
   def volunteer
+  end
+
+  def settle
+    @show_settled = true
   end
 
   def next_status
@@ -117,11 +121,15 @@ class RequestsController < ApplicationController
     @allItems = Item.all
 
     respond_to do |format|
-      if @request.update(request_params)
+      if @request.update(request_params.except(:send_to_settle))
         @request.save
 
-        format.html { redirect_to @request, notice: "Request was successfully updated." }
-        format.json { render :show, status: :ok, location: @request }
+        if request_params[:send_to_settle] && current_user&.volunteer?
+          format.html { redirect_to settle_request_path(@request), notice: "Request was successfully updated." }
+        else
+          format.html { redirect_to @request, notice: "Request was successfully updated." }
+          format.json { render :show, status: :ok, location: @request }
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @request.errors, status: :unprocessable_entity }
@@ -149,7 +157,10 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address, :availability, :comments, item_changes_attributes: [:id, :category_id, :quantity, :settled, :itemType, :size, :change_type, :_destroy])
+    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address,
+                                    :availability, :comments, :send_to_settle,
+                                    item_changes_attributes: [:id, :category_id, :quantity, :settled, :itemType, :size,
+                                                              :change_type, :_destroy])
   end
 
   # Redirects to :root if accessed by non-volunteer after 30 minutes to

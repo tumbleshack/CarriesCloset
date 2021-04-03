@@ -49,13 +49,9 @@
 
 <p>
   <strong>Requested Items:</strong>
-  <% if current_user&.volunteer? %>
-    <%= render partial: "item_change_form", locals: { request: @request } %>
-  <% else %>
-    <%@request.item_changes.each do |item|%>
-      <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
-    <%end%>
-  <% end %>
+  <% @request.item_changes.each do |item|%>
+    <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
+  <%end%>
   
 </p>
 

@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2021_04_02_174537) do
     t.bigint "category_id"
     t.bigint "request_id"
     t.bigint "donation_id"
-    t.integer "settled", default: 0
+    t.integer "settle", default: 0
     t.index ["category_id"], name: "index_item_changes_on_category_id"
     t.index ["donation_id"], name: "index_item_changes_on_donation_id"
     t.index ["request_id"], name: "index_item_changes_on_request_id"

@@ -212,16 +212,19 @@
 
 </script>
 
+<% send_to_settle ||= false %>
+
 <div class="field">
   <%= form.label :items, 'What items would you like to request?' %>
   <table id="items-table">
     <thead>
     <tr>
-      <th>Settled</th>
-      <th>Quantity</th>
-      <% if current_user&.volunteer? %>
+      <% if current_user&.volunteer? && send_to_settle %>
+        <th>Settled</th>
+        <th>Quantity</th>
         <th>Description</th>
       <% else %>
+        <th>Quantity</th>
         <th>Category</th>
         <th>Item Type</th>
         <th>Size</th>
@@ -234,8 +237,9 @@
     <tbody id="table-body">
       <%= form.fields_for :item_changes do |item_change_form| %>
         <% item_change = item_change_form.instance_variable_get(:@object) %>
+
         <tr data-id=<%=item_change_form.index%>>
-          <% if current_user&.volunteer? %>
+          <% if current_user&.volunteer? && send_to_settle %>
             <td><%= item_change_form.number_field :settled %></td>
             <td><%= item_change.quantity %></td>
             <td>

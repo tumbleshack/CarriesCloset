@@ -21,7 +21,7 @@
     <% end %>
   </ul>
 
-  <p>Due in <%= time_ago_in_words(request.due_time) %></p>
+  <b><i>Due in <%= time_ago_in_words(request.due_time) %></i></b>
 
-  <p><%= link_to 'View', request %></p>
+  <p><%= link_to 'View', settle_request_path(request) %></p>
 </div>

@@ -1,0 +1,78 @@
+
+<div class="margins-needed">
+  <h1>Request a Donation: Summary</h1>
+  <h2>Please review and confirm the summary of your request:</h2>
+
+  <p>
+    <strong>Urgency:</strong>
+    <%= Request::URGENCIES.key(@request.urgency) %>
+  </p>
+
+  <p>
+    <strong>Full name:</strong>
+    <%= @request.full_name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong>
+    <%= @request.email %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    <%= @request.phone %>
+  </p>
+
+  <% if @request.meet %>
+    <p>
+      <strong>County:</strong>
+      <%= Request::COUNTIES.key(@request.county) %>
+
+    </p>
+  <% else %>
+    <p>
+      <strong>Address:</strong>
+      <%= @request.address %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Availability:</strong>
+    <%= @request.availability %>
+  </p>
+
+  <p>
+    <strong>Comments:</strong>
+    <%= @request.comments %>
+  </p>
+
+  <% if current_user&.volunteer? %>
+    <strong>Order Status:</strong>
+    <%= @request.status.titleize %>
+    <br>
+  <% end %>
+
+  <p>
+    <strong>Requested Items:</strong>
+    <% if current_user&.volunteer? %>
+      <%= render partial: "item_change_form", locals: { request: @request, send_to_settle: current_user&.volunteer? } %>
+    <% else %>
+      <%@request.item_changes.each do |item|%>
+        <p><%= item.description %>
+      <%end%>
+    <% end %>
+  </p>
+
+  <% if current_user&.volunteer? && @request.status == "pending" %>
+    <%= link_to "Mark Ready for Delivery", requests_next_status_path(@request), class: "home-link" %>
+    <br>
+  <% end %>
+
+  <% if current_user&.volunteer? && @request.status == "delivery_ready" %>
+    <%= link_to "Mark Order Complete", requests_next_status_path(@request), class: "home-link" %>
+    <br>
+  <% end %>
+
+  <%= link_to 'Edit', edit_request_path(@request) %> |
+  <%= link_to 'Back', :back %>
+</div>

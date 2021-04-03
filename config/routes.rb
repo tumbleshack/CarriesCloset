@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/requests/my_requests' => 'requests#my_requests'
   get '/requests/popup' => 'requests#popup'
   get '/requests/volunteer' => 'requests#volunteer'
+  get '/requests/:id/settle' => 'requests#settle', as: :settle_request
   get '/users/manage' => 'users#manage'
   resources :requests
   get 'public/index'

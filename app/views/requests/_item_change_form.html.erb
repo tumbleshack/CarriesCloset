@@ -14,9 +14,11 @@
   <% end %>
 
   <div class="margins-needed">
-    <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request } %>
+    <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request, send_to_settle: send_to_settle } %>
 
     <div class="actions">
+      <% send_to_settle ||= false %>
+      <%= form.hidden_field :send_to_settle, value: send_to_settle %>
       <%= form.submit %>
     </div>
   </div>
