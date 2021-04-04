@@ -233,14 +233,14 @@
     </tr>
     </thead>
 
-    <% @itemsToStock = @request.getItemStock() %>
     <tbody id="table-body">
       <%= form.fields_for :item_changes do |item_change_form| %>
         <% item_change = item_change_form.instance_variable_get(:@object) %>
 
         <tr data-id=<%=item_change_form.index%>>
           <% if current_user&.volunteer? && send_to_settle %>
-            <td><%= item_change_form.number_field :settled %></td>
+            <% @itemsToStock = @request.getItemStock() %>
+            <td><%= item_change_form.number_field :settle %></td>
             <td><%= item_change.quantity %></td>
             <td>
               <%= item_change.description %>

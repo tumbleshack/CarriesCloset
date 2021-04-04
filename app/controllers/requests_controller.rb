@@ -38,11 +38,11 @@ class RequestsController < ApplicationController
       for item in @request.item_changes
         # match item for inventory 
         matchingItems = Item.where(:itemType => item.itemType, :size => item.size, :category_id => item.category_id)
-        quantityFulfilled = item.quantity
+        quantityFulfilled = item.settle
 
         # contiously remove from each item until the set quantity has been removed 
         for matchedItem in matchingItems
-          if matchedItem.quantity <= quantityFulfilled
+          if matchedItem.quantity >= quantityFulfilled
             # perform the update quantity 
             # ex: quantityFulfilled = 20, and amount in inventory = 15, then quantityFulfilled becomes 5 and amount in inventory should become 0
             # it will then continue to loop to see if there are any more items it can remove
@@ -56,7 +56,7 @@ class RequestsController < ApplicationController
     end 
     @request.save 
 
-    redirect_to @request
+    redirect_to settle_request_path(@request)
   end
 
   # GET /requests/new
@@ -161,7 +161,7 @@ class RequestsController < ApplicationController
   def request_params
     params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address,
                                     :availability, :comments, :send_to_settle,
-                                    item_changes_attributes: [:id, :category_id, :quantity, :settled, :itemType, :size,
+                                    item_changes_attributes: [:id, :category_id, :quantity, :settle, :itemType, :size,
                                                               :change_type, :_destroy])
   end
 
