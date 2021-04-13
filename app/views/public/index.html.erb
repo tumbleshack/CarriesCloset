@@ -45,14 +45,17 @@
     <% end %>
   <% end %>
 
-  <% if current_user && current_user.volunteer? %>
+  <% if current_user&.volunteer? %>
     <div class="centered-div">
       <%= link_to "New Pop-Up Shop Transaction", requests_popup_url, class: "home-link" %>
     </div>
     <br />
-  <% end %>
 
-  <% if current_user&.volunteer? %>
+    <div class="centered-div">
+      <%= link_to "Donation Quality Check", donations_quality_check_url, class: "home-link" %>
+    </div>
+    <br />
+
     <div class="centered-div">
       <%= link_to "Volunteer Requests", requests_volunteer_path, class: "home-link" %>
     </div>

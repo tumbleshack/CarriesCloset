@@ -1,0 +1,15 @@
+<div class="margins-needed">
+  <h1>Quality Donation Screening</h1>
+  <p>Select the number of quality items available in this donation. [TODO: More text]</p>
+
+  <% if current_user&.volunteer? %>
+    <%= render partial: "requests/item_change_form", locals: { request: @donation, send_to_screen: current_user&.volunteer? } %>
+  <% else %>
+    <% @donation.item_changes.each do |item| %>
+      <p><%= item.description %>
+    <% end %>
+  <% end %>
+
+  <%= link_to 'Edit', edit_donation_path(@donation) %> |
+  <%= link_to 'Back', :back %>
+</div>
