@@ -40,6 +40,9 @@
         <% end %>
       </div>
     </nav>
+    <% if current_user != nil %>
+      <span class="padding-for-account-bar">&nbsp;</span>
+    <% end %>
     <span class="padding-for-nav-bar">&nbsp;</span>
     
     <%= yield %>

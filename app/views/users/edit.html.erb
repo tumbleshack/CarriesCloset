@@ -6,21 +6,17 @@
       <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
     </div>
 
+    <%= f.label :admin, "Roles" %>
+    <span>&nbsp;</span>
     <div class="field">
-      <%= f.label :admin %>
       <%= f.check_box :admin, autocomplete: "admin" %>
-    </div>
-    <div class="field">
-      <%= f.label :volunteer %>
+      <%= f.label :admin %>
       <%= f.check_box :volunteer, autocomplete: "volunteer" %>
-    </div>
-    <div class="field">
-      <%= f.label :donor %>
+      <%= f.label :volunteer %>
       <%= f.check_box :donor, autocomplete: "donor" %>
-    </div>
-    <div class="field">
-      <%= f.label :donee %>
+      <%= f.label :donor %>
       <%= f.check_box :donee, autocomplete: "donee" %>
+      <%= f.label :donee %>
     </div>
 
     <div class="actions">

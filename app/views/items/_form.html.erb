@@ -25,14 +25,9 @@
 
   <div class="field">
     <%= form.label :category %>
+    <br>
     <% if item.id.nil? %>
-      <div class="inline-options">
-        <%= collection_check_boxes(:item, :category_id, Category.all, :id, :name) do |b| %>
-          <%= b.label class:"label-checkbox" do%>
-            <%= b.check_box + b.text %>
-          <%end%>
-        <% end %>
-      </div>
+      <%= collection_check_boxes(:item, :category_id, Category.all, :id, :name) %>
     <% else %>
       <li><%= item.category.name %></li>
       <%= form.hidden_field :category %>
