@@ -96,12 +96,13 @@ nav {
 }
 
 span.padding-for-nav-bar {
-  line-height: 12rem;
+  line-height: 10rem;
 }
 
 body {
   padding-bottom: 8rem;
 }
+
 // HOME PAGE GRID STYLING
 div.index {
   box-sizing: border-box;
@@ -110,7 +111,7 @@ div.index {
     text-align: center;
     vertical-align: middle;
 
-    // Remove grid separation when thee grid (`md` breakpoint) resolves to one
+    // Remove grid separation when the grid (`md` breakpoint) resolves to one
     // column.
     $_TABLE_PADDING: 1.2rem;
     @media (min-width: $BREAKPOINT_1) {
@@ -169,5 +170,31 @@ div.container {
 
   div.links {
     margin: 1rem auto;
+  }
+
+  @media(max-width: $BREAKPOINT_1) {
+    margin: 0;
+    padding: 0.4rem;
+  }
+}
+
+// COMPONENTS
+button, input[type="submit"] {
+  border-radius: 100rem;
+  border: 2px solid black;
+  background-color: $PRIMARY_BLUE;
+  padding: 0.5rem 2rem;
+}
+
+table {
+  margin-bottom: 2rem !important;
+}
+
+// Only tables scroll horizontally when on small screen/mobile
+@media(max-width: $BREAKPOINT_1) {
+  table {
+    overflow: scroll;
+    display: block;
+    margin: 0;
   }
 }

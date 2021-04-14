@@ -4,8 +4,47 @@ form {
     font-size: 18pt;
   }
 
-  input {
-    width: 100%;
+  input, textarea {
+    box-sizing: border-box;
+    width: 95%;
     max-width: 40rem;
+    border: 2px solid black !important;
+    border-radius: 6px;
+    padding: 0.4rem 1rem;
+    margin: 0.5rem 0;
+  }
+
+  input[type=text], textarea {
+    border-radius: 8px;
+  }
+
+  input[type="radio"] + label, input[type="checkbox"] + label {
+    display: inline-block;
+    font-weight: normal;
+  }
+
+  label {
+    width: calc(100% - 2rem);
+    margin: 0;
+    a, p {
+      font-weight: normal;
+    }
+  }
+
+  input[type="radio"], input[type="checkbox"] {
+    height: 1rem !important;
+    width: 1rem;
+    margin-right: 10px;
+    margin-top: -8px;
+    vertical-align: middle;
+    border: 2px solid black !important;
+  }
+  input[type="checkbox"] {
+    margin-bottom: -0.1rem;
+    margin-right: 0.2rem;
+  }
+
+  div.field {
+    margin-bottom: 2rem;
   }
 }
