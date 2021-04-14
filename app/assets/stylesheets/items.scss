@@ -2,34 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-div.container {
-  margin: auto;
-  width: 50rem;
-  padding: 10px;
-
-  h1 {
-    margin-bottom: 2rem;
-  }
-
-  table {
-    width: 100%;
-    border: 1px solid black;
-    th, td { padding: 3px 6px; }
-    th {
-      text-align: left;
-      border: 2px solid black;
-    }
-    td {
-      border: 1px solid grey;
-      border-collapse: collapse;
-    }
-  }
-
-  div.links {
-    margin: 1rem auto;
-  }
-}
-
 form {
   label {
     font-weight: bold;
