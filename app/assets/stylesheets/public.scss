@@ -63,11 +63,26 @@ nav {
   }
 
   div.account-bar {
-    font-size: 1rem;
-    text-align: center;
+    font-size: 1.2rem;
+    text-align: right;
+    padding-bottom: 1.5rem;
 
     div.account {
+      max-width: 3000px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      font-size: 1.3rem;
       margin-bottom: 0.9rem;
+    }
+
+    div {
+      white-space: nowrap;
+    }
+
+    @media(max-width: $BREAKPOINT_1) {
+      &, div.account { text-align: center; }
     }
   }
 
