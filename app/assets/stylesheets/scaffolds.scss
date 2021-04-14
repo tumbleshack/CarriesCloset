@@ -38,3 +38,14 @@ div.field, div.actions {
   font-size: 12px;
   list-style: square;
 }
+
+div.links {
+  a {
+    width: fit-content;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+  br {
+    display: none;
+  }
+}
