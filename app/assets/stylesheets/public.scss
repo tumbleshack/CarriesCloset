@@ -8,7 +8,7 @@ $PRIMARY_BLUE: #E7F6FE;
 $BREAKPOINT_1: 768px;
 $BREAKPOINT_2: 1024px;
 
-body {
+* {
   font-family: 'Cabin', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14pt;
   color: black;
@@ -99,6 +99,9 @@ span.padding-for-nav-bar {
   line-height: 12rem;
 }
 
+body {
+  padding-bottom: 8rem;
+}
 // HOME PAGE GRID STYLING
 div.index {
   box-sizing: border-box;
@@ -133,6 +136,10 @@ div.index {
       text-align: center;
     }
   }
+}
+
+div.index-footer {
+  align-content: center;
 }
 
 // LAYOUTS
