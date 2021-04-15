@@ -15,10 +15,9 @@ class ApplicationController < ActionController::Base
     case role
 
       when :admin;     should_reject = true unless current_user&.admin?
-      when :volunteer; should_reject = true unless current_user&.volunteer?
-      when :donee;     should_reject = true unless current_user&.donee?
-      when :donor;     should_reject = true unless current_user&.donor?
-
+      when :volunteer; should_reject = true unless current_user&.volunteer? || current_user&.admin?
+      when :donee;     should_reject = true unless current_user&.donor? || current_user&.donee? || current_user&.volunteer? || current_user&.admin?
+      when :donor;     should_reject = true unless current_user&.donor? || current_user&.donee? || current_user&.volunteer? || current_user&.admin?
     end
 
     redirect_to redirect_path, alert: 'You do not have proper authorization to access the attempted URL.' if should_reject
