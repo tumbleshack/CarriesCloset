@@ -4,6 +4,14 @@ form {
     font-size: 18pt;
   }
 
+  label + table {
+    margin: 1.4rem 0;
+  }
+
+  label, input {
+    display: block;
+  }
+
   input, textarea {
     box-sizing: border-box;
     width: 95%;
@@ -24,8 +32,9 @@ form {
   }
 
   label {
-    width: calc(100% - 2rem);
+    width: calc(100% - 8rem);
     margin: 0;
+    margin-bottom: 1rem;
     a, p {
       font-weight: normal;
     }
@@ -47,4 +56,11 @@ form {
   div.field {
     margin-bottom: 2rem;
   }
+
+  p {
+    margin: 0.8rem auto;
+  }
+
+  label + i { padding: 1rem; }
+  input + em { padding: 1rem; }
 }

@@ -159,7 +159,7 @@ div.container {
   }
 
   table {
-    width: 100%;
+    width: fit-content;
     border: 1px solid black;
     th, td { padding: 3px 6px; }
     th {
@@ -172,14 +172,14 @@ div.container {
     }
   }
 
-  div.links {
-    margin: 1rem auto;
-  }
-
   @media(max-width: $BREAKPOINT_1) {
     margin: 0;
     padding: 0.4rem;
   }
+}
+
+div.links {
+  margin: 1rem 2rem;
 }
 
 // COMPONENTS
@@ -197,7 +197,7 @@ table {
 // Only tables scroll horizontally when on small screen/mobile
 table {
   border-collapse: collapse;
-  border: 1px solid black;
+
   $PADDING: 2rem;
   max-width: calc(100% - $PADDING * 4);
   margin: 0 $PADDING;
@@ -208,12 +208,14 @@ table {
 
 // PAYPAL STYLE
 div.paypal {
+  width: 14rem;
+  margin-left: auto;
+  margin-right: auto;
+
   margin-top: 1rem;
   padding: 0.4rem 1.6rem;
-  border: 2px solid black;
-  border-radius: 1.2rem;
   height: fit-content;
-  background-color: $PRIMARY_BLUE;
+  min-height: 9rem;
 
   i { font-size: 16pt; }
 
@@ -226,7 +228,9 @@ div.paypal {
     margin: 0.4rem;
   }
   div.home-link {
+    margin-bottom: 1.2rem;
     img {
+      margin-top: 0.4rem;
       width: 3rem;
     }
     span.home-link-text {
@@ -234,9 +238,18 @@ div.paypal {
       vertical-align: middle;
       font-size: 18pt;
       margin-left: 0.4rem;
-      top: -1.8rem;
+      position: relative;
+      top: -1.2rem;
     }
   }
 
   h2 { margin: 0; }
+}
+
+body > h1, body > h2, body > h3 {
+  margin-left: 2rem;
+}
+
+div.contact-info {
+  text-align: center;
 }
