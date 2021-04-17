@@ -1,6 +1,17 @@
 <div class="margins-needed">
   <h1>Quality Donation Screening</h1>
-  <p>Select the number of quality items available in this donation. [TODO: More text]</p>
+  <p>Remember to wear gloves and a mask while processing donations!</p>
+  <p>Please sort the items to make sure we only accept items that meet Carrie's Closet's quality standards, based on the CUTE acronym:</p>
+  <div class="centered-div">
+    <ul class="cute">
+      <li class="cute">Clean</li>
+      <li class="cute">Usable</li>
+      <li class="cute">Timely</li>
+      <li class="cute">Equipment</li>
+    </ul>
+  </div>
+  <p>If an item is equipment, such as a stroller, remember that it must be stored differently in inventory.</p>
+  <p>Adjust the quantities below to only show the items that Carrie's Closet will accept, <i>not</i> anything that will be thrown out.</p>
 
   <% if current_user&.volunteer? %>
     <%= render partial: "requests/item_change_form", locals: { request: @donation, send_to_screen: current_user&.volunteer? } %>
