@@ -1,0 +1,61 @@
+<div class="margins-needed">
+  <h1>Quality Donation Screening</h1>
+  <p>Remember to wear gloves and a mask while processing donations!</p>
+  <p>Please sort the items to make sure we only accept items that meet Carrie's Closet's quality standards, based on the CUTE acronym:</p>
+  <div class="centered-div">
+    <ul class="cute">
+      <li class="cute">Clean</li>
+      <li class="cute">Usable</li>
+      <li class="cute">Timely</li>
+      <li class="cute">Equipment</li>
+    </ul>
+  </div>
+  <p>If an item is equipment, such as a stroller, remember that it must be stored differently in inventory.</p>
+  <p>Adjust the quantities below to only show the items that Carrie's Closet will accept, <i>not</i> anything that will be thrown out.</p>
+
+  <% if current_user&.volunteer? %>
+    <%= render partial: "requests/item_change_form", locals: { request: @donation, send_to_screen: current_user&.volunteer? } %>
+  <% else %>
+    <% @donation.item_changes.each do |item| %>
+      <p><%= item.description %>
+    <% end %>
+  <% end %>
+
+  <h1>Contact the donor!</h1>
+  <i>Remember to contact the donor before you go to let them know when to meet and make sure they're still available.</i>
+  <p>
+    <strong>Full name:</strong>
+    <%= @donation.full_name %>
+  </p>
+  
+  <p>
+    <strong>Email:</strong>
+    <%= @donation.email %>
+  </p>
+  
+  <p>
+    <strong>Phone:</strong>
+    <%= @donation.phone %>
+  </p>
+  
+  <% if @donation.meet %>
+    <p>
+      <strong>County:</strong>
+      <%= Request::COUNTIES.key(@donation.county) %>
+  
+    </p>
+  <% else %>
+    <p>
+      <strong>Address:</strong>
+      <%= @donation.address %>
+    </p>
+  <% end %>
+  
+  <p>
+    <strong>Availability:</strong>
+    <%= @donation.availability %>
+  </p>
+
+  <%= link_to 'Edit', edit_donation_path(@donation) %> |
+  <%= link_to 'Back', :back %>
+</div>

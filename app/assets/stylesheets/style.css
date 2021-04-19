@@ -41,6 +41,17 @@ p, label {
    background-color: white;
 
 }
+li.cute {
+    font-family: Cabin;
+   font-size: 24px;
+   color: #000;
+   margin: 10px;
+}
+ul.cute {
+    background: #e8f6fb;
+    border-radius: 5px;
+    width: 80%;
+}
 
 h1 {
    font-family: Cabin;
