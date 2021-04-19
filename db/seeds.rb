@@ -25,8 +25,16 @@ end
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
-@someitem = Item.find_by_itemType("Shoes")
-@someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6") if @someitem.nil?
+
+items = %w[ Shoes Shirts Pants ]
+items.each do |item|
+  categories.each do |category|
+    cat = Category.find_by_name(category)
+    @someitem = Item.find_by(itemType: item, category: cat)
+    @someitem = Item.create!(quantity: rand(1...30), category: cat, itemType: item, size: "6")
+    puts "Created item: #{@someitem.quantity}x #{@someitem.category.name} #{@someitem.itemType} (Size #{@someitem.size})"
+  end
+end
 
 @volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
 @volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
