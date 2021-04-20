@@ -1,5 +1,7 @@
 class Request < ApplicationRecord
 
+  include FormattableAttributes
+
   URGENCIES = {
     '': 0,
     'Within 24 hours': 1,
@@ -94,6 +96,6 @@ class Request < ApplicationRecord
     end 
 
     return itemsToStock
-  end 
+  end
 
 end
