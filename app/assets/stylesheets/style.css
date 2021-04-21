@@ -143,6 +143,11 @@ margin-top:1%;
     justify-content: center;
 }
 
+.get-involved-div {
+  width: 80%;
+  justify-content: center;
+}
+
 
 p.contact-info {
    font-family: Cabin;
@@ -218,11 +223,19 @@ ul#subjects li {
 .padding-for-nav-bar {
   padding-top: 145px;
 }
+
 .navbar-element, .navbar-element:hover {
   align-items: center;
   height: 80px;
   padding: 0px 5%;
   background-color: #e8f6fb;
+}
+
+.social-link, .social-link:hover {
+  align-items: center;
+  height: 80px;
+  padding: 0px 5%;
+  background-color: white;
 }
 nav {
   position: fixed;
