@@ -1,10 +1,12 @@
 <div class="volunteer-request-list-block">
-  <% @itemsToStock = request.getItemStock() %>
+  <% isRequestElseDonation = request.respond_to?(:getItemStock) %>
+
+  <% @itemsToStock = request.getItemStock() if isRequestElseDonation %>
   <ul>
     <% request.item_changes.limit(5).each do |item| %>
       <li>
         <%= item.description %>
-        <% if @itemsToStock.keys.any?(item.id) %>
+        <% if !@itemsToStock.nil? && @itemsToStock.keys.any?(item.id) %>
           <% if @itemsToStock[item.id] > 0 %>
             - Limited Stock (<%= @itemsToStock[item.id] =%>)
           <% else %>
@@ -21,7 +23,11 @@
     <% end %>
   </ul>
 
-  <b><i>Due in <%= time_ago_in_words(request.due_time) %></i></b>
+  <% if isRequestElseDonation %>
+    <b><i>Due in <%= time_ago_in_words(request.due_time) %></i></b>
 
-  <p><%= link_to 'View', settle_request_path(request) %></p>
+    <p><%= link_to 'View', settle_request_path(request) %></p>
+  <% else %>
+    <p><%= link_to 'View', quality_screen_path(request) %></p>
+  <% end %>
 </div>
