@@ -28,7 +28,10 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
+  config.cache_classes = true
+  config.serve_static_assets = true
+  config.assets.digest = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = 'http://assets.example.com'
@@ -111,7 +114,7 @@ Rails.application.configure do
      password: ENV["APP_PASSWORD"]
    }
    # can change host when we have a URL
-   config.action_mailer.default_url_options = {:host => "127.0.0.1:3000"}
+   config.action_mailer.default_url_options = {:host => "https://closet-service-mt3t7nvwaq-ue.a.run.app/"}
    config.action_mailer.delivery_method = :smtp
  
     # -----------------------------------------------------------------------------------------------

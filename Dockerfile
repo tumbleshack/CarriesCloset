@@ -26,6 +26,14 @@ RUN yarn install --check-files
 EXPOSE 3000
 EXPOSE 443
 EXPOSE 80
+ENV PORT 3000
+ENV RAILS_ENV production
+ENV RAILS_SERVE_STATIC_FILES true
+
+COPY --chown=rails_user:rails_user execute.sh /cc_server/execute.sh
+COPY --chown=rails_user:rails_user Rakefile /cc_server/Rakefile
+COPY --chown=rails_user:rails_user . /cc_server/
 
 # Start the main process.
-CMD rm -f tmp/pids/server.pid; rails server -b '0.0.0.0'
+RUN chmod +x execute.sh
+ENTRYPOINT ["/cc_server/execute.sh"]

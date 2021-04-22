@@ -50,7 +50,10 @@ test:
 #
 production:
   adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
+  # Configure additional properties here.
+  username: <%= ENV["DATABASE_USERNAME"] %>  # e.g. "my-database-user"
+  password: <%= ENV["DATABASE_PASSWORD"] %> # e.g. "my-database-password"
+  database: <%= ENV.fetch("DB_NAME") { "closet" } %>
+  # If connecting via unix domain socket, specify the socket path as host
+  host:  "<%= ENV.fetch("DB_SOCKET_DIR") { '/cloudsql' } %>/<%= ENV["INSTANCE_CONNECTION_NAME"] %>"
 
