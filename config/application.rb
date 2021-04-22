@@ -22,6 +22,9 @@ module CarriesCloset
     # TODO: Remove wildcard matching when a URL is set.
     config.hosts << /.*\.herokuapp\.com/
     config.hosts << "127.0.0.1"
+    config.hosts << "closet-service-mt3t7nvwaq-ue.a.run.app"
+
+    config.assets.initialize_on_precompile = false
     
     # FOR ACTION MAILER ---------------------------------------------------
     config.before_configuration do
