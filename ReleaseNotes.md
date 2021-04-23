@@ -37,7 +37,7 @@
 - The app doesn't look ugly anymore! 🦋
 - Paypal! Carrie's Closet can accept money from nice people online
 
-## Known Bugs
+## Known Bugs 🐞
 - When a user selects "yes" to inputing their address, forms to not validate one is actually entered
 - Admins can create duplicate item categories
 - When creating an account, if the "Password" and "Confirm Password" fields do not match, no error is surfaced (but account creation is still blocked)
