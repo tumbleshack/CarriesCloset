@@ -1,32 +1,35 @@
-<div class="container">
-  <%= form_for(@user) do |f| %>
 
-    <div class="field">
-      <%= f.label :email %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-    </div>
+<%= form_for(@user) do |f| %>
 
-    <%= f.label :admin, "Roles" %>
-    <span>&nbsp;</span>
-    <div class="field">
-      <%= f.check_box :admin, autocomplete: "admin" %>
-      <%= f.label :admin %>
-      <%= f.check_box :volunteer, autocomplete: "volunteer" %>
-      <%= f.label :volunteer %>
-      <%= f.check_box :donor, autocomplete: "donor" %>
-      <%= f.label :donor %>
-      <%= f.check_box :donee, autocomplete: "donee" %>
-      <%= f.label :donee %>
-    </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
 
-    <div class="actions">
-      <%= f.submit "Update" %>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label :admin %>
+    <%= f.check_box :admin, autocomplete: "admin" %>
+  </div>
+  <div class="field">
+    <%= f.label :volunteer %>
+    <%= f.check_box :volunteer, autocomplete: "volunteer" %>
+  </div>
+  <div class="field">
+    <%= f.label :donor %>
+    <%= f.check_box :donor, autocomplete: "donor" %>
+  </div>
+  <div class="field">
+    <%= f.label :donee %>
+    <%= f.check_box :donee, autocomplete: "donee" %>
+  </div>
 
-  <h3>Delete this account</h3>
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
 
-  <%= button_to 'Remove This User', @user, method: :delete , data: {confirm: 'Are you sure you want to delete this user?' } %>
+<h3>Delete this account</h3>
 
-  <%= link_to "Back", :back %>
-</div>
+<%= button_to 'Remove This User', @user, method: :delete , data: {confirm: 'Are you sure you want to delete this user?' } %>
+
+<%= link_to "Back", :back %>

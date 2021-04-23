@@ -112,7 +112,7 @@ class RequestsController < ApplicationController
 
       if @request.save
 
-        if !isPopUpTransaction
+        if request_params[:popup] != 'true'
           # ActionMailer should send email immediately after new request creation is saved
           UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
