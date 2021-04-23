@@ -46,7 +46,7 @@ docker run --name cc_server_seed -d gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
 ```
 Once running, execute the seed command inside the container with:
 ```
-docker exec cc_server_seed bin/rails db:seed
+docker exec cc_server_seed bin/rails db:create db:migrate db:seed
 ```
 Once the seed finishes, it's safe to stop the container with:
 ```
