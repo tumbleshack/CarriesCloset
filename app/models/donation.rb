@@ -1,5 +1,7 @@
 class Donation < ApplicationRecord
 
+  include FormattableAttributes
+
   has_many :item_changes
   accepts_nested_attributes_for :item_changes, allow_destroy: true
   

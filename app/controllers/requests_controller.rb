@@ -91,10 +91,9 @@ class RequestsController < ApplicationController
   def create
     @allCategories = Category.all
     @allItems = Item.all
-    isPopUpTransaction = request_params.has_key?(:item_changes_attributes) && !request_params[:item_changes_attributes].blank?
-    @request = Request.new(request_params.except(:item_changes_attributes))
+    @request = Request.new(request_params.except(:item_changes_attributes, :popup))
 
-    if isPopUpTransaction
+    if request_params[:popup] == 'true'
       @request.full_name = "POPUP SHOP"
       @request.meet = 1
       @request.relationship = 1
@@ -113,7 +112,7 @@ class RequestsController < ApplicationController
 
       if @request.save
 
-        if !isPopUpTransaction
+        if request_params[:popup] != 'true'
           # ActionMailer should send email immediately after new request creation is saved
           UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
@@ -177,7 +176,7 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-    params.require(:request).permit(:urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address,
+    params.require(:request).permit(:popup, :urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address,
                                     :availability, :comments, :send_to_settle,
                                     item_changes_attributes: [:id, :category_id, :quantity, :settle, :itemType, :size,
                                                               :change_type, :_destroy])
