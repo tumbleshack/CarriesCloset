@@ -10,51 +10,92 @@ See [README.md](README.md)
 
 # Production Instance
 
-Production app goes on Google Cloud.
+Production app goes on Google Cloud. The source code will be built into a Docker container locally, then pushed to a container registry, then deployed.
 
 ### Pre-requisites
 1. A Google Cloud account
-2. A project on Google Cloud with billing enabled, as well as the Cloud Run API, Cloud SQL API, and Google Contiainer Registry enabled
+2. A project on Google Cloud with billing enabled, as well as the Cloud Run API, [Cloud SQL API](https://console.cloud.google.com/flows/enableapi?apiid=sqladmin&redirect=https://console.cloud.google.com&_ga=2.123185100.670298711.1619196945-1893429947.1619196945), and Google Contiainer Registry enabled
 
-### Dependent libraries that must be installed:
+Go to the Google Cloud Console and find the SQL service. Create a PostgreSQL instance. The minium resources should be sufficient:
+- Shared CPU without High Availablility
+- 1/2 GB Memory
+- 10 GB HDD Storage
+- Keep a up to 7 backups
+
+Create a new user for the PostgreSQL instance in the Users menu of the instance page. Select "ADD USER ACCOUNT" then select the "PostgreSQL" radio button. Make a user name and password, note these somewhere.
+
+Now, grant your Default compute service account Cloud SQL Admin permissions to allow the webapp access to the databse. Go to Google Cloud's IAM service.
+
+Locate the service account `{somenumber}-compute@developer.gserviceaccount.com`. If this account does not exist, proceede to the next step, and return here after completing the "Run Instructions" section.
+
+Click on the edit member icon for `{somenumber}-compute@developer.gserviceaccount.com`. Select "ADD ANOTHER ROLE". Locate Cloud SQL Admin (make sure the Cloud SQL Admin API is enabled). Save.
+
+### Dependent Libraries that must be Installed on your Machine:
 1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
 2. [Git](https://git-scm.com/downloads)
 3. [Google Cloud CLI](https://cloud.google.com/sdk) (Command Line Interface)
 
-### Download instructions: 
+### Download Instructions: 
 Clone the repository (it's open source) by runing in your shell: 
 
 ```$ git clone https://github.com/tumbleshack/CarriesCloset.git```
 
-### Build instructions (if needed)
-Prepare your environment by setting your Google Cloud project id
+### Build Instructions
+Prepare your environment by setting your Google Cloud project id:
 ```
-export PROJECT_ID=your-project-id
+$ export PROJECT_ID=your-project-id
 ```
-Create a name for your cloud run service, we suggest
+Create a name for your cloud run service, we suggest:
 ```
-export _SERVICE_ID=carries-closet-webapp
+$ export _SERVICE_ID=carries-closet-webapp
 ```
-Build the container by running
+Generate the file `config/master.key` by running in your shell:
+```
+$ EDITOR=vim rails credentials:edit
+```
+Exit vim by typing `:wq`.
+
+Next, build the container by running:
 ```
 $ docker build . --tag gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
 ```
 
-### Installation of actual application: 
-Login to the Google Cloud CLI with
+### Installation of Application: 
+Login to the Google Cloud CLI with:
 ```
-gcloud login
+gcloud auth login
 ```
-Send the container to your Google Container Registry
+Send the container to your Google Container Registry:
 ```
 docker push gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
 ```
 
-### Run instructions:
-Then deploy the container to Google Cloud Run
+### Run Instructions:
+Now deploy the container to Google Cloud Run.
 ```
 gcloud run deploy $_SERVICE_ID --image=gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID --platform=managed --region=us-east1
 ```
-The CLI will then give the public URL on which the web app is running in your shell.
+The CLI will then give the public URL on which the web app is running in your shell. Go to the Google Cloud Console, locate the Cloud Run service, and select "EDIT & DEPLOY NEW REVISION." Go the "VARIABLES" tab. Add the following environment variables:
+- `RAILS_ENV`: `production`
+- `RAILS_MASTER_KEY`: the key found in `config/master.key`
+- `DATABASE_USERNAME`: username you set for the PostgreSQL instance
+- `DATABASE_PASSWORD`: password you set for the PostgreSQL username
+- `RAILS_LOG_TO_STDOUT`: `true`
+- `INSTANCE_CONNECTION_NAME`: {project-id}:{postgres-region}:{postgres-instance-id}, for example `carries-closet:us-central1:closet-db-1`
+Then click the "DEPLOY" button.
 
 ### Troubleshooting:
+
+The Cloud Run logs are the most helpful resource for debugging problems. You can locate them in the "LOGS" tab of the Cloud Run service's page. If the service fails to deploy, Cloud Run will present a link to the relevent logs in the Google Cloud Console. Tips for some common problems:
+
+**Cloud Run fails to connect to the Database**
+
+Ensure the environment variables `DATABASE_USERNAME`, `DATABASE_PASSWORD`, `INSTANCE_CONNECTION_NAME` are set correctly. Read about the instance connection name and general database connection [here](https://cloud.google.com/sql/docs/mysql/connect-run)
+
+**A `gcloud` command fails**
+
+Read about gcloud authorization [here](https://cloud.google.com/sdk/gcloud/reference/auth/login).
+
+**Rails encounters a secret key error**
+
+Ensure the environment variable `RAILS_MASTER_KEY` matches the master key in the file. Every time a new master key is generated, this variable must be updated.
