@@ -1,90 +1,85 @@
-
-<div>
-  
-    <br>
-    <% if current_user != nil and current_user.admin? %>
-      <div class = "centered-div">
-        <%= link_to "All Requests", "requests/", class: "home-link" %>
-      </div>
-      <br />
-      <div class = "centered-div">
-        <%= link_to "All Pending Donations", "donations/", class: "home-link" %>
-      </div>
-      <br />
-      <div class = "centered-div">
-        <%= link_to "View Inventory", "items", class: "home-link" %>
-      </div>
-      <br />
-      <div class = "centered-div">
-        <%= link_to "Add Item Type", "items/new", class: "home-link" %>
-      </div>
-      <br />
-      <div class = "centered-div">
-        <%= link_to "Manage Users", "users/manage", class: "home-link" %>
-      </div>
-      <br />
-    <% end %>
+<div class="container">
+  <div class="pure-g index">
     <% if current_user != nil %>
-    <div class = "centered-div">
-    <%= link_to "My Requests", "requests/my_requests", class: "home-link" %>
-    </div>
-    <br>
-
-
-    <div class = "centered-div">
-    <%= link_to "My Donations", "donations/my_donations", class: "home-link" %>
-    </div>
-    <br>
-
-    <% if current_user.admin? %>
-      <div class = "centered-div">
-        <%= link_to "Add User", "users/invitation/new/", class: "home-link" %>
-
-      </div>
-      <br />
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "My Requests", "requests/my_requests" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "My Donations", "donations/my_donations" %>
+      </div></div>
     <% end %>
-  <% end %>
 
-  <% if current_user&.volunteer? %>
-    <div class="centered-div">
-      <%= link_to "New Pop-Up Shop Transaction", requests_popup_url, class: "home-link" %>
+    <% if current_user&.admin? %>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "All Requests", "requests/" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "All Pending Donations", "donations/" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "View Inventory", "items" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "Add Item Type", "items/new" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "Manage Users", "users/manage" %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "Add User", "users/invitation/new/" %>
+      </div></div>
+    <% end %>
+
+    <% if current_user&.volunteer? %>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "New Pop-Up Shop Transaction", requests_popup_url %>
+      </div></div>
+      <div class="pure-u-1 pure-u-md-1-2"><div>
+        <%= link_to "Volunteer Requests", requests_volunteer_path %>
+      </div></div>
+    <% end %>
+
+    <div class="pure-u-1 pure-u-md-1-2"><div>
+      <%= link_to 'Request Clothing and Hygiene Items', new_request_url%>
+    </div></div>
+    <div class="pure-u-1 pure-u-md-1-2"><div>
+      <%= link_to "Donate Items", new_donation_url %>
+    </div></div>
+    <div class="pure-u-1 pure-u-md-1-2"><div>
+      <%= link_to "Volunteer", root_path %>
+    </div></div>
+  </div>
+  <div class="index-footer">
+    <div class="paypal">
+      <div class="centered-div-support-us">
+        <h2 class = "home-link-text"><i>Support Our Cause</i></h2>
+        <form aria-live="polite" data-ux="Form" action="https://www.paypal.com/cgi-bin/webscr" method="post" class="home-li">
+          <input type="hidden" name="edit_selector" data-aid="EDIT_PANEL_EDIT_PAYMENT_ICON">
+          <input type="hidden" name="business" value="carrie.closets@gmail.com">
+          <input type="hidden" name="cmd" value="_xclick">
+          <input type="hidden" name="item_name" value="Support Our Cause">
+          <input type="hidden" name="item_number">
+          <input type="hidden" name="amount" value="20.00" data-aid="PAYMENT_HIDDEN_AMOUNT">
+          <input type="hidden" name="shipping" value="0.00">
+          <input type="hidden" name="currency_code" value="USD" data-aid="PAYMENT_HIDDEN_CURRENCY">
+          <input type="hidden" name="rm" value="0">
+          <input type="hidden" name="return" value="http://carriesclosetofga.org/">
+          <input type="hidden" name="cancel_return" value="http://carriesclosetofga.org/">
+          <input type="hidden" name="cbt" value="Return to Carrie's Closet of Georgia">
+          <div data-ux="Block" class="home-link">
+            <button data-ux-btn="spotlight" data-ux="ButtonSpotlight" shape="PILL" decoration="NONE" shadow="NONE" name="submit" data-aid="PAYMENT_PAYPALBUTTON_RENDERED" icon="[object Object]" data-typography="ButtonAlpha" class="home-link" data-tccl="ux2.PAYMENT.payment1.Form.Default.Button.Spotlight.82000.click,click">
+            <span data-ux="Element" class="home-link">
+              <span data-ux="Element" class="home-link">
+                <img alt="image48" src="https://www.paypalobjects.com/webstatic/icon/pp258.png" data-ux="Image" data-aid="PAYMENT_PAYPALBUTTON_IMAGE_RENDERED" class="home-link"></span>
+              <span class="home-link-text" data-ux="Element" class="home-link">Donate</span>
+            </span>
+          </button>
+          </div>
+        </form>
+      </div>
     </div>
-    <br />
-
-    <div class="centered-div">
-      <%= link_to "Donation Quality Check", donations_quality_check_url, class: "home-link" %>
+    <div  class="contact-info">
+      <p>Contact Information: <%= link_to_email 'carrie.closets@gmail.com' %></p>
     </div>
-    <br />
-
-    <div class="centered-div">
-      <%= link_to "Volunteer Requests", requests_volunteer_path, class: "home-link" %>
-    </div>
-    <br />
-  <% end %>
-
-  <div class = "centered-div">
-  <%= link_to 'Request Clothing and Hygiene Items', new_request_url, class: "home-link"%>
-  </div>
-  <br>
-  <div class = "centered-div">
-
-  <%= link_to "Donate Items", new_donation_url, class: "home-link" %>
-
-  </div>
-  <br>
-  <div class = "centered-div">
-  <%= link_to "Get Involved", "get-involved", class: "home-link" %>
-  </div>
-  <br>
-  <div class = "centered-div">
-
-  <div class = "centered-div-support-us">
-  <p class = "home-link-text">Support Our Cause<p>
-  <form aria-live="polite" data-ux="Form" action="https://www.paypal.com/cgi-bin/webscr" method="post" class="home-li"><input type="hidden" name="edit_selector" data-aid="EDIT_PANEL_EDIT_PAYMENT_ICON"><input type="hidden" name="business" value="carrie.closets@gmail.com"><input type="hidden" name="cmd" value="_xclick"><input type="hidden" name="item_name" value="Support Our Cause"><input type="hidden" name="item_number"><input type="hidden" name="amount" value="20.00" data-aid="PAYMENT_HIDDEN_AMOUNT"><input type="hidden" name="shipping" value="0.00"><input type="hidden" name="currency_code" value="USD" data-aid="PAYMENT_HIDDEN_CURRENCY"><input type="hidden" name="rm" value="0"><input type="hidden" name="return" value="http://carriesclosetofga.org/"><input type="hidden" name="cancel_return" value="http://carriesclosetofga.org/"><input type="hidden" name="cbt" value="Return to Carrie's Closet of Georgia"><div data-ux="Block" class="home-link"><button data-ux-btn="spotlight" data-ux="ButtonSpotlight" shape="PILL" decoration="NONE" shadow="NONE" name="submit" data-aid="PAYMENT_PAYPALBUTTON_RENDERED" icon="[object Object]" data-typography="ButtonAlpha" class="home-link" data-tccl="ux2.PAYMENT.payment1.Form.Default.Button.Spotlight.82000.click,click"><span data-ux="Element" class="home-link"><span data-ux="Element" class="home-link"><img alt="image48" src="https://www.paypalobjects.com/webstatic/icon/pp258.png" data-ux="Image" data-aid="PAYMENT_PAYPALBUTTON_IMAGE_RENDERED" class="home-link"></span><span class="home-link-text" data-ux="Element" class="home-link">Donate</span></span></button></div></form>
-  </div>
-
-  </div>
-  <div class = "centered-div">
-    <p class="contact-info">Contact Information:<br>carrie.closets@gmail.com</p>
   </div>
 </div>

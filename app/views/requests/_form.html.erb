@@ -47,13 +47,12 @@
   </div>
 
   <div class="field">
-    <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
+    <label>
+      <%= form.label :meet, 'Can you meet us at your local DFCS office?' %>
+      <p>Don't know where your local DFCS office is? <%= link_to 'Find your county\'s DFCS location here.', 'https://dfcs.georgia.gov/locations', target: :_blank %></p>
+    </label>
     <%= form.collection_radio_buttons :meet, [['Yes', 1], ['No, my address is:', 2]], :last, :first %>
     <%= form.text_area :address %>
-  </div>
-
-  <div class="field">
-    <%= link_to 'Find your county\'s DFCS location', 'https://dfcs.georgia.gov/locations', target: :_blank %>
   </div>
 
   <div class="field">
