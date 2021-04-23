@@ -1,17 +1,73 @@
 body {
 
-    font-family: Cabin, sans-serif;
+
+  font-family: Cabin;
 
    font-size: medium;
-   font-color: #000;
+   color: #000;
    background-color: white;
 
 }
+input, textarea, select, button, option {
+  width : 97%;
+  padding-top: 5px !important;
+  padding-bottom: 10px !important;
+  padding-right: 2px !important;
+  padding-left: 2px !important;
+  border: 2px solid !important;
+  border-color: #74B9CB !important;
+  border-radius: 8px !important;
+  background-color: white;
+  font-family: Cabin !important;
+  font-size: medium !important;
+}
 
-p {
+button, input[type=submit] {
+  background-color: #74b9cb;
+  padding: 5px;
+}
+button:hover, input[type=submit]:hover {
+  background-color: #e8f6fb;
+}
+
+option {
+    color: white;
+    background-color: #74B9CB !important;
+}
+
+
+p, label {
    font-family: Cabin;
    font-size: medium;
-   font-color: #000;
+   color: #000;
+   background-color: white;
+
+}
+li.cute {
+    font-family: Cabin;
+   font-size: 24px;
+   color: #000;
+   margin: 10px;
+}
+ul.cute {
+    background: #e8f6fb;
+    border-radius: 5px;
+    width: 80%;
+}
+
+h1 {
+   font-family: Cabin;
+   font-size: 19;
+   color: #74b9cb;
+   background-color: white;
+   text-align: center;
+
+}
+
+h2 {
+   font-family: Cabin;
+   font-size: 16;
+   color: #000;
    background-color: white;
 
 }
@@ -100,8 +156,9 @@ margin-top:1%;
     justify-content: center;
 }
 
-input {
-   margin-bottom: 5px;
+.get-involved-div {
+  width: 80%;
+  justify-content: center;
 }
 
 
@@ -173,9 +230,32 @@ ul#subjects li {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  
 }
-.navbar-element {
+.padding-for-nav-bar {
+  padding-top: 145px;
+}
+
+.navbar-element, .navbar-element:hover {
   align-items: center;
+  height: 80px;
+  padding: 0px 5%;
+  background-color: #e8f6fb;
+}
+
+.social-link, .social-link:hover {
+  align-items: center;
+  height: 80px;
+  padding: 0px 5%;
+  background-color: white;
+}
+nav {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  border-bottom: 5px solid #74b9cb;
 }
 
 
@@ -238,5 +318,38 @@ ul#subjects li {
   font-weight: normal;
   font-size: 24px;
   background-color: rgba(0.5, 0, 0, 0)
+}
+.field_with_errors {
+  background: red !important;
+  width : 100%;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: 1.5px solid #74B9CB;
+  background-color: white;
+  font-family: Cabin;
+  font-size: medium;
+  border: 1px solid red !important;
+}
+li {
+  font-family: Cabin;
+  font-size: medium;
+  color: #CC0000;
+}
+
+input[type=radio] {
+  height: 25px;
+  width: 25px;
+  color: #74b9cb;
+  border: 2px solid #74B9CB;
+  box-sizing: border-box;
+}
+
+input[type=checkbox] {
+  height: 25px;
+  width: 25px;
+  color: #74b9cb;
+  border: 2px solid #74B9CB;
+  box-sizing: border-box;
 }
 

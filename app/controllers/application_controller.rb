@@ -14,10 +14,10 @@ class ApplicationController < ActionController::Base
     should_reject = false
     case role
 
-      when :admin;     should_reject = true unless (current_user != nil and current_user.admin?)
-      when :volunteer; should_reject = true unless (current_user != nil and current_user.volunteer?)
-      when :donee;     should_reject = true unless (current_user != nil and current_user.donee?)
-      when :donor;     should_reject = true unless (current_user != nil and current_user.donor?)
+      when :admin;     should_reject = true unless current_user&.admin?
+      when :volunteer; should_reject = true unless current_user&.volunteer?
+      when :donee;     should_reject = true unless current_user&.donee?
+      when :donor;     should_reject = true unless current_user&.donor?
 
     end
 
@@ -27,11 +27,14 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+
   protected
 
   def configure_permitted_parameters
       #devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :email, :password) }
-      devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password, :current_password, :admin, :volunteer, :donor, :donee])
-    end
+
+      devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password, :current_password, :admin, :volunteer, :donor, :donee, email_setting_attributes: [:preference]])
+  end
+
 
 end

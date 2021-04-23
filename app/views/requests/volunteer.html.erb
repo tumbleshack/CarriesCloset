@@ -1,0 +1,9 @@
+<h1>Pending Requests (<%= Request.pending.count %>)</h1>
+<% Request.pending.each do |pending_request| %>
+  <%= render partial: 'volunteer_request_block', locals: { request: pending_request } %>
+<% end %>
+
+<h1>Ready to Deliver (<%= Request.delivery_ready.count %>)</h1>
+<% Request.delivery_ready.each do |delivery_ready| %>
+  <%= render partial: 'volunteer_request_block', locals: { request: delivery_ready } %>
+<% end %>

@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 
-ActiveRecord::Schema.define(version: 2021_03_05_183914) do
+ActiveRecord::Schema.define(version: 2021_04_02_174537) do
 
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -57,11 +57,33 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
     t.boolean "meet"
     t.string "address"
     t.string "availability"
+
     t.string "items"
-    t.text "comments"
+
+  create_table "email_settings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "preference"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_email_settings_on_user_id"
   end
+
+  create_table "item_changes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "quantity"
+    t.string "itemType"
+    t.string "size"
+    t.integer "change_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "category_id"
+    t.bigint "request_id"
+    t.bigint "donation_id"
+    t.integer "settle", default: 0
+    t.index ["category_id"], name: "index_item_changes_on_category_id"
+    t.index ["donation_id"], name: "index_item_changes_on_donation_id"
+    t.index ["request_id"], name: "index_item_changes_on_request_id"
+  end
+
 
   create_table "items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "quantity"
@@ -83,10 +105,10 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
     t.boolean "meet"
     t.string "address"
     t.string "availability"
-    t.string "items"
     t.text "comments"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -121,6 +143,10 @@ ActiveRecord::Schema.define(version: 2021_03_05_183914) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
 
+  add_foreign_key "email_settings", "users"
+  add_foreign_key "item_changes", "categories"
+  add_foreign_key "item_changes", "donations"
+  add_foreign_key "item_changes", "requests"
   add_foreign_key "items", "categories"
 
 end

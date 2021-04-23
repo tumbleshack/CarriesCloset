@@ -1,9 +1,15 @@
 class DonationsController < ApplicationController
-  before_action :set_donation, only: %i[ show edit update destroy ]
+
+  before_action :set_categories_and_items
+  before_action :set_donation, only: %i[ show edit update destroy quality_screen ]
+
   
   before_action :authenticate_user!, only: %i[ index, my_donations ]
 
   before_action -> { require_role(:root, :admin) }, only: :index
+
+  before_action -> { require_role(:root, :volunteer) }, only: :quality_screen
+
 
   # GET /donations or /donations.json
   def index
@@ -17,10 +23,21 @@ class DonationsController < ApplicationController
   # GET /donations/new
   def new
     @donation = Donation.new
+
+    1.times { @donation.item_changes.build }
+
   end
 
   # GET /donations/1/edit
   def edit
+  end
+
+
+  def quality_check
+  end
+
+  def quality_screen
+
   end
 
   # GET /donations/my-donations
@@ -30,8 +47,9 @@ class DonationsController < ApplicationController
 
   # POST /donations or /donations.json
   def create
-    @donation = Donation.new(donation_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-    @donation.items = "#{donation_params["items_quantity"]}x #{donation_params["items_category"]} #{donation_params["items_itemType"]} size #{donation_params["items_sizes"]}"
+
+    @donation = Donation.new(donation_params)
+  
 
     respond_to do |format|
       if @donation.save
@@ -50,12 +68,17 @@ class DonationsController < ApplicationController
   # PATCH/PUT /donations/1 or /donations/1.json
   def update
     respond_to do |format|
-      if @donation.update(donation_params.except(:items_quantity, :items_category, :items_itemType, :items_sizes))
-        @donation.items = "#{donation_params["items_quantity"]}x #{donation_params["items_category"]} #{donation_params["items_itemType"]} Size #{donation_params["items_sizes"]}"
+
+      if @donation.update(donation_params.except(:send_to_settle, :send_to_screen))
         @donation.save
 
-        format.html { redirect_to @donation, notice: "Donation was successfully updated." }
-        format.json { render :show, status: :ok, location: @donation }
+        if donation_params[:send_to_screen] && current_user&.volunteer?
+          format.html { redirect_to quality_screen_path(@donation), notice: "Donation was successfully updated." }
+        else
+          format.html { redirect_to @donation, notice: "Donation was successfully updated." }
+          format.json { render :show, status: :ok, location: @donation }
+        end
+
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @donation.errors, status: :unprocessable_entity }
@@ -80,6 +103,16 @@ class DonationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def donation_params
-      params.require(:donation).permit(:full_name, :email, :phone, :county, :meet, :address, :availability, :items, :items_quantity, :items_category, :items_itemType, :items_sizes, :comments)
+
+      params.require(:donation).permit(:full_name, :email, :phone, :county, :meet, :address, :availability, :comments,
+                                       :send_to_settle, :send_to_screen,
+                                       item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size,
+                                                                 :change_type, :settle, :_destroy])
     end
+
+  def set_categories_and_items
+    @allCategories = Category.all
+    @allItems = Item.all
+  end
+
 end

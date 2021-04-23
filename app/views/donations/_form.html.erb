@@ -49,28 +49,9 @@
     <%= form.text_field :availability %>
   </div>
 
-  <div class="field">
-    <%= form.label :items, 'What items would you like to donate?' %>
-    <table>
-      <thead>
-        <tr>
-          <th>Quantity</th>
-          <th>Category</th>
-          <th>Item Type</th>
-          <th>Size</th>
-        </tr>
-      </thead>
 
-      <tbody>
-          <tr>
-            <td><%= form.number_field :items_quantity %></td>
-            <td><%= form.select :items_category, Category.all.map { |category| category.name } %></td>
-            <td><%= form.select :items_sizes, Item.all.map{ |item| item.size } %></td>
-            <td><%= form.select :items_itemType, Item.all.map{ |item| item.itemType } %></td>
-          </tr>
-      </tbody>
-    </table>
-  </div>
+  <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :donation } %> 
+
 
   <div class="field">
     <%= form.label :comments %>

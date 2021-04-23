@@ -1,0 +1,274 @@
+<script>
+
+  /*  SCRIPT TLDR 
+      data-{name} attributes are used to identify rails input fields. These are also element.dataset.{name}
+      The add item button clones the last row
+      The remove button simply marks the row for destruction (Rails feature) and sets display:none
+      There are two hidden inputs: change_type and _destroy. They exist to maintian Rails convention; better configure the front end
+        to send up complete data. change_type is hidden because it's the same for all item_changes from a particular place.
+        _destroy is hidden because the default rails UI makes no sense (check box). This JS makes it a responsive button.
+  */
+
+  window.onload = () => {
+
+    /*functions in this block will be run for every postback, so use with caution*/
+
+    itemTypeSelectors = document.querySelectorAll('[data-selectortype$="category"]');
+    itemTypeSelectors.forEach(element => {
+      updateItemTypes(element);
+    });
+
+    sizeSelectors = document.querySelectorAll('[data-selectortype$="itemType"]');
+    sizeSelectors.forEach(element => {
+      updateItemSizes(element);
+    });
+
+    // for some reason, when validation fails on an unrelated part of the form, rails 
+    // will put the items marked for destruction back in the table as visible
+    // to keep UI clear, mark them as no longer destructable and make user remove
+    // them all again. Alternatively, we could mark them as display:none, which would
+    // be nice, but this is easer.
+    destroyNodes = document.querySelectorAll('[data-type$="destroy"]');
+    destroyNodes.forEach(node => {
+      if ((!node.style.display) || node.style.display.search("none") == -1) {
+        node.value = false;
+      }
+    });
+  }
+
+  function getBody() {
+    return document.getElementById("table-body");
+  }
+
+  // consumes the category selector field and updates
+  // the corresponding itemType selector field
+  function updateItemTypes(element) {
+    var items = <%= raw @allItems.to_json %>;
+    var categories = <%= raw @allCategories.to_json %>;
+    var categoryValue = element.value;
+    var row = element.parentElement.parentElement;
+    var itemSelector = row.querySelector('[data-selectortype$="itemType"]');
+
+    for(var i = itemSelector.options.length - 1; i >= 0; i--) {
+      itemSelector.remove(i);
+    }
+
+    const matchedCategory = categories.find(c => c.id == categoryValue);
+    if (matchedCategory) {
+      const categoryID = matchedCategory.id;
+      const itemsForCategoryRaw = items.filter(i => i.category_id == categoryID);
+
+      const itemsForCategory = toUnique(itemsForCategoryRaw);
+
+      for (var i = 0; i < itemsForCategory.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.value = itemsForCategory[i].itemType;
+        newOption.innerHTML = itemsForCategory[i].itemType;
+        itemSelector.appendChild(newOption);
+      }
+    }
+
+    updateItemSizes(itemSelector);
+  }
+
+  // consumes the itemType selector field and updates
+  // the corresponding size selector field
+  function updateItemSizes(element) {
+    var items = <%= raw @allItems.to_json %>;
+    var categories = <%= raw @allCategories.to_json %>;
+    var itemTypeName = element.value;
+
+    var row = element.parentElement.parentElement;
+    if (row.tagName == "TD") row = row.parentElement;
+    var sizeSelector = row.querySelector('[data-selectortype$="size"]');
+
+    for(var i = sizeSelector.options.length - 1; i >= 0; i--) {
+      sizeSelector.remove(i);
+    }
+
+    const matchedItem = items.find(i => i.itemType == itemTypeName);
+    if (matchedItem) {
+      const itemID = matchedItem.id;
+      const sizesForItemRaw = items.filter(i => i.id == itemID).map(i => i.size);
+      const sizesForItem = toUnique(sizesForItemRaw);
+
+      for (var i = 0; i < sizesForItem.length; i++) {
+        var newOption = document.createElement('option');
+        newOption.value = sizesForItem[i];
+        newOption.innerHTML = sizesForItem[i];
+        sizeSelector.appendChild(newOption);
+      }
+    }
+  }
+
+  // Returns all rows in the table
+  function getAllRows() {
+    const body = getBody();
+    return [ ...body.childNodes ].filter(element => element.tagName == "TR");
+  }
+
+  // Returns the last row of the table by rails index number
+  function getLastRow() {
+    const body = getBody();
+    const prevRows = getAllRows();
+    var maxIndex = -1;
+    var maxRow = null;
+    prevRows.forEach(row => {
+      row.childNodes.forEach(td => {
+        if (td.tagName == "TD") {
+          td.childNodes.forEach(field => {
+            let inx = extractIndexFromName(field.name);
+            if ((inx != null) && inx[0] > maxIndex) {
+              maxIndex = inx[0];
+              maxRow = row;
+            }
+          });
+        }
+      });
+    });
+    return maxRow;
+  }
+
+  // Returns null if the name does not correspond to 
+  // an editable rails field. Else, returns array where 
+  // 0: the index of the field found
+  // 1: the character in the name where the index starts
+  function extractIndexFromName(name) {
+    if (!name) return null;
+    const regex = /\[(\d)+\]/;
+    const found = name.match(regex);
+    if (!found) return null;
+    return [parseInt(found[0].substring(1, found[0].length - 1)), found.index]
+  }
+
+  // DFS through the tree of elements. Applies doSomethingToNode on all elements
+  function allDescendants (root, doSomethingToNode) { 
+    root.childNodes.forEach(child => { 
+       allDescendants(child, doSomethingToNode);
+       doSomethingToNode(child);   
+    }); 
+  }
+
+  function insertItemRow() {
+    const body = getBody();
+    const prevRow = getLastRow();
+    const clone = prevRow.cloneNode(true);
+    clone.dataset.id = parseInt(clone.dataset.id) + 1;
+    var categorySelector = null;
+
+    // if last node has been destroyed, undestroy the clone
+    clone.style.display = null;
+    
+    const incrementNameAndIdIndex = (node) => {
+      // when validation fails, rails surrounds the field with and error div
+      // rather than remove it and flatten, just remove the class name so the 
+      // red box goes away. Hacky, but works
+      if (node.className && node.className.search("field_with_errors") > -1) {
+        node.className = node.className.replace("field_with_errors", "");
+      }
+
+      found = extractIndexFromName(node.name)
+
+      // confirm that this is indeed a editable field
+      if (found != null) {
+        // increment index
+        node.name = node.name.replace("[" + found[0] + "]", "[" + (found[0] + 1) + "]");
+        node.id = node.id.replace("_" + found[0] + "_", "_" + (found[0] + 1) + "_");
+        
+        //set event handlers, not copied on "clone" call
+        if (node.dataset.selectortype == "category") {
+          node.onchange = function() { updateItemTypes(this); }
+          categorySelector = node;
+        } else if (node.dataset.selectortype == "itemType") {
+          node.onchange = function() { updateItemSizes(this); }
+        } else if (node.dataset.type == "destroy") {
+          node.value = false;
+        }
+      }
+    }
+
+    allDescendants(clone, incrementNameAndIdIndex);
+    body.appendChild(clone);
+    updateItemTypes(categorySelector);
+  }
+
+  function removeItemRow(button) {
+    if (getAllRows().filter(node => (!node.style.display) || node.style.display.search("none") == -1).length < 2) return;
+    const index = button.parentNode.parentNode.dataset.id;
+    const body = getBody();
+    const selector = '[data-id="' + index + '"]';
+    const row = body.querySelector(selector);
+    row.style.display = "none";
+    destroyNode = row.querySelector('[data-type$="destroy"]')
+    destroyNode.value = true;
+    
+  }
+
+  function toUnique(array) {
+    return array.filter(function(item, pos) {
+      return array.indexOf(item) == pos;
+    });
+  }
+
+</script>
+
+<% send_to_settle ||= false %>
+<% send_to_screen ||= false %>
+
+<div class="field">
+  <% unless send_to_screen %>
+    <%= form.label :items, 'What items would you like to request?'  %>
+  <% end %>
+  <table id="items-table">
+    <thead>
+    <tr>
+      <% if current_user&.volunteer? && (send_to_settle || send_to_screen) %>
+        <th><%= send_to_settle ? 'Settled' : 'Quality Items' %></th>
+        <th>Quantity</th>
+        <th>Description</th>
+      <% else %>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Item Type</th>
+        <th>Size</th>
+      <% end %>
+      <th></th>
+    </tr>
+    </thead>
+
+    <tbody id="table-body">
+      <%= form.fields_for :item_changes do |item_change_form| %>
+        <% item_change = item_change_form.instance_variable_get(:@object) %>
+
+        <tr data-id=<%=item_change_form.index%>>
+          <% if current_user&.volunteer? && (send_to_settle || send_to_screen) %>
+            <% @itemsToStock = @request.getItemStock() if send_to_settle %>
+            <td><%= item_change_form.number_field :settle %></td>
+            <td><%= item_change.quantity %></td>
+            <td>
+              <%= item_change.description %>
+              <% if send_to_settle && @itemsToStock.keys.any?(item_change.id) %>
+                <% if @itemsToStock[item_change.id] > 0 %>
+                  - Limited Stock (<%= @itemsToStock[item_change.id] %>)
+                <% else %>
+                  - Out of Stock
+                <% end %>
+              <% end %>      
+            </td>
+          <% else %>
+            <td><%= item_change_form.number_field :quantity %></td>
+            <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
+            <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
+            <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
+            <td hidden><%= item_change_form.hidden_field :change_type, value:ItemChange::CHANGE_TYPES.fetch(parent_f) %></td>
+            <td hidden><%= item_change_form.hidden_field :_destroy, html_options = {:onchange => "updateItemSizes(this)", :data => { type: "destroy" }}%></td>
+          <% end %>
+            <td><button type="button" onclick="removeItemRow(this);">Remove</button></td>
+        </tr> 
+      <%end%>
+    </tbody>
+  </table>
+  <% unless send_to_screen %>
+    <button type="button" onclick="insertItemRow();">Add Item</button>
+  <% end %>
+</div>

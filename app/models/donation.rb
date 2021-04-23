@@ -1,18 +1,29 @@
 class Donation < ApplicationRecord
-  COUNTIES = {
-    '': 0,
-    'Fulton': 1,
-    'Dekalb': 2,
-    'Gwinnett': 3,
-    'Cobb': 4,
-    'Clayton': 5,
-    'Henry': 6,
-    'Muscogee': 7,
-    'Other (provide your address below)': 8
-  }.freeze
+
+
+  include FormattableAttributes
+
+  has_many :item_changes
+  accepts_nested_attributes_for :item_changes, allow_destroy: true
   
   validates_presence_of :full_name, :email, :availability,
-                        :county, :meet, :phone, :items
+                        :county, :meet, :phone, :item_changes
+
+#   COUNTIES = {
+#     '': 0,
+#     'Fulton': 1,
+#     'Dekalb': 2,
+#     'Gwinnett': 3,
+#     'Cobb': 4,
+#     'Clayton': 5,
+#     'Henry': 6,
+#     'Muscogee': 7,
+#     'Other (provide your address below)': 8
+#   }.freeze
+  
+#   validates_presence_of :full_name, :email, :availability,
+#                         :county, :meet, :phone, :items
+
 
   validates_numericality_of :county, greater_than: 0, :message => "can't be blank"
   
