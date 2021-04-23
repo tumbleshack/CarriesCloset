@@ -30,6 +30,30 @@ Locate the service account `{somenumber}-compute@developer.gserviceaccount.com`.
 
 Click on the edit member icon for `{somenumber}-compute@developer.gserviceaccount.com`. Select "ADD ANOTHER ROLE". Locate Cloud SQL Admin (make sure the Cloud SQL Admin API is enabled). Save.
 
+### Seed the Database
+
+If the deployment is fresh (ie. database has never been setup before), the database will need to be seeded. The seeds are set in the file [db/seeds.rb](db/seeds.rb). **Make sure to change the administrator seed** before proceeding.
+
+To seed the database, run the docker container on your local machine, connect it to the Google Cloud PostgreSQL instance, then execute the seed command inside the container. 
+
+First, authorize your local network to connect with Cloud SQL. Go to the Google Cloud Console page for the PostgreSQL instance, and view the "Connections" tab. Add your public IP address to the list of "Authorized networks."
+
+Next, copy the IP address of your PostgreSQL instance, found on the "Overview" tab. Make sure it's a public IP address. Open the file [config/database.yml](config/database.yml) and temporarily change the `host` field under `production` to the PostgreSQL IP address just copied. 
+
+Now, set all the environment variables specified in the _**Run Instructions:**_ section of this document by temporarily adding them to the Dockerfile. Build the container as specified in _Build Instructions_ and run it with:
+```
+docker run --name cc_server_seed -d gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
+```
+Once running, execute the seed command inside the container with:
+```
+docker exec cc_server_seed bin/rails db:seed
+```
+Once the seed finishes, it's safe to stop the container with:
+```
+docker stop cc_server_seed
+```
+Restore the Dockerfile and [config/database.yml](config/database.yml) file back to their original states, and proceed with installation.
+
 ### Dependent Libraries that must be Installed on your Machine:
 1. [Docker Desktop](https://www.docker.com/products/docker-desktop)
 2. [Git](https://git-scm.com/downloads)
