@@ -85,6 +85,8 @@ The CLI will then give the public URL on which the web app is running in your sh
 
 Go to the CONTAINER tab, and set Port to `3000`
 
+Go to the CONNECTIONS tab. Under the "Cloud SQL connections" heading, select your PostgreSQL instance in the dropdown.
+
 Then click the "DEPLOY" button.
 
 ### Troubleshooting:
