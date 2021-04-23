@@ -1,11 +1,15 @@
 class DonationsController < ApplicationController
+
   before_action :set_categories_and_items
   before_action :set_donation, only: %i[ show edit update destroy quality_screen ]
+
   
   before_action :authenticate_user!, only: %i[ index, my_donations ]
 
   before_action -> { require_role(:root, :admin) }, only: :index
+
   before_action -> { require_role(:root, :volunteer) }, only: :quality_screen
+
 
   # GET /donations or /donations.json
   def index
@@ -19,12 +23,15 @@ class DonationsController < ApplicationController
   # GET /donations/new
   def new
     @donation = Donation.new
+
     1.times { @donation.item_changes.build }
+
   end
 
   # GET /donations/1/edit
   def edit
   end
+
 
   def quality_check
   end
@@ -40,8 +47,10 @@ class DonationsController < ApplicationController
 
   # POST /donations or /donations.json
   def create
+
     @donation = Donation.new(donation_params)
   
+
     respond_to do |format|
       if @donation.save
 
@@ -59,6 +68,7 @@ class DonationsController < ApplicationController
   # PATCH/PUT /donations/1 or /donations/1.json
   def update
     respond_to do |format|
+
       if @donation.update(donation_params.except(:send_to_settle, :send_to_screen))
         @donation.save
 
@@ -68,6 +78,7 @@ class DonationsController < ApplicationController
           format.html { redirect_to @donation, notice: "Donation was successfully updated." }
           format.json { render :show, status: :ok, location: @donation }
         end
+
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @donation.errors, status: :unprocessable_entity }
@@ -92,6 +103,7 @@ class DonationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def donation_params
+
       params.require(:donation).permit(:full_name, :email, :phone, :county, :meet, :address, :availability, :comments,
                                        :send_to_settle, :send_to_screen,
                                        item_changes_attributes: [:id, :category_id, :quantity, :itemType, :size,
@@ -102,4 +114,5 @@ class DonationsController < ApplicationController
     @allCategories = Category.all
     @allItems = Item.all
   end
+
 end

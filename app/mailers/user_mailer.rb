@@ -5,6 +5,7 @@ class UserMailer < ApplicationMailer
         @request = params[:request]
         # mail to: User.admins.pluck(:email), #send to all admins
         #   subject: "[URGENT] Donation Request" if User.admins.any? # only is admins exist
+
         # if User.admins.any?
         #   mail to: User.admins.pluck(:email), #send to all admins
         #    subject: "[URGENT] Donation Request"
@@ -68,6 +69,7 @@ class UserMailer < ApplicationMailer
         mail to: 'carries.closet.confirmations@gmail.com', #send to all carries closet email if no volunteers
           subject: "Donation Request Notification"
       end 
+
     end
 
 

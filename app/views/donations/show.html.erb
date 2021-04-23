@@ -34,9 +34,11 @@
 
 <p>
   <strong>Items:</strong>
+
   <%@donation.item_changes.each do |item|%>
      <p><%= item.quantity %> <%= Category.find(item.category_id).name %> <%= item.itemType %>, size: <%= item.size %></p>
   <%end%>
+
 </p>
 
 <p>
