@@ -1,12 +1,12 @@
 # Release Notes
 
-## Teminology
+## Teminology 📘
 - **Donee**: someone receiving clothing/items _from_ Carrie's Closet
 - **Request**: form which a donee uses ask Carrie's Closet for clothing/items
 - **Donor**: somone giving clothing/items _to_ Carrie's Closet
 - **Donation:** form which donors use to give items to Carrie's Closet
 
-## New & Improved 
+## New & Improved ⭐
 
 - Anyone on the internet can make item requests. 💁 They can specify
   -  How urgent their need is
@@ -38,12 +38,14 @@
 - Paypal! Carrie's Closet can accept money from nice people online
 
 ## Known Bugs
-- Team?
+- When a user selects "yes" to inputing their address, forms to not validate one is actually entered
+- Admins can create duplicate item categories
+- When creating an account, if the "Password" and "Confirm Password" fields do not match, no error is surfaced (but account creation is still blocked)
+- The radio buttons may still be stacked on mobile views
 
 ## Fixes 🛠️
 - Radio buttons are no longer strangly stacked (side by side now)
 - The invite user page doesn't lead to a black hole anymore... why'd we do that... haha, oops
 - Donors are no longer allowed to donate negative (huh?) item quantities
 - The inventory list doesn't extend past the width of your screen
- 
  
