@@ -1,86 +1,81 @@
 body {
+
   font-family: Cabin;
-  font-size: medium;
-  color: #000;
-  background-color: white;
+   font-size: medium;
+   color: #000;
+   background-color: white;
+
 }
-input,
-textarea,
-select,
-button,
-option {
-  width: 97%;
+input, textarea, select, button, option {
+  width : 97%;
   padding-top: 5px !important;
   padding-bottom: 10px !important;
   padding-right: 2px !important;
   padding-left: 2px !important;
   border: 2px solid !important;
-  border-color: #74b9cb !important;
+  border-color: #74B9CB !important;
   border-radius: 8px !important;
   background-color: white;
   font-family: Cabin !important;
   font-size: medium !important;
 }
 
-button,
-input[type="submit"] {
+button, input[type=submit] {
   background-color: #74b9cb;
   padding: 5px;
 }
-button:hover,
-input[type="submit"]:hover {
+button:hover, input[type=submit]:hover {
   background-color: #e8f6fb;
 }
 
 option {
-  color: white;
-  background-color: #74b9cb !important;
+    color: white;
+    background-color: #74B9CB !important;
 }
 
-p,
-label {
-  font-family: Cabin;
-  font-size: medium;
-  color: #000;
-  background-color: white;
+
+p, label {
+   font-family: Cabin;
+   font-size: medium;
+   color: #000;
+   background-color: white;
+
 }
 li.cute {
-  font-family: Cabin;
-  font-size: 24px;
-  color: #000;
-  margin: 10px;
+    font-family: Cabin;
+   font-size: 24px;
+   color: #000;
+   margin: 10px;
 }
 ul.cute {
-  background: #e8f6fb;
-  border-radius: 5px;
-  width: 80%;
+    background: #e8f6fb;
+    border-radius: 5px;
+    width: 80%;
 }
 
 h1 {
-  font-family: Cabin;
-  font-size: 19;
-  color: #74b9cb;
-  background-color: white;
-  text-align: center;
+   font-family: Cabin;
+   font-size: 19;
+   color: #74b9cb;
+   background-color: white;
+   text-align: center;
+
 }
 
 h2 {
-  font-family: Cabin;
-  font-size: 16;
-  color: #000;
-  background-color: white;
+   font-family: Cabin;
+   font-size: 16;
+   color: #000;
+   background-color: white;
+
 }
 
-a:link,
-a:active,
-a:visited,
-a:hover {
-  color: #74b9cb;
+a:link, a:active, a:visited, a:hover {
+   color: #74b9cb;
 }
 
-a.home-link:link,
-a.home-link:active,
-a.home-link:visited {
+
+a.home-link:link, a.home-link:active, a.home-link:visited {
   background-color: #74b9cb;
   color: #1b1b1b;
   padding: 1em 1.5em;
@@ -90,8 +85,8 @@ a.home-link:visited {
   font-family: Cabin;
   border: 2px solid #74b9cb;
   border-radius: 5px;
-  width: 100%;
-  text-align: center;
+  width:100%;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -112,8 +107,8 @@ a.home-link:hover {
   font-family: Cabin;
   border: 2px solid #74b9cb;
   border-radius: 5px;
-  width: 100%;
-  text-align: center;
+  width:100%;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -124,9 +119,7 @@ a.home-link:hover {
   align-items: center;
 }
 
-a.small-link-button:link,
-a.small-link-button:active,
-a.small-link-button:visited {
+a.small-link-button:link, a.small-link-button:active,a.small-link-button:visited {
   background-color: #e8f6fb;
   color: #1b1b1b;
   padding: 1em 1.5em;
@@ -136,7 +129,7 @@ a.small-link-button:visited {
   font-family: Cabin;
   border: 2px solid #74b9cb;
   border-radius: 5px;
-  text-align: center;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
@@ -146,18 +139,19 @@ a.small-link-button:visited {
 }
 
 a.small-link-button:hover {
+  
 }
 
 .margins-needed {
-  margin-left: 1%;
-  margin-right: 1%;
-  margin-bottom: 1%;
-  margin-top: 1%;
+  margin-left:1%;
+margin-right:1%;
+margin-bottom:1%;
+margin-top:1%;
 }
 
 .centered-div {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .get-involved-div {
@@ -165,65 +159,67 @@ a.small-link-button:hover {
   justify-content: center;
 }
 
+
 p.contact-info {
-  font-family: Cabin;
-  font-size: medium;
-  font-color: #000;
-  background-color: white;
+   font-family: Cabin;
+   font-size: medium;
+   font-color: #000;
+   background-color: white;
   line-height: 150%;
   border: 2px solid #74b9cb;
   padding: 1em 1.5em;
   background-color: #e8f6fb;
-  text-align: center;
+  text-align:center;
   width: 60%;
   font-size: 18px;
+  
 }
 
 div#container {
-  width: 760px;
-  margin: 0 auto;
+   width: 760px;
+   margin: 0 auto;
 }
 
 div#header {
-  text-align: center;
-  padding-bottom: 15px;
+   text-align: center;
+   padding-bottom: 15px;
 }
 
 div#content {
-  float: left;
-  width: 450px;
-  padding: 10px;
+   float: left;
+   width: 450px;
+   padding: 10px;
 }
 
 div#content h3 {
-  margin-top: 15px;
+   margin-top: 15px;
 }
 
 ul#books {
-  list-style-type: none;
+   list-style-type: none;
 }
 
 ul#books li {
-  line-height: 140%;
+   line-height: 140%;
 }
 
 div#sidebar {
-  width: 200px;
-  margin-left: 480px;
+   width: 200px;
+   margin-left: 480px;
 }
 
 ul#subjects {
-  width: 700px;
-  text-align: center;
-  padding: 5px;
-  background-color: #ececec;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
+   width: 700px;
+   text-align: center;
+   padding: 5px;
+   background-color: #ececec;
+   border: 1px solid #ccc;
+   margin-bottom: 20px;
 }
 
 ul#subjects li {
-  display: inline;
-  padding-left: 5px;
+   display: inline;
+   padding-left: 5px;
 }
 
 .nav-bar {
@@ -232,21 +228,21 @@ ul#subjects li {
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  
 }
 .padding-for-nav-bar {
   padding-top: 145px;
 }
 
-.navbar-element,
-.navbar-element:hover {
+.navbar-element, .navbar-element:hover {
   align-items: center;
   height: 80px;
   padding: 0px 5%;
   background-color: #e8f6fb;
 }
 
-.social-link,
-.social-link:hover {
+.social-link, .social-link:hover {
   align-items: center;
   height: 80px;
   padding: 0px 5%;
@@ -260,10 +256,11 @@ nav {
   border-bottom: 5px solid #74b9cb;
 }
 
+
 .button-looks-like-link {
-  background: none !important;
+  background: none!important;
   border: none;
-  padding: 0 !important;
+  padding: 0!important;
   /*optional*/
   font-family: arial, sans-serif;
   /*input has OS specific font-family*/
@@ -277,13 +274,13 @@ nav {
   color: #1b1b1b;
   padding: 1em 1.5em;
   text-decoration: none;
-  background-color: #74b9cb;
+  background-color:#74b9cb;
   margin-left: 5px;
   margin-right: 5px;
   font-family: Cabin;
   border: 2px solid #74b9cb;
   border-radius: 5px;
-  text-align: center;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -301,8 +298,8 @@ nav {
   font-family: Cabin;
   border: 2px solid #74b9cb;
   border-radius: 5px;
-  width: 100%;
-  text-align: center;
+  width:100%;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
@@ -314,19 +311,19 @@ nav {
 }
 .home-link-text {
   font-family: Cabin;
-  text-align: center;
+  text-align:center;
   font-style: normal;
   font-weight: normal;
   font-size: 24px;
-  background-color: rgba(0.5, 0, 0, 0);
+  background-color: rgba(0.5, 0, 0, 0)
 }
 .field_with_errors {
   background: red !important;
-  width: 100%;
+  width : 100%;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  border: 1.5px solid #74b9cb;
+  border: 1.5px solid #74B9CB;
   background-color: white;
   font-family: Cabin;
   font-size: medium;
@@ -335,20 +332,20 @@ nav {
 li {
   font-family: Cabin;
   font-size: medium;
-  color: #cc0000;
+  color: #CC0000;
 }
 
-input[type="radio"] {
+input[type=radio] {
   height: 25px;
   width: 25px;
   color: #74b9cb;
-  border: 2px solid #74b9cb;
+  border: 2px solid #74B9CB;
   box-sizing: border-box;
 }
-input[type="checkbox"] {
+input[type=checkbox] {
   height: 25px;
   width: 25px;
   color: #74b9cb;
-  border: 2px solid #74b9cb;
+  border: 2px solid #74B9CB;
   box-sizing: border-box;
 }
