@@ -114,7 +114,7 @@ Rails.application.configure do
      password: ENV["APP_PASSWORD"]
    }
    # can change host when we have a URL
-   config.action_mailer.default_url_options = {:host => "https://closet-service-mt3t7nvwaq-ue.a.run.app/"}
+   config.action_mailer.default_url_options = {:host => ENV["HOST_URL"]}
    config.action_mailer.delivery_method = :smtp
  
     # -----------------------------------------------------------------------------------------------
