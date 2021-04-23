@@ -82,6 +82,9 @@ The CLI will then give the public URL on which the web app is running in your sh
 - `DATABASE_PASSWORD`: password you set for the PostgreSQL username
 - `RAILS_LOG_TO_STDOUT`: `true`
 - `INSTANCE_CONNECTION_NAME`: {project-id}:{postgres-region}:{postgres-instance-id}, for example `carries-closet:us-central1:closet-db-1`
+
+Go to the CONTAINER tab, and set Port to `3000`
+
 Then click the "DEPLOY" button.
 
 ### Troubleshooting:
