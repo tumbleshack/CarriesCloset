@@ -1,10 +1,8 @@
 body {
-
   font-family: Cabin;
    font-size: medium;
    color: #000;
    background-color: white;
-
 }
 input, textarea, select, button, option {
   width : 97%;
@@ -136,10 +134,6 @@ a.small-link-button:link, a.small-link-button:active,a.small-link-button:visited
   display: inline-block;
 
   align-items: center;
-}
-
-a.small-link-button:hover {
-  
 }
 
 .margins-needed {
