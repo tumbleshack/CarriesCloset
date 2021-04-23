@@ -14,13 +14,11 @@
   <% end %>
 
   <div class="margins-needed">
-    <% send_to_settle ||= false %>
-    <% send_to_screen ||= false %>
-    <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request, send_to_settle: send_to_settle, send_to_screen: send_to_screen } %>
+    <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :request, send_to_settle: send_to_settle } %>
 
     <div class="actions">
+      <% send_to_settle ||= false %>
       <%= form.hidden_field :send_to_settle, value: send_to_settle %>
-      <%= form.hidden_field :send_to_screen, value: send_to_screen %>
       <%= form.submit %>
     </div>
   </div>

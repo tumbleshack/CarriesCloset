@@ -83,46 +83,28 @@ class RequestsController < ApplicationController
   # GET /requests/popup
   def popup
     @request = Request.new
-    default = ItemChange.create!(category: Category.all.sample, quantity: 1, itemType: 2, change_type: 2, size: Item.all.pluck(:size).uniq.sample)
-    @request.item_changes << default
   end
 
   # POST /requests or /requests.json
   def create
     @allCategories = Category.all
     @allItems = Item.all
-    isPopUpTransaction = request_params.has_key?(:item_changes_attributes) && !request_params[:item_changes_attributes].blank?
-    @request = Request.new(request_params.except(:item_changes_attributes))
+    @request = Request.new(request_params)
 
-    if isPopUpTransaction
-      @request.full_name = "POPUP SHOP"
-      @request.meet = 1
-      @request.relationship = 1
-      @request.email = 'carries.closets@gmail.com'
-      @request.urgency = Request::URGENCIES[:'Within 24 hours']
-      @request.availability = 'POPUP'
-      @request.county = Request::COUNTIES[:Fulton]
-      @request.phone = 678_555_5555
-
-      items = request_params[:item_changes_attributes].values
-      items = items.map{ |item| item.except(:_destroy) } # Remove excess attribute
-      @request.item_changes = ItemChange.create!(items)
-    end
 
     respond_to do |format|
 
       if @request.save
 
-        if !isPopUpTransaction
-          # ActionMailer should send email immediately after new request creation is saved
-          UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
-          #if @request.urgency == 1 // new email settings will take care of this
-          UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
-          # end
+        # ActionMailer should send email immediately after new request creation is saved
+        UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
 
-          UserMailer.with(request: @request).volunteer_email.deliver_later
-        end
+        #if @request.urgency == 1 // new email settings will take care of this
+        UserMailer.with(request: @request).new_admin_urgent_email.deliver_later # to ADMIN if URGENT
+        # end
+
+        UserMailer.with(request: @request).volunteer_email.deliver_later
 
 
         format.html { redirect_to @request, notice: "Request was successfully created." }
@@ -181,10 +163,6 @@ class RequestsController < ApplicationController
                                     :availability, :comments, :send_to_settle,
                                     item_changes_attributes: [:id, :category_id, :quantity, :settle, :itemType, :size,
                                                               :change_type, :_destroy])
-  end
-
-  def request_changes
-    request_params.require(:item_changes_attributes)
   end
 
   # Redirects to :root if accessed by non-volunteer after 30 minutes to

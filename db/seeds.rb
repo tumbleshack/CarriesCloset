@@ -25,16 +25,8 @@ end
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
                       admin: true) if @admin.nil?
 
-
-items = %w[ Shoes Shirts Pants ]
-items.each do |item|
-  categories.each do |category|
-    cat = Category.find_by_name(category)
-    @someitem = Item.find_by(itemType: item, category: cat)
-    @someitem = Item.create!(quantity: rand(1...30), category: cat, itemType: item, size: "6")
-    puts "Created item: #{@someitem.quantity}x #{@someitem.category.name} #{@someitem.itemType} (Size #{@someitem.size})"
-  end
-end
+@someitem = Item.find_by_itemType("Shoes")
+@someitem = Item.create!(quantity: 2, category: Category.find_by_name(categories.first), itemType: "Shoes", size: "6") if @someitem.nil?
 
 @volunteer = User.find_by_email('carries.closet.volunteer@gmail.com')
 @volunteer = User.create!(email: 'carries.closet.volunteer@gmail.com', password: 'volunteer-password',
@@ -89,37 +81,9 @@ loop do |index|
     change.save!
   end
 
-  if request.save!
+  if request.save
     puts "Request #{index} created"
     puts " - Items requested: #{request.item_changes.count}"
     puts "   - " + request.item_changes.map(&:description).join("\n   - ")
-  end
-end
-
-loop do |index|
-  break if Donation.count >= 50 || Rails.env.production?
-  county = Request::COUNTIES.values.sample
-
-  donation = Donation.new full_name: Faker::Name.name,
-                          email: Faker::Internet.email,
-                          availability: 1,
-                          county: county == 0 ? 1 : county,
-                          meet: 1,
-                          phone: (678_555_0000...678_567_9999).to_a.sample.to_s
-
-  (6...30).to_a.sample.times do
-    category = categories.sample
-    don_item = donation.item_changes.new category: Category.find_by_name(category),
-                                         change_type: 2,
-                                         quantity: (1...20).to_a.sample,
-                                         itemType: Item.all.pluck(:itemType).sample,
-                                         size: %w[ XS S M L XL XXL ].sample
-    don_item.save
-  end
-
-  if donation.save!
-    puts "Donation #{Donation.all.count} created"
-    puts " - Items donated: #{donation.item_changes.count}"
-    puts "   - " + donation.item_changes.map(&:description).join("\n   - ")
   end
 end

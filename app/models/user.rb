@@ -23,4 +23,8 @@ class User < ApplicationRecord
     self.build_email_setting.save! if self.email_setting.nil?
   end
 
+  def volunteer?; volunteer || admin?; end
+  def donee?; donee || donor || volunteer? || admin?; end
+  def donor?; donor || donor || volunteer? || admin?; end
+
 end

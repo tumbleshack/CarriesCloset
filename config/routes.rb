@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   resources :email_settings
   get '/donations/my_donations' => 'donations#my_donations'
-  get '/donations/quality_check' => 'donations#quality_check'
-  get '/donations/:id/quality_screen' => 'donations#quality_screen', as: :quality_screen
   resources :donations
   resources :categories
   resources :items
@@ -17,11 +15,10 @@ Rails.application.routes.draw do
   get 'public/index'
   devise_for :users, :path_prefix => 'my', controllers: { registrations: 'users/registrations', invitations: 'users/invitations' }
   resources :users
-  get '/get-involved' => 'get_involved#index'
    
   resources :users
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: "public#index"
+  root to: "public#index"  
 
 end

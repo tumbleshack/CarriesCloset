@@ -1,7 +1,4 @@
 <h1>New Pop-Up Shop Transaction</h1>
 <%= form_with(model: @request, html: { class: 'pure-form pure-form-stacked' }) do |form| %>
-  <%= render partial: 'form_helpers/item_selection', locals: { form: form, parent_f: :donation } %>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= render partial: 'item_selection', locals: { form: form } %>
 <% end %>

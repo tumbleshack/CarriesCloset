@@ -213,17 +213,14 @@
 </script>
 
 <% send_to_settle ||= false %>
-<% send_to_screen ||= false %>
 
 <div class="field">
-  <% unless send_to_screen %>
-    <%= form.label :items, 'What items would you like to request?'  %>
-  <% end %>
+  <%= form.label :items, 'What items would you like to request?' %>
   <table id="items-table">
     <thead>
     <tr>
-      <% if current_user&.volunteer? && (send_to_settle || send_to_screen) %>
-        <th><%= send_to_settle ? 'Settled' : 'Quality Items' %></th>
+      <% if current_user&.volunteer? && send_to_settle %>
+        <th>Settled</th>
         <th>Quantity</th>
         <th>Description</th>
       <% else %>
@@ -241,15 +238,15 @@
         <% item_change = item_change_form.instance_variable_get(:@object) %>
 
         <tr data-id=<%=item_change_form.index%>>
-          <% if current_user&.volunteer? && (send_to_settle || send_to_screen) %>
-            <% @itemsToStock = @request.getItemStock() if send_to_settle %>
+          <% if current_user&.volunteer? && send_to_settle %>
+            <% @itemsToStock = @request.getItemStock() %>
             <td><%= item_change_form.number_field :settle %></td>
             <td><%= item_change.quantity %></td>
             <td>
               <%= item_change.description %>
-              <% if send_to_settle && @itemsToStock.keys.any?(item_change.id) %>
+              <% if @itemsToStock.keys.any?(item_change.id) %>
                 <% if @itemsToStock[item_change.id] > 0 %>
-                  - Limited Stock (<%= @itemsToStock[item_change.id] %>)
+                  - Limited Stock (<%= @itemsToStock[item_change.id] =%>)
                 <% else %>
                   - Out of Stock
                 <% end %>
@@ -268,7 +265,5 @@
       <%end%>
     </tbody>
   </table>
-  <% unless send_to_screen %>
-    <button type="button" onclick="insertItemRow();">Add Item</button>
-  <% end %>
+  <button type="button" onclick="insertItemRow();">Add Item</button> 
 </div>
