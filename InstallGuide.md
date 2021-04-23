@@ -73,7 +73,7 @@ docker push gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
 ### Run Instructions:
 Now deploy the container to Google Cloud Run.
 ```
-gcloud run deploy $_SERVICE_ID --image=gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID --platform=managed --region=us-east1
+gcloud run deploy $_SERVICE_ID --image=gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID --platform=managed --region=us-east1 --allow-unauthenticated
 ```
 The CLI will then give the public URL on which the web app is running in your shell. Go to the Google Cloud Console, locate the Cloud Run service, and select "EDIT & DEPLOY NEW REVISION." Go the "VARIABLES" tab. Add the following environment variables:
 - `RAILS_ENV`: `production`
