@@ -16,20 +16,26 @@ USER rails_user
 # Install all dependencies through `gem` and `yarn` package managers.
 COPY --chown=rails_user:rails_user Gemfile /cc_server/Gemfile
 COPY --chown=rails_user:rails_user Gemfile.lock /cc_server/Gemfile.lock
-RUN gem install bundler:2.2.8 && bundle install
-
-COPY --chown=rails_user:rails_user package.json /cc_server/package.json
-COPY --chown=rails_user:rails_user yarn.lock /cc_server/yarn.lock
-RUN yarn install --check-files
+RUN gem install bundler:2.2.8
+RUN bundle install
 
 # Expose ports for access either from `dev` (:3000) or `prod` (:80 and :443)
 ENV RAILS_ENV production
 ENV RAILS_SERVE_STATIC_FILES true
+ENV RAILS_LOG_TO_STDOUT true
+
+COPY --chown=rails_user:rails_user package.json /cc_server/package.json
+COPY --chown=rails_user:rails_user yarn.lock /cc_server/yarn.lock
+RUN yarn install --check-files --production
 
 COPY --chown=rails_user:rails_user execute.sh /cc_server/execute.sh
 COPY --chown=rails_user:rails_user Rakefile /cc_server/Rakefile
 COPY --chown=rails_user:rails_user . /cc_server/
 
+RUN bundle exec rake assets:precompile
+
 # Start the main process.
 RUN chmod +x execute.sh
 ENTRYPOINT ["/cc_server/execute.sh"]
+
+CMD bundle exec rails server -b '0.0.0.0' -p 3000

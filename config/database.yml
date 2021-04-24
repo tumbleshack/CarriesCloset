@@ -56,4 +56,5 @@ production:
   database: <%= ENV.fetch("DB_NAME") { "closet" } %>
   # If connecting via unix domain socket, specify the socket path as host
   host:  "<%= ENV.fetch("DB_SOCKET_DIR") { '/cloudsql' } %>/<%= ENV["INSTANCE_CONNECTION_NAME"] %>"
+  # host: 35.224.23.225
 
