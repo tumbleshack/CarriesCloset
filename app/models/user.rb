@@ -23,6 +23,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :email_setting
 
   def ensure_email_setting
+    return if self.user_id.nil?
     self.build_email_setting.save! if self.email_setting.nil?
   end
 

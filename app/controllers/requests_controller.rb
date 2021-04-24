@@ -92,7 +92,12 @@ class RequestsController < ApplicationController
 
     @allCategories = Category.all
     @allItems = Item.all
-    @request = Request.new(request_params.except(:item_changes_attributes, :popup))
+    @request = nil
+    if request_params[:popup] == 'true'
+      @request = Request.new(request_params.except(:item_changes_attributes, :popup))
+    else
+      @request = Request.new(request_params.except(:popup))
+    end
 
     if request_params[:popup] == 'true'
       @request.full_name = "POPUP SHOP"
@@ -105,7 +110,7 @@ class RequestsController < ApplicationController
       @request.phone = 678_555_5555
 
       items = request_params[:item_changes_attributes].values
-      items = items.map{ |item| item.except(:_destroy) } # Remove excess attribute
+      items = items.map{ |item| item.except(:_destroy, :id) } # Remove excess attribute
       @request.item_changes = ItemChange.create!(items)
     end
 
