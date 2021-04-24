@@ -1,2 +1,8 @@
-GMAIL_USERNAME: 'carries.closet.confirmations@gmail.com'
-APP_PASSWORD: 'wdyningvalfezuqt'
+GMAIL_USERNAME:  'carries.closet.confirmations@gmail.com'
+APP_PASSWORD:  'password-for-gmail-app'
+DATABASE_USERNAME:  prod_db_user
+DATABASE_PASSWORD:  db-password
+DB_NAME: closet
+HOST_URL: 127.0.0.1
+
+RAILS_ENV: production
