@@ -13,6 +13,7 @@ require 'faker'
 @test = User.create!(email: 'test@example.com',
                      password: 'secure-password') if @test.nil?
 
+
 @default = User.find_by_email('carrie.closets@gmail.com')
 @default = User.create!(email: 'carrie.closets@gmail.com', password: 'GmM$}$X?fb!?+6&(', admin: true) if @default.nil?
 
@@ -20,6 +21,7 @@ categories = [ "Boys'", "Girls'", "Women's", "Men's", "Hygiene Products" ]
 categories.each do |category|
   Category.create!(name: category) if Category.find_by_name(category).nil?
 end
+
 
 @admin = User.find_by_email('carries.closet.confirmations@gmail.com')
 @admin = User.create!(email: 'carries.closet.confirmations@gmail.com', password: 'admin-password',
@@ -66,6 +68,7 @@ loop do |index|
   puts "Request #{index} created: '#{request.full_name}' requests \n- " +
          "#{request.item_changes.map(&:description).join("\n- ")}'" if request.save
 end
+
 
 loop do |index|
   break if Request.count >= 10 || Rails.env.production?
@@ -123,3 +126,4 @@ loop do |index|
     puts "   - " + donation.item_changes.map(&:description).join("\n   - ")
   end
 end
+

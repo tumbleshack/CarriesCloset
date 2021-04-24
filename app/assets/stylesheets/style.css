@@ -1,6 +1,8 @@
 body {
 
+
   font-family: Cabin;
+
    font-size: medium;
    color: #000;
    background-color: white;
@@ -342,6 +344,7 @@ input[type=radio] {
   border: 2px solid #74B9CB;
   box-sizing: border-box;
 }
+
 input[type=checkbox] {
   height: 25px;
   width: 25px;
@@ -349,3 +352,4 @@ input[type=checkbox] {
   border: 2px solid #74B9CB;
   box-sizing: border-box;
 }
+

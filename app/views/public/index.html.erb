@@ -1,7 +1,8 @@
 
 <div>
-  
+
     <br>
+
     <% if current_user != nil and current_user.admin? %>
       <div class = "centered-div">
         <%= link_to "All Requests", "requests/", class: "home-link" %>
