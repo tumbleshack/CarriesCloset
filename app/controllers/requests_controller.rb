@@ -89,6 +89,7 @@ class RequestsController < ApplicationController
 
   # POST /requests or /requests.json
   def create
+
     @allCategories = Category.all
     @allItems = Item.all
     @request = Request.new(request_params.except(:item_changes_attributes, :popup))
@@ -108,10 +109,10 @@ class RequestsController < ApplicationController
       @request.item_changes = ItemChange.create!(items)
     end
 
+
     respond_to do |format|
 
       if @request.save
-
         if request_params[:popup] != 'true'
           # ActionMailer should send email immediately after new request creation is saved
           UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
@@ -121,6 +122,7 @@ class RequestsController < ApplicationController
           # end
 
           UserMailer.with(request: @request).volunteer_email.deliver_later
+
         end
 
 
@@ -140,6 +142,7 @@ class RequestsController < ApplicationController
     @allItems = Item.all
 
     respond_to do |format|
+
       if @request.update(request_params.except(:send_to_settle))
         @request.save
 
@@ -149,6 +152,7 @@ class RequestsController < ApplicationController
           format.html { redirect_to @request, notice: "Request was successfully updated." }
           format.json { render :show, status: :ok, location: @request }
         end
+
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @request.errors, status: :unprocessable_entity }
@@ -190,5 +194,6 @@ class RequestsController < ApplicationController
   # protect information contained in request.
   def check_timeout
     require_role(:root, :volunteer) if @request.nil? || (Time.current.utc - @request.created_at.utc) / 1.minute > 30
+
   end
 end

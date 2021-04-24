@@ -26,7 +26,9 @@ class UsersController < ApplicationController
 
     def edit
         @user = User.find(params[:id])
+
         @user.email_setting = @user.build_email_setting.save! if @user.email_setting.nil?
+
     end
 
     def show
@@ -59,6 +61,8 @@ class UsersController < ApplicationController
     end
 
     def user_params
+
         params.require(:user).permit(:email, :admin, :volunteer, :donee, :donor, :current_password, :password_confirmation => [], email_setting_attributes: [:preference])
+
     end
   end
