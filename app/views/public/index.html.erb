@@ -2,37 +2,37 @@
   <div class="pure-g index">
     <% if current_user != nil %>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "My Requests", "requests/my_requests" %>
+        <%= link_to "My Requests", requests_my_requests_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "My Donations", "donations/my_donations" %>
+        <%= link_to "My Donations", donations_my_donations_path %>
       </div></div>
     <% end %>
 
     <% if current_user&.admin? %>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "All Requests", "requests/" %>
+        <%= link_to "All Requests", requests_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "All Pending Donations", "donations/" %>
+        <%= link_to "All Pending Donations", donations_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "View Inventory", "items" %>
+        <%= link_to "View Inventory", items_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "Add Item Type", "items/new" %>
+        <%= link_to "Add Item Type", new_item_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "Manage Users", "users/manage" %>
+        <%= link_to "Manage Users", users_manage_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "Add User", "users/invitation/new/" %>
+        <%= link_to "Add User", new_user_invitation_path %>
       </div></div>
     <% end %>
 
     <% if current_user&.volunteer? %>
       <div class="pure-u-1 pure-u-md-1-2"><div>
-        <%= link_to "New Pop-Up Shop Transaction", requests_popup_url %>
+        <%= link_to "New Pop-Up Shop Transaction", requests_popup_path %>
       </div></div>
       <div class="pure-u-1 pure-u-md-1-2"><div>
         <%= link_to "Volunteer Requests", requests_volunteer_path %>
@@ -40,16 +40,16 @@
     <% end %>
 
     <div class="pure-u-1 pure-u-md-1-2"><div>
-      <%= link_to 'Request Clothing and Hygiene Items', new_request_url%>
+      <%= link_to 'Request Clothing and Hygiene Items', new_request_path%>
     </div></div>
     <div class="pure-u-1 pure-u-md-1-2"><div>
-      <%= link_to "Donate Items", new_donation_url %>
+      <%= link_to "Donate Items", new_donation_path %>
     </div></div>
     <div class="pure-u-1 pure-u-md-1-2"><div>
       <%= link_to "Volunteer", root_path %>
     </div></div>
     <div class="pure-u-1 pure-u-md-1-2"><div>
-      <%= link_to "Get Involved", get_involved, class: "home-link" %>
+      <%= link_to "Get Involved", get_involved_path, class: "home-link" %>
     </div></div>
   </div>
   <div class="index-footer">

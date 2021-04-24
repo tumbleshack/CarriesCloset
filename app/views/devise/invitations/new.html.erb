@@ -11,20 +11,14 @@
   <% end -%>
 
   <div class="field">
-    <%= f.label :admin %>
-    <%= f.check_box :admin %>
-  </div>
-  <div class="field">
-    <%= f.label :volunteer %>
-    <%= f.check_box :volunteer %>
-  </div>
-  <div class="field">
-    <%= f.label :donor %>
-    <%= f.check_box :donor %>
-  </div>
-  <div class="field">
-    <%= f.label :donee %>
-    <%= f.check_box :donee %>
+      <%= f.check_box :admin, autocomplete: "admin" %>
+      <%= f.label :admin %>
+      <%= f.check_box :volunteer, autocomplete: "volunteer" %>
+      <%= f.label :volunteer %>
+      <%= f.check_box :donor, autocomplete: "donor" %>
+      <%= f.label :donor %>
+      <%= f.check_box :donee, autocomplete: "donee" %>
+      <%= f.label :donee %>
   </div>
   <div class="actions">
     <%= f.submit t("devise.invitations.new.submit_button") %>
