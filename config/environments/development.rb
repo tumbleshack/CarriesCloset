@@ -75,7 +75,6 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Configure mailer options for Devise mailers
-  config.action_mailer.default_url_options = { host: '127.0.0.1', port: 3000 }
 
   # ----------------------------------Action Mailer------------------------------------------------
   config.action_mailer.perform_deliveries = true 
@@ -91,7 +90,7 @@ Rails.application.configure do
     password: ENV["APP_PASSWORD"]
   }
   # can change host when we have a URL
-  config.action_mailer.default_url_options = {:host => "127.0.0.1:3000"}
+  config.action_mailer.default_url_options = {:host => ENV["HOST_URL"]}
   config.action_mailer.delivery_method = :smtp
 
    # -----------------------------------------------------------------------------------------------
