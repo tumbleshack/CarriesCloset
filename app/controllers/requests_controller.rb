@@ -113,8 +113,6 @@ class RequestsController < ApplicationController
     respond_to do |format|
 
       if @request.save
-
-
         if request_params[:popup] != 'true'
           # ActionMailer should send email immediately after new request creation is saved
           UserMailer.with(request: @request).new_email.deliver_later # to DONEE who submitted request
@@ -182,7 +180,6 @@ class RequestsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def request_params
-
     params.require(:request).permit(:popup, :urgency, :full_name, :email, :phone, :relationship, :county, :meet, :address,
                                     :availability, :comments, :send_to_settle,
                                     item_changes_attributes: [:id, :category_id, :quantity, :settle, :itemType, :size,

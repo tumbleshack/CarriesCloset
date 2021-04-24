@@ -1,6 +1,5 @@
 class Donation < ApplicationRecord
 
-
   include FormattableAttributes
 
   has_many :item_changes

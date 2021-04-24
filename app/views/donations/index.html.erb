@@ -28,13 +28,11 @@
         <td><%= donation.meet %></td>
         <td><%= donation.address %></td>
         <td><%= donation.availability %></td>
-
         <td>
           <% donation.item_changes.limit(5).each do |item_change| %>
             <li><%= item_change.description %></li>
           <% end %>
         </td>
-
         <td><%= donation.comments %></td>
         <td><%= link_to 'Show', donation %></td>
         <td><%= link_to 'Edit', edit_donation_path(donation) %></td>
