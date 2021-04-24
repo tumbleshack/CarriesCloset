@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  before_validation :ensure_email_setting
+
+  before_create :ensure_email_setting
+
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -16,11 +18,16 @@ class User < ApplicationRecord
   scope :donees,     -> { where(donee:     1) }
   scope :donors,     -> { where(donor:     1) }
 
+
   has_one :email_setting, dependent: :destroy, required: true
   accepts_nested_attributes_for :email_setting
 
   def ensure_email_setting
-    self.build_email_setting.save! if self.email_setting.nil?
+    self.build_email_setting.save! if self.email_setting.nil? && !self.id.nil?
   end
+
+  def volunteer?; volunteer || admin?; end
+  def donee?; donee || donor || volunteer? || admin?; end
+  def donor?; donor || donor || volunteer? || admin?; end
 
 end

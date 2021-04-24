@@ -1,0 +1,6 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Donation Quality (<%= Donation.all.count %>)</h1>
+<% Donation.all.each do |donation| %>
+  <%= render partial: 'requests/volunteer_request_block', locals: { request: donation } %>
+<% end %>

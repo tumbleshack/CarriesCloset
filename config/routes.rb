@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
+
   resources :email_settings
   get '/donations/my_donations' => 'donations#my_donations'
+  get '/donations/quality_check' => 'donations#quality_check'
+  get '/donations/:id/quality_screen' => 'donations#quality_screen', as: :quality_screen
   resources :donations
   resources :categories
   resources :items
