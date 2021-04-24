@@ -1,3 +1,23 @@
 // Place all the styles related to the get-involved controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.social-link, .social-link:hover {
+    align-items: center;
+    height: 80px;
+    padding: 0px 5%;
+    background-color: white;
+}
+
+.get-involved-div {
+    width: 80%;
+    justify-content: center;
+}
+
+div.container {
+    padding: 0 3rem;
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+  
