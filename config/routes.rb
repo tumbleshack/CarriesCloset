@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   devise_for :users, :path_prefix => 'my', controllers: { registrations: 'users/registrations', invitations: 'users/invitations' }
   resources :users
   get '/get-involved' => 'get_involved#index'
-
    
   resources :users
 
