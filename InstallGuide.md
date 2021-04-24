@@ -81,7 +81,7 @@ Exit vim by typing `:wq`.
 
 Next, build the container by running:
 ```
-$ docker build f Dockerfile.prod . --tag gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
+$ docker build -f Dockerfile.prod . --tag gcr.io/$PROJECT_ID/cloudrun/$_SERVICE_ID
 ```
 
 ### Installation of Application: 
