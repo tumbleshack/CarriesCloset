@@ -1,6 +1,6 @@
 # Technical Overview
 
-This webapp for Carrie's Closet of Georgia runs using [Ruby on Rails](https://rubyonrails.org/), a full-stack framework for [CRUD web apps](https://www.codecademy.com/articles/what-is-crud). The best resource for learning about and debugging common Rails problems is the [official Rails guide](https://guides.rubyonrails.org/), which was used extensively during development. Rails beleives in "convention over configuration," so many features needed came out of the box. Many also come from packages, which Rails calls Gems. Notable Gems used by this webapp include: `devise`, `devise-invitable`, `webpakcer`, and `puma`. Gems can suffer from the [bloated dependency problem](https://res.cloudinary.com/practicaldev/image/fetch/s--hHU5ov3u--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://preview.redd.it/eu7hrdzzy3x11.jpg%3Fwidth%3D640%26crop%3Dsmart%26auto%3Dwebp%26s%3D18ed21e9420e1b0fb327c3d356f0c47eb28f9aa2), so tread carefully when adding new ones.
+This webapp for Carrie's Closet of Georgia runs using [Ruby on Rails](https://rubyonrails.org/), a full-stack framework for [CRUD web apps](https://www.codecademy.com/articles/what-is-crud). The best resource for learning about and debugging common Rails problems is the [official Rails guide](https://guides.rubyonrails.org/), which was used extensively during development. Rails believes in "convention over configuration," so many features needed came out of the box. Many also come from packages, which Rails calls Gems. Notable Gems used by this webapp include: `devise`, `devise-invitable`, `webpacker`, and `puma`. Gems can suffer from the [bloated dependency problem](https://res.cloudinary.com/practicaldev/image/fetch/s--hHU5ov3u--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://preview.redd.it/eu7hrdzzy3x11.jpg%3Fwidth%3D640%26crop%3Dsmart%26auto%3Dwebp%26s%3D18ed21e9420e1b0fb327c3d356f0c47eb28f9aa2), so tread carefully when adding new ones.
 
 The app is deployed on Google Cloud using their managed [Kubernetes](https://kubernetes.io/) platform, [Google Cloud Run](https://cloud.google.com/run). The binaries are packaged into a [Docker](https://docs.docker.com/get-started/overview/) container, which Google scales automagically based on request intensity. Current configuration allows Google to shut down all container instances when not in use, which means Carrie's Closet gets around 1.2 million free monthly requests (although first requests in more than an hour can be slow). Postgres is used for the database, which is also hosted with Google Cloud, and is currently the only hosting cost. For details on how to deploy to these services, continue reading.
 
@@ -10,7 +10,7 @@ See [README.md](README.md)
 
 # Production Instance
 
-Production app goes on Google Cloud. The source code will be built into a Docker container locally, then pushed to a container registry, then deployed.
+The production app goes on Google Cloud. The source code will be built into a Docker container locally, then pushed to a container registry, then deployed.
 
 ### Pre-requisites
 1. A Google Cloud account
@@ -20,19 +20,19 @@ Go to the Google Cloud Console and find the SQL service. Create a PostgreSQL ins
 - Shared CPU without High Availablility
 - 1/2 GB Memory
 - 10 GB HDD Storage
-- Keep a up to 7 backups
+- Keep up to 7 backups
 
 Create a new user for the PostgreSQL instance in the Users menu of the instance page. Select "ADD USER ACCOUNT" then select the "PostgreSQL" radio button. Make a user name and password, note these somewhere.
 
 Now, grant your Default compute service account Cloud SQL Admin permissions to allow the webapp access to the databse. Go to Google Cloud's IAM service.
 
-Locate the service account `{somenumber}-compute@developer.gserviceaccount.com`. If this account does not exist, proceede to the next step, and return here after completing the "Run Instructions" section.
+Locate the service account `{somenumber}-compute@developer.gserviceaccount.com`. If this account does not exist, proceed to the next step, and return here after completing the "Run Instructions" section.
 
 Click on the edit member icon for `{somenumber}-compute@developer.gserviceaccount.com`. Select "ADD ANOTHER ROLE". Locate Cloud SQL Admin (make sure the Cloud SQL Admin API is enabled). Save.
 
 ### Seed the Database
 
-If the deployment is fresh (ie. database has never been setup before), the database will need to be seeded. The seeds are set in the file [db/seeds.rb](db/seeds.rb). **Make sure to change the administrator seed** before proceeding.
+If the deployment is fresh (ie. the database has never been setup before), the database will need to be seeded. The seeds are set in the file [db/seeds.rb](db/seeds.rb). **Make sure to change the administrator seed** before proceeding.
 
 To seed the database, run the docker container on your local machine, connect it to the Google Cloud PostgreSQL instance, then execute the seed command inside the container. 
 
@@ -115,7 +115,7 @@ Then click the "DEPLOY" button.
 
 ### Troubleshooting:
 
-The Cloud Run logs are the most helpful resource for debugging problems. You can locate them in the "LOGS" tab of the Cloud Run service's page. If the service fails to deploy, Cloud Run will present a link to the relevent logs in the Google Cloud Console. Tips for some common problems:
+The Cloud Run logs are the most helpful resource for debugging problems. You can locate them in the "LOGS" tab of the Cloud Run service's page. If the service fails to deploy, Cloud Run will present a link to the relevant logs in the Google Cloud Console. Tips for some common problems:
 
 **Cloud Run fails to connect to the Database**
 
