@@ -70,46 +70,46 @@
   <%= link_to "Mark Ready for Delivery", requests_next_status_path(@request), class: "home-link" %>
   <br>
 <% end %>
-
-  
-<h1>Contact the donee!</h1>
-<i>Remember to contact the donee before you go to let them know when to meet and make sure they're still available.</i>
-<p>
-  <strong>Full name:</strong>
-  <%= @request.full_name %>
-</p>
-
-<p>
-  <strong>Email:</strong>
-  <%= @request.email %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @request.phone %>
-</p>
-
-<% if @request.meet %>
+<% if current_user&.volunteer? %>
+  <h1>Contact the donee!</h1>
+  <i>Remember to contact the donee before you go to let them know when to meet and make sure they're still available.</i>
   <p>
-    <strong>County:</strong>
-    <%= Request::COUNTIES.key(@request.county) %>
-
+    <strong>Full name:</strong>
+    <%= @request.full_name %>
   </p>
-<% else %>
+
   <p>
-    <strong>Address:</strong>
-    <%= @request.address %>
+    <strong>Email:</strong>
+    <%= @request.email %>
   </p>
-<% end %>
 
-<p>
-  <strong>Availability:</strong>
-  <%= @request.availability %>
-</p>
+  <p>
+    <strong>Phone:</strong>
+    <%= @request.phone %>
+  </p>
 
-<% if current_user&.volunteer? && @request.status == "delivery_ready" %>
-  <%= link_to "Mark Order Complete", requests_next_status_path(@request), class: "home-link" %>
-  <br>
+  <% if @request.meet %>
+    <p>
+      <strong>County:</strong>
+      <%= Request::COUNTIES.key(@request.county) %>
+
+    </p>
+  <% else %>
+    <p>
+      <strong>Address:</strong>
+      <%= @request.address %>
+    </p>
+  <% end %>
+
+  <p>
+    <strong>Availability:</strong>
+    <%= @request.availability %>
+  </p>
+
+  <% if current_user&.volunteer? && @request.status == "delivery_ready" %>
+    <%= link_to "Mark Order Complete", requests_next_status_path(@request), class: "home-link" %>
+    <br>
+  <% end %>
 <% end %>
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
