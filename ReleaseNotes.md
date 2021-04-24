@@ -1,4 +1,4 @@
-# Release Notes
+# Release Notes: Version 1.0
 
 ## Teminology 📘
 - **Donee**: someone receiving clothing/items _from_ Carrie's Closet
@@ -6,35 +6,35 @@
 - **Donor**: somone giving clothing/items _to_ Carrie's Closet
 - **Donation:** form which donors use to give items to Carrie's Closet
 
-## New & Improved ⭐
+## New & Improved Functionality in This Release ⭐
 
 - Anyone on the internet can make item requests. 💁 They can specify
   -  How urgent their need is
-  -  When they are available
+  -  When they are available to receive the items
   -  What items they need
   -  Where they are located
 
 - Anyone on the internet can also donate to Carrie's Closet 🎅 They can specify
   -  What items they'd like to donate
   -  Where they are located
-  -  When they are available
-  -  Directly increase/increase quantities when inventory lists inebitably get out of wack
+  -  When they are available to donate the items
 
 - Administrators & volunteers can manage item inventory 👚
   - Can specify categories (like boy's shoes, girl's tops, etc.)
-  - Automatically decrease inventory when a request is fulfilled
-  - Automatically increase inventory when a donation is received
+  - The system automatically decreases inventory when a request is fulfilled
+  - The system automatically increases inventory when a donation is received
+  - Directly increase/decrease quantities when inventory lists inevitably get out of sync with real inventory
 
 - Admnistrators can manage other user's accounts 🧾
-  - Grant them 1 or more roles within Carrie's Closet: donee, donor, volunteer, administrator
+  - Grant them one or more roles within Carrie's Closet: donee, donor, volunteer, administrator
   - Invite new users by sending unique sign up links to email addresses
 
-- You get emails now! Notifications 📧
+- Users get emails now! Notifications 📧
   - To admins & volunteers when an urgent request comes in
   - To anyone who completes a form, confirming it's completed
   - To new users, inviting them to join
 
-- The app doesn't look ugly anymore! 🦋
+- The app is now stylistically appealing! 🦋
 - Paypal! Carrie's Closet can accept money from nice people online
 
 ## Known Bugs 🐞
@@ -43,9 +43,9 @@
 - When creating an account, if the "Password" and "Confirm Password" fields do not match, no error is surfaced (but account creation is still blocked)
 - The radio buttons may still be stacked on mobile views
 
-## Fixes 🛠️
-- Radio buttons are no longer strangly stacked (side by side now)
-- The invite user page doesn't lead to a black hole anymore... why'd we do that... haha, oops
-- Donors are no longer allowed to donate negative (huh?) item quantities
+## Previous Bugs that are Now Fixed 🛠️
+- Radio buttons are no longer strangely stacked (side by side now)
+- The invite user page leads to the intended location
+- Donors are no longer allowed to donate negative item quantities
 - The inventory list doesn't extend past the width of your screen
  
