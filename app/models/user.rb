@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  before_validation :ensure_email_setting
+  before_create :ensure_email_setting
 
 
   # Include default devise modules. Others available are:
@@ -23,8 +23,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :email_setting
 
   def ensure_email_setting
-    return if self.user_id.nil?
-    self.build_email_setting.save! if self.email_setting.nil?
+    self.build_email_setting.save! if self.email_setting.nil? && !self.id.nil?
   end
 
   def volunteer?; volunteer || admin?; end
