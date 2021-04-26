@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  before_create :ensure_email_setting
+  # before_validation :ensure_email_setting
 
 
   # Include default devise modules. Others available are:
@@ -19,10 +19,10 @@ class User < ApplicationRecord
   scope :donors,     -> { where(donor:     1) }
 
 
-  has_one :email_setting, dependent: :destroy, required: true
+  has_one :email_setting, dependent: :destroy
   accepts_nested_attributes_for :email_setting
 
-  def ensure_email_setting
+  def create_email_setting
     self.build_email_setting.save! if self.email_setting.nil? && !self.id.nil?
   end
 
