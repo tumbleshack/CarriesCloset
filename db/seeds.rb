@@ -30,6 +30,7 @@ end
 
 items = %w[ Shoes Shirts Pants ]
 items.each do |item|
+  break if Rails.env.production?
   categories.each do |category|
     cat = Category.find_by_name(category)
     @someitem = Item.find_by(itemType: item, category: cat)
