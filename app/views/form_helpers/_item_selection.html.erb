@@ -258,8 +258,8 @@
           <% else %>
             <td><%= item_change_form.number_field :quantity %></td>
             <td><%= item_change_form.select :category_id, Category.all.map { |category| [ category.name, category.id ] }, options = {}, html_options = {:onchange => "updateItemTypes(this)", :data => { selectorType: "category" }} %></td>
-            <td><%= item_change_form.select :itemType, Item.all.map{ |item| item.itemType }, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
-            <td><%= item_change_form.select :size, Item.all.map{ |item| item.size }, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
+            <td><%= item_change_form.select :itemType, Item.all.pluck(:itemType).uniq, options = {}, html_options = {:onchange => "updateItemSizes(this)", :data => { selectorType: "itemType" }} %></td>
+            <td><%= item_change_form.select :size, Item.all.pluck(:size).uniq, options = {}, html_options = {:data => { selectorType: "size" }} %></td>
             <td hidden><%= item_change_form.hidden_field :change_type, value:ItemChange::CHANGE_TYPES.fetch(parent_f) %></td>
             <td hidden><%= item_change_form.hidden_field :_destroy, html_options = {:onchange => "updateItemSizes(this)", :data => { type: "destroy" }}%></td>
           <% end %>
