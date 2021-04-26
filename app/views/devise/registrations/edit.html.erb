@@ -26,14 +26,14 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
   
-  <% if current_user != nil and (current_user.admin?  or current_user.volunteer?)%>
+  <% if current_user&.admin? || current_user&.volunteer? %>
     <div class="field">
       <%= f.fields_for :email_setting, include_id: false do |email_f| %>
         <%= email_f.label :preference, "Email Notification Preferences" %>
-  	  <p>When would you like to be notified of requests?</p>
+  	    <p>When would you like to be notified of requests?</p>
         <%= email_f.select(:preference, EmailSetting::OPTIONS) %>
       <% end %>
-  </div>
+    </div>
   <% end %>
 
   <div class="field">
