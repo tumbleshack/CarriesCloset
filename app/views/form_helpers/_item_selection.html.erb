@@ -217,7 +217,12 @@
 
 <div class="field">
   <% unless send_to_screen %>
-    <%= form.label :items, 'What items would you like to request?'  %>
+    <% if parent_f == :request %>
+      <%= form.label :items, 'What items would you like to request?'  %>
+    <% end %>
+    <% if parent_f == :donation %>
+      <%= form.label :items, 'What items would you like to donate?'  %>
+    <% end %>
   <% end %>
   <table id="items-table">
     <thead>
