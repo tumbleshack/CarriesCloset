@@ -26,9 +26,7 @@ class UsersController < ApplicationController
 
     def edit
         @user = User.find(params[:id])
-
-        @user.email_setting = @user.build_email_setting.save! if @user.email_setting.nil?
-
+        @user.build_email_setting.save! if @user.email_setting.nil?
     end
 
     def show
